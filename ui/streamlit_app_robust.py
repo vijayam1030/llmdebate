@@ -277,38 +277,103 @@ def main():
                         final_score = scores[-1] if scores else 0
                         st.metric("Final Consensus", f"{final_score:.3f}")
                     
-                    # Models used
-                    st.subheader("Models Used")
+                    # Models used - Better layout
+                    st.subheader("🤖 Models Used")
+                    
                     orchestrator = result.get("orchestrator_model", "Unknown")
                     debaters = result.get("debater_models", [])
                     
-                    st.write(f"**Orchestrator**: {orchestrator}")
-                    st.write(f"**Debaters**: {', '.join(debaters)}")
+                    # Use columns for better organization
+                    model_col1, model_col2 = st.columns([1, 2])
                     
-                    # Debate summary
+                    with model_col1:
+                        st.markdown("**🎭 Orchestrator:**")
+                        st.code(orchestrator, language="text")
+                    
+                    with model_col2:
+                        st.markdown("**🗣️ Debaters:**")
+                        for i, model in enumerate(debaters, 1):
+                            st.code(f"Debater {i}: {model}", language="text")
+                    
+                    # Debate summary - Full width with better formatting
                     if result.get("summary"):
-                        st.subheader("Debate Summary")
-                        st.write(result["summary"])
+                        st.subheader("📋 Debate Summary")
+                        
+                        # Use container for full width
+                        with st.container():
+                            # Create expandable summary for long text
+                            summary_text = result["summary"]
+                            
+                            if len(summary_text) > 500:
+                                # Show preview and expandable full text
+                                st.write(f"**Preview:** {summary_text[:500]}...")
+                                
+                                with st.expander("📖 Read Full Summary", expanded=False):
+                                    # Use markdown for better formatting
+                                    st.markdown(f"""
+                                    <div style="background-color: #f0f2f6; padding: 15px; border-radius: 5px; line-height: 1.6;">
+                                    {summary_text.replace('\n', '<br>')}
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                            else:
+                                # Show full text directly with better styling
+                                st.markdown(f"""
+                                <div style="background-color: #f0f2f6; padding: 15px; border-radius: 5px; line-height: 1.6; margin: 10px 0;">
+                                {summary_text.replace('\n', '<br>')}
+                                </div>
+                                """, unsafe_allow_html=True)
                         
                         if len(result["summary"]) >= 1000:
-                            st.info("Summary truncated for display. Full details available in logs.")
+                            st.info("💡 Full summary available above - expanded for better readability")
                     
-                    # Consensus evolution
+                    # Consensus evolution - Improved layout
                     if result.get("consensus_scores"):
-                        st.subheader("Consensus Evolution")
+                        st.subheader("📈 Consensus Evolution")
+                        
                         scores = result["consensus_scores"]
                         
-                        for i, score in enumerate(scores, 1):
-                            progress = min(score, 1.0)  # Cap at 1.0 for display
-                            st.write(f"Round {i}: {score:.3f}")
-                            st.progress(progress)
+                        # Create two columns for better layout
+                        col_left, col_right = st.columns([3, 1])
+                        
+                        with col_left:
+                            for i, score in enumerate(scores, 1):
+                                progress = min(score, 1.0)  # Cap at 1.0 for display
+                                
+                                # Better formatting for each round
+                                st.markdown(f"**Round {i}:** {score:.3f}")
+                                st.progress(progress)
+                                st.write("")  # Add spacing
+                        
+                        with col_right:
+                            # Summary stats
+                            if len(scores) > 1:
+                                improvement = scores[-1] - scores[0]
+                                st.metric("Overall Change", f"{improvement:+.3f}")
+                                st.metric("Best Round", f"{max(scores):.3f}")
+                                st.metric("Trend", "📈 Up" if improvement > 0 else "📉 Down" if improvement < 0 else "➡️ Stable")
                     
-                    # Success indicators
-                    st.subheader("System Performance")
-                    st.write("✓ External process execution (no conflicts)")
-                    st.write("✓ Small models only (memory efficient)")
-                    st.write("✓ Large token limits (detailed responses)")
-                    st.write("✓ Max 3 rounds (time efficient)")
+                    # Success indicators - Enhanced layout
+                    st.subheader("🏆 System Performance")
+                    
+                    # Create a nice grid layout for performance indicators
+                    perf_col1, perf_col2 = st.columns(2)
+                    
+                    with perf_col1:
+                        st.markdown("""
+                        **🔧 Technical Features:**
+                        - ✅ External process execution (no conflicts)
+                        - ✅ Small models only (memory efficient)
+                        """)
+                    
+                    with perf_col2:
+                        st.markdown("""
+                        **⚡ Performance Features:**
+                        - ✅ Large token limits (detailed responses)
+                        - ✅ Max 3 rounds (time efficient)
+                        """)
+                    
+                    # Add performance summary in an info box
+                    st.info("💡 This debate used conflict-free external process execution with optimized small models for maximum reliability and efficiency.")
                     
                 else:
                     st.error("✗ Debate failed")

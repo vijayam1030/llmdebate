@@ -10,10 +10,10 @@ from langchain.agents import AgentExecutor, create_react_agent
 from langchain.tools import Tool
 from langchain.prompts import PromptTemplate
 
-from models import DebaterResponse, MCPContext
+from .models import DebaterResponse, MCPContext
 from config import Config, ModelConfig
-from ollama_integration import CustomOllamaLLM, model_factory
-from consensus_engine import consensus_engine
+from .ollama_integration import CustomOllamaLLM, model_factory
+from .consensus_engine import consensus_engine
 
 logger = logging.getLogger(__name__)
 

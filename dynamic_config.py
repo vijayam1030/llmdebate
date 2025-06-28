@@ -7,7 +7,7 @@ import logging
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 
-from ollama_integration import ollama_manager
+from backend.ollama_integration import ollama_manager
 from config import ModelConfig
 
 logger = logging.getLogger(__name__)

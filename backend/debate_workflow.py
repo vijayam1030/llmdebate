@@ -10,13 +10,13 @@ from datetime import datetime
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
-from models import (
+from .models import (
     DebateState, DebateStatus, DebaterResponse, DebateRound, 
     DebateResult, MCPContext
 )
-from agents import DebaterAgent, OrchestratorAgent
-from consensus_engine import consensus_engine
-from ollama_integration import model_factory
+from .agents import DebaterAgent, OrchestratorAgent
+from .consensus_engine import consensus_engine
+from .ollama_integration import model_factory
 from config import Config
 
 logger = logging.getLogger(__name__)

@@ -11,9 +11,9 @@ from typing import Optional
 from dotenv import load_dotenv
 
 from config import Config
-from models import DebateResult, DebateStatus
-from debate_workflow import debate_workflow
-from ollama_integration import ollama_manager, model_factory
+from backend.models import DebateResult, DebateStatus
+from backend.debate_workflow import debate_workflow
+from backend.ollama_integration import ollama_manager, model_factory
 
 # Setup logging
 logging.basicConfig(
