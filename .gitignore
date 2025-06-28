@@ -144,10 +144,10 @@ cython_debug/
 .env.test.local
 .env.production.local
 
-# Logs
+# Logs (exclude main log, but allow sample)
 logs/
 *.log
-debate_logs.txt
+# debate_logs.txt  # Uncomment to exclude main log file
 
 # Temporary files
 *.tmp
