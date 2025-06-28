@@ -28,7 +28,7 @@ class Config:
         name="Orchestrator",
         model="llama3.2:3b",  # Small, efficient orchestrator model
         temperature=0.3,
-        max_tokens=2000,
+        max_tokens=2000,  # Restored to original size for detailed responses
         personality="analytical and diplomatic",
         system_prompt="""You are an expert debate orchestrator. Your role is to:
 1. Analyze responses from three debater LLMs
@@ -44,7 +44,7 @@ Be objective, thorough, and focus on finding common ground."""
             name="Analytical_Debater",
             model="gemma2:2b",
             temperature=0.6,
-            max_tokens=800,
+            max_tokens=800,  # Restored to original size for detailed responses
             personality="analytical and fact-focused",
             system_prompt="""You are an analytical debater who focuses on facts, data, and logical reasoning. 
 Provide well-structured arguments based on evidence and clear reasoning. 
@@ -54,7 +54,7 @@ Be thorough but concise in your responses."""
             name="Creative_Debater", 
             model="phi3:mini",
             temperature=0.8,
-            max_tokens=800,
+            max_tokens=800,  # Restored to original size for detailed responses
             personality="creative and perspective-oriented",
             system_prompt="""You are a creative debater who brings unique perspectives and innovative thinking.
 Explore different angles, consider alternative viewpoints, and think outside the box.
@@ -64,7 +64,7 @@ Challenge assumptions while remaining constructive."""
             name="Practical_Debater",
             model="tinyllama:1.1b",
             temperature=0.7,
-            max_tokens=800,
+            max_tokens=800,  # Restored to original size for detailed responses
             personality="practical and solution-focused",
             system_prompt="""You are a practical debater focused on real-world applications and solutions.
 Emphasize actionable insights, practical implications, and concrete examples.

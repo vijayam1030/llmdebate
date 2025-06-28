@@ -31,6 +31,10 @@ python run_small_debate.py "Should we use renewable energy?"
 ```bash
 streamlit run streamlit_launcher.py
 ```
+*If you encounter torch/asyncio conflicts, use:*
+```bash
+streamlit run streamlit_app_fixed.py
+```
 
 ### **4. Original CLI (with small models configured)**
 ```bash
@@ -57,7 +61,8 @@ python main.py
   - `gemma2:2b` (creative and focused)  
   - `llama3.2:3b` (analytical and focused)
 - **Max Rounds**: 3 (quick, efficient debates)
-- **Response Length**: Optimized for clarity
+- **Response Length**: Detailed responses with large token limits
+- **Token Limits**: Orchestrator 2000, Debaters 800 (comprehensive arguments)
 
 ## 💾 **Memory Usage**
 - **Before**: 42GB+ (with llama3.1:70b)
@@ -99,6 +104,9 @@ This confirms all 14 small models are detected and configured properly.
 - **`.gitignore`**: Added to exclude `__pycache__/`, logs, and cache files
 - **Memory efficient**: Only small models under 4GB are used
 - **Clean codebase**: No bytecode or temporary files in version control
+- **Large token limits**: Optimized for detailed, comprehensive responses
+- **Torch conflicts resolved**: Alternative Streamlit launcher available
+- **"Response too long" warnings**: Normal behavior, doesn't affect functionality
 
 ---
 **✨ Perfect! Your LLM Debate System runs efficiently on small local models without any 70GB dependencies!**
