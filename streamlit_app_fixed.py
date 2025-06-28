@@ -76,7 +76,7 @@ async def run_debate():
     system = LLMDebateSystem()
     if await system.initialize():
         result = await system.conduct_debate("{question}", max_rounds=3)
-        await system.cleanup()
+        # Note: Models stay loaded for efficiency - cleanup only on app exit
         
         # Return simplified result
         return {{

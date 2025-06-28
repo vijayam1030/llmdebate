@@ -708,3 +708,441 @@ question
 2025-06-28 15:57:14,833 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
 2025-06-28 15:57:14,833 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
 2025-06-28 15:57:14,833 - main - INFO - System cleanup completed
+2025-06-28 16:03:32,140 - main - INFO - Initializing LLM Debate System...
+2025-06-28 16:03:32,603 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:03:32,604 - ollama_integration - INFO - Loading required models: ['gemma2:2b', 'tinyllama:1.1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 16:03:33,087 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:03:33,089 - ollama_integration - INFO - Loading model gemma2:2b...
+2025-06-28 16:03:35,236 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:03:35,236 - ollama_integration - INFO - Successfully loaded model gemma2:2b
+2025-06-28 16:03:35,236 - ollama_integration - INFO - Loading model tinyllama:1.1b...
+2025-06-28 16:03:36,441 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:03:36,441 - ollama_integration - INFO - Successfully loaded model tinyllama:1.1b
+2025-06-28 16:03:36,442 - ollama_integration - INFO - Model gemma2:2b already loaded
+2025-06-28 16:03:36,442 - ollama_integration - INFO - Loading model llama3.2:3b...
+2025-06-28 16:03:44,103 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:03:44,104 - ollama_integration - INFO - Successfully loaded model llama3.2:3b
+2025-06-28 16:03:44,104 - ollama_integration - INFO - Currently loaded models: ['gemma2:2b', 'tinyllama:1.1b', 'llama3.2:3b']
+2025-06-28 16:03:44,104 - ollama_integration - INFO - All required models loaded successfully
+2025-06-28 16:03:44,104 - main - INFO - System initialized successfully
+2025-06-28 16:03:44,105 - main - INFO - Starting debate: what are benefits of excercise
+2025-06-28 16:03:44,105 - debate_workflow - INFO - Starting debate: what are benefits of excercise
+2025-06-28 16:03:44,107 - debate_workflow - INFO - Initializing debate for question: what are benefits of excercise
+2025-06-28 16:03:44,108 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:03:50,227 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:03:50,227 - ollama_integration - WARNING - Response too long from Small_Debater_1_Practical: 2053 chars
+2025-06-28 16:03:50,242 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:03:50,242 - ollama_integration - WARNING - Response too long from Small_Debater_3_Analytical: 1110 chars
+2025-06-28 16:04:01,081 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:01,082 - ollama_integration - WARNING - Response too long from Small_Debater_2_Creative: 1800 chars
+2025-06-28 16:04:01,083 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:04:01,083 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:04:01,186 - debate_workflow - INFO - Consensus analysis: similarity=0.719, reached=False
+2025-06-28 16:04:01,187 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:04:06,987 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:06,988 - ollama_integration - WARNING - Response too long from Small_Orchestrator: 2446 chars
+2025-06-28 16:04:06,988 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:04:06,989 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:04:11,968 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:11,968 - ollama_integration - WARNING - Response too long from Small_Debater_1_Practical: 1332 chars
+2025-06-28 16:04:16,004 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:16,005 - ollama_integration - WARNING - Response too long from Small_Debater_2_Creative: 2725 chars
+2025-06-28 16:04:24,482 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:24,483 - ollama_integration - WARNING - Response too long from Small_Debater_3_Analytical: 2346 chars
+2025-06-28 16:04:24,483 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:04:24,484 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:04:24,566 - debate_workflow - INFO - Consensus analysis: similarity=0.688, reached=False
+2025-06-28 16:04:24,567 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:04:32,009 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:32,010 - ollama_integration - WARNING - Response too long from Small_Orchestrator: 2370 chars
+2025-06-28 16:04:32,010 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:04:32,011 - debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-28 16:04:38,273 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:38,274 - ollama_integration - WARNING - Response too long from Small_Debater_1_Practical: 1407 chars
+2025-06-28 16:04:41,800 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:41,800 - ollama_integration - WARNING - Response too long from Small_Debater_2_Creative: 2779 chars
+2025-06-28 16:04:51,763 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:04:51,764 - ollama_integration - WARNING - Response too long from Small_Debater_3_Analytical: 2999 chars
+2025-06-28 16:04:51,764 - debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-28 16:04:51,765 - debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-28 16:04:51,850 - debate_workflow - INFO - Consensus analysis: similarity=0.608, reached=False
+2025-06-28 16:04:51,852 - debate_workflow - INFO - Handling max rounds reached
+2025-06-28 16:05:00,617 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:05:00,617 - ollama_integration - WARNING - Response too long from Small_Orchestrator: 3175 chars
+2025-06-28 16:05:00,618 - debate_workflow - INFO - Max rounds handling completed
+2025-06-28 16:05:00,618 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-28 16:05:00,619 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 16:05:00,619 - main - INFO - System cleanup completed
+2025-06-28 16:09:51,920 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:09:51,924 - dynamic_config - INFO - Found 19 available models
+2025-06-28 16:10:36,474 - main - INFO - Initializing LLM Debate System...
+2025-06-28 16:10:36,954 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:10:36,957 - ollama_integration - INFO - Loading required models: ['gemma2:2b', 'tinyllama:1.1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 16:10:37,457 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:10:37,459 - ollama_integration - INFO - Loading model gemma2:2b...
+2025-06-28 16:10:39,599 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:10:39,599 - ollama_integration - INFO - Successfully loaded model gemma2:2b
+2025-06-28 16:10:39,600 - ollama_integration - INFO - Loading model tinyllama:1.1b...
+2025-06-28 16:10:40,831 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:10:40,831 - ollama_integration - INFO - Successfully loaded model tinyllama:1.1b
+2025-06-28 16:10:40,831 - ollama_integration - INFO - Model gemma2:2b already loaded
+2025-06-28 16:10:40,831 - ollama_integration - INFO - Loading model llama3.2:3b...
+2025-06-28 16:10:48,449 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:10:48,450 - ollama_integration - INFO - Successfully loaded model llama3.2:3b
+2025-06-28 16:10:48,450 - ollama_integration - INFO - Currently loaded models: ['tinyllama:1.1b', 'llama3.2:3b', 'gemma2:2b']
+2025-06-28 16:10:48,450 - ollama_integration - INFO - All required models loaded successfully
+2025-06-28 16:10:48,450 - main - INFO - System initialized successfully
+2025-06-28 16:10:48,450 - main - INFO - Starting debate: what are benifits of renewable energy
+2025-06-28 16:10:48,450 - debate_workflow - INFO - Starting debate: what are benifits of renewable energy
+2025-06-28 16:10:48,452 - debate_workflow - INFO - Initializing debate for question: what are benifits of renewable energy
+2025-06-28 16:10:48,453 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:10:55,440 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:10:55,441 - ollama_integration - WARNING - Response too long from Small_Debater_1_Practical: 2345 chars
+2025-06-28 16:10:56,012 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:10:56,012 - ollama_integration - WARNING - Response too long from Small_Debater_3_Analytical: 1315 chars
+2025-06-28 16:11:06,234 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:06,235 - ollama_integration - WARNING - Response too long from Small_Debater_2_Creative: 1910 chars
+2025-06-28 16:11:06,235 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:11:06,236 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:11:06,319 - debate_workflow - INFO - Consensus analysis: similarity=0.732, reached=False
+2025-06-28 16:11:06,320 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:11:12,195 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:12,195 - ollama_integration - WARNING - Response too long from Small_Orchestrator: 2525 chars
+2025-06-28 16:11:12,196 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:11:12,196 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:11:18,392 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:18,393 - ollama_integration - WARNING - Response too long from Small_Debater_1_Practical: 1842 chars
+2025-06-28 16:11:22,035 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:22,035 - ollama_integration - WARNING - Response too long from Small_Debater_2_Creative: 2927 chars
+2025-06-28 16:11:31,498 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:31,499 - ollama_integration - WARNING - Response too long from Small_Debater_3_Analytical: 2677 chars
+2025-06-28 16:11:31,499 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:11:31,500 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:11:31,571 - debate_workflow - INFO - Consensus analysis: similarity=0.697, reached=False
+2025-06-28 16:11:31,572 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:11:39,027 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:39,028 - ollama_integration - WARNING - Response too long from Small_Orchestrator: 2284 chars
+2025-06-28 16:11:39,028 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:11:39,029 - debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-28 16:11:49,326 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:49,327 - ollama_integration - WARNING - Response too long from Small_Debater_1_Practical: 3565 chars
+2025-06-28 16:11:51,053 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:11:51,054 - ollama_integration - WARNING - Response too long from Small_Debater_2_Creative: 2894 chars
+2025-06-28 16:12:01,721 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:12:01,722 - ollama_integration - WARNING - Response too long from Small_Debater_3_Analytical: 2332 chars
+2025-06-28 16:12:01,722 - debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-28 16:12:01,723 - debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-28 16:12:01,795 - debate_workflow - INFO - Consensus analysis: similarity=0.691, reached=False
+2025-06-28 16:12:01,797 - debate_workflow - INFO - Handling max rounds reached
+2025-06-28 16:12:10,192 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:12:10,193 - ollama_integration - WARNING - Response too long from Small_Orchestrator: 3401 chars
+2025-06-28 16:12:10,194 - debate_workflow - INFO - Max rounds handling completed
+2025-06-28 16:12:10,194 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-28 16:12:10,194 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 16:12:10,195 - main - INFO - System cleanup completed
+2025-06-28 16:26:04,518 - dynamic_config - INFO - Found 19 available models
+2025-06-28 16:26:04,518 - main - INFO - Initializing LLM Debate System...
+2025-06-28 16:26:16,387 - main - INFO - System initialized successfully
+2025-06-28 16:26:16,387 - main - INFO - Starting debate: should ai be regulated
+2025-06-28 16:26:16,387 - debate_workflow - INFO - Starting debate: should ai be regulated
+2025-06-28 16:26:16,393 - debate_workflow - INFO - Initializing debate for question: should ai be regulated
+2025-06-28 16:26:16,393 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:26:21,788 - ollama_integration - WARNING - Response too long from Creative_Debater: 1204 chars
+2025-06-28 16:26:29,170 - ollama_integration - WARNING - Response too long from Practical_Debater: 2028 chars
+2025-06-28 16:26:30,378 - ollama_integration - WARNING - Response too long from Analytical_Debater: 2026 chars
+2025-06-28 16:26:30,378 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:26:30,379 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:26:30,473 - debate_workflow - INFO - Consensus analysis: similarity=0.619, reached=False
+2025-06-28 16:26:30,474 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:26:43,486 - ollama_integration - WARNING - Response too long from Orchestrator: 2544 chars
+2025-06-28 16:26:43,487 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:26:43,487 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:26:57,992 - ollama_integration - WARNING - Response too long from Creative_Debater: 4118 chars
+2025-06-28 16:27:06,797 - ollama_integration - WARNING - Response too long from Practical_Debater: 2697 chars
+2025-06-28 16:27:09,755 - ollama_integration - WARNING - Response too long from Analytical_Debater: 3436 chars
+2025-06-28 16:27:09,755 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:27:09,756 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:27:09,814 - debate_workflow - INFO - Consensus analysis: similarity=0.471, reached=False
+2025-06-28 16:27:09,815 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:27:22,960 - ollama_integration - WARNING - Response too long from Orchestrator: 2619 chars
+2025-06-28 16:27:22,960 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:27:22,960 - debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-28 16:27:32,294 - ollama_integration - WARNING - Response too long from Creative_Debater: 2485 chars
+2025-06-28 16:27:40,381 - ollama_integration - WARNING - Response too long from Practical_Debater: 2379 chars
+2025-06-28 16:27:43,575 - ollama_integration - WARNING - Response too long from Analytical_Debater: 3510 chars
+2025-06-28 16:27:43,576 - debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-28 16:27:43,576 - debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-28 16:27:43,633 - debate_workflow - INFO - Consensus analysis: similarity=0.468, reached=False
+2025-06-28 16:27:43,634 - debate_workflow - INFO - Handling max rounds reached
+2025-06-28 16:27:57,694 - ollama_integration - WARNING - Response too long from Orchestrator: 3252 chars
+2025-06-28 16:27:57,694 - debate_workflow - INFO - Max rounds handling completed
+2025-06-28 16:27:57,695 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-28 16:27:57,695 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 16:27:57,695 - main - INFO - System cleanup completed
+2025-06-28 16:28:32,369 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:28:32,370 - dynamic_config - INFO - Found 19 available models
+2025-06-28 16:28:32,374 - main - INFO - Initializing LLM Debate System...
+2025-06-28 16:28:32,858 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:28:32,860 - ollama_integration - INFO - Loading required models: ['gemma2:2b', 'tinyllama:1.1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 16:28:33,358 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:28:33,361 - ollama_integration - INFO - Loading model gemma2:2b...
+2025-06-28 16:28:35,893 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:28:35,893 - ollama_integration - INFO - Successfully loaded model gemma2:2b
+2025-06-28 16:28:35,893 - ollama_integration - INFO - Loading model tinyllama:1.1b...
+2025-06-28 16:28:37,141 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:28:37,141 - ollama_integration - INFO - Successfully loaded model tinyllama:1.1b
+2025-06-28 16:28:37,142 - ollama_integration - INFO - Model gemma2:2b already loaded
+2025-06-28 16:28:37,142 - ollama_integration - INFO - Loading model llama3.2:3b...
+2025-06-28 16:28:44,778 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:28:44,778 - ollama_integration - INFO - Successfully loaded model llama3.2:3b
+2025-06-28 16:28:44,778 - ollama_integration - INFO - Currently loaded models: ['tinyllama:1.1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 16:28:44,779 - ollama_integration - INFO - All required models loaded successfully
+2025-06-28 16:28:44,779 - main - INFO - System initialized successfully
+2025-06-28 16:28:44,779 - main - INFO - Starting debate: should ai be regulated
+2025-06-28 16:28:44,779 - debate_workflow - INFO - Starting debate: should ai be regulated
+2025-06-28 16:28:44,782 - debate_workflow - INFO - Initializing debate for question: should ai be regulated
+2025-06-28 16:28:44,782 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:28:50,039 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:28:50,040 - ollama_integration - WARNING - Response too long from Creative_Debater: 1180 chars
+2025-06-28 16:28:55,924 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:28:55,925 - ollama_integration - WARNING - Response too long from Practical_Debater: 1420 chars
+2025-06-28 16:28:56,789 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:28:56,790 - ollama_integration - WARNING - Response too long from Analytical_Debater: 1726 chars
+2025-06-28 16:28:56,790 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:28:56,791 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:28:56,890 - debate_workflow - INFO - Consensus analysis: similarity=0.737, reached=False
+2025-06-28 16:28:56,891 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:29:09,620 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:29:09,621 - ollama_integration - WARNING - Response too long from Orchestrator: 2375 chars
+2025-06-28 16:29:09,621 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:29:09,622 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:29:19,023 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:29:19,024 - ollama_integration - WARNING - Response too long from Creative_Debater: 2243 chars
+2025-06-28 16:29:29,427 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:29:29,428 - ollama_integration - WARNING - Response too long from Practical_Debater: 3115 chars
+2025-06-28 16:29:31,353 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:29:31,353 - ollama_integration - WARNING - Response too long from Analytical_Debater: 3276 chars
+2025-06-28 16:29:31,354 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:29:31,355 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:29:31,419 - debate_workflow - INFO - Consensus analysis: similarity=0.713, reached=False
+2025-06-28 16:29:31,420 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:29:43,490 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:29:43,491 - ollama_integration - WARNING - Response too long from Orchestrator: 2118 chars
+2025-06-28 16:29:43,491 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:29:43,492 - debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-28 16:29:55,277 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:29:55,277 - ollama_integration - WARNING - Response too long from Creative_Debater: 3214 chars
+2025-06-28 16:30:01,123 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:30:04,667 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:30:04,668 - ollama_integration - WARNING - Response too long from Analytical_Debater: 3217 chars
+2025-06-28 16:30:04,668 - debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-28 16:30:04,669 - debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-28 16:30:04,739 - debate_workflow - INFO - Consensus analysis: similarity=0.630, reached=False
+2025-06-28 16:30:04,740 - debate_workflow - INFO - Handling max rounds reached
+2025-06-28 16:30:19,411 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:30:19,411 - ollama_integration - WARNING - Response too long from Orchestrator: 3597 chars
+2025-06-28 16:30:19,412 - debate_workflow - INFO - Max rounds handling completed
+2025-06-28 16:30:19,412 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-28 16:30:19,412 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 16:39:24,548 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:39:24,552 - dynamic_config - INFO - Found 19 available models
+2025-06-28 16:39:24,554 - main - INFO - Initializing LLM Debate System...
+2025-06-28 16:39:25,034 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:39:25,034 - ollama_integration - INFO - Loading required models: ['gemma2:2b', 'tinyllama:1.1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 16:39:25,490 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:39:25,491 - ollama_integration - INFO - Loading model gemma2:2b...
+2025-06-28 16:39:27,535 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:39:27,535 - ollama_integration - INFO - Successfully loaded model gemma2:2b
+2025-06-28 16:39:27,535 - ollama_integration - INFO - Loading model tinyllama:1.1b...
+2025-06-28 16:39:28,764 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:39:28,764 - ollama_integration - INFO - Successfully loaded model tinyllama:1.1b
+2025-06-28 16:39:28,764 - ollama_integration - INFO - Model gemma2:2b already loaded
+2025-06-28 16:39:28,765 - ollama_integration - INFO - Loading model llama3.2:3b...
+2025-06-28 16:39:36,253 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:39:36,253 - ollama_integration - INFO - Successfully loaded model llama3.2:3b
+2025-06-28 16:39:36,253 - ollama_integration - INFO - Currently loaded models: ['tinyllama:1.1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 16:39:36,253 - ollama_integration - INFO - All required models loaded successfully
+2025-06-28 16:39:36,253 - main - INFO - System initialized successfully
+2025-06-28 16:39:36,253 - main - INFO - Starting debate: test question
+2025-06-28 16:39:36,253 - debate_workflow - INFO - Starting debate: test question
+2025-06-28 16:39:36,255 - debate_workflow - INFO - Initializing debate for question: test question
+2025-06-28 16:39:36,256 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:39:39,715 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:39:42,032 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:39:43,699 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:39:43,700 - ollama_integration - WARNING - Response too long from Practical_Debater: 1402 chars
+2025-06-28 16:39:43,700 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:39:43,701 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:39:43,702 - consensus_engine - ERROR - Error calculating semantic similarity: [Errno 22] Invalid argument
+2025-06-28 16:39:43,703 - debate_workflow - INFO - Consensus analysis: similarity=0.000, reached=False
+2025-06-28 16:39:43,704 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:39:43,705 - consensus_engine - ERROR - Error calculating semantic similarity: [Errno 22] Invalid argument
+2025-06-28 16:39:56,026 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:39:56,027 - ollama_integration - WARNING - Response too long from Orchestrator: 2358 chars
+2025-06-28 16:39:56,027 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:39:56,028 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:40:02,829 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:40:02,829 - ollama_integration - WARNING - Response too long from Creative_Debater: 1719 chars
+2025-06-28 16:40:06,849 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:40:08,220 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:40:08,221 - ollama_integration - WARNING - Response too long from Practical_Debater: 1754 chars
+2025-06-28 16:40:08,221 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:40:08,222 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:40:08,223 - consensus_engine - ERROR - Error calculating semantic similarity: [Errno 22] Invalid argument
+2025-06-28 16:40:08,223 - debate_workflow - INFO - Consensus analysis: similarity=0.000, reached=False
+2025-06-28 16:40:08,224 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:40:08,225 - consensus_engine - ERROR - Error calculating semantic similarity: [Errno 22] Invalid argument
+2025-06-28 16:43:36,763 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:43:36,766 - dynamic_config - INFO - Found 19 available models
+2025-06-28 16:43:36,768 - main - INFO - Initializing LLM Debate System...
+2025-06-28 16:43:37,255 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:43:37,256 - ollama_integration - INFO - Loading required models: ['gemma2:2b', 'tinyllama:1.1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 16:43:37,713 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:43:37,714 - ollama_integration - INFO - Loading model gemma2:2b...
+2025-06-28 16:43:39,853 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:43:39,853 - ollama_integration - INFO - Successfully loaded model gemma2:2b
+2025-06-28 16:43:39,853 - ollama_integration - INFO - Loading model tinyllama:1.1b...
+2025-06-28 16:43:41,106 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:43:41,107 - ollama_integration - INFO - Successfully loaded model tinyllama:1.1b
+2025-06-28 16:43:41,107 - ollama_integration - INFO - Model gemma2:2b already loaded
+2025-06-28 16:43:41,107 - ollama_integration - INFO - Loading model llama3.2:3b...
+2025-06-28 16:43:48,769 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:43:48,770 - ollama_integration - INFO - Successfully loaded model llama3.2:3b
+2025-06-28 16:43:48,770 - ollama_integration - INFO - Currently loaded models: ['llama3.2:3b', 'gemma2:2b', 'tinyllama:1.1b']
+2025-06-28 16:43:48,770 - ollama_integration - INFO - All required models loaded successfully
+2025-06-28 16:43:48,770 - main - INFO - System initialized successfully
+2025-06-28 16:43:48,770 - main - INFO - Starting debate: are vitamin supplements good
+2025-06-28 16:43:48,770 - debate_workflow - INFO - Starting debate: are vitamin supplements good
+2025-06-28 16:43:48,772 - debate_workflow - INFO - Initializing debate for question: are vitamin supplements good
+2025-06-28 16:43:48,772 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:43:53,874 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:43:53,875 - ollama_integration - WARNING - Response too long from Creative_Debater: 1163 chars
+2025-06-28 16:44:00,589 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:44:00,589 - ollama_integration - WARNING - Response too long from Practical_Debater: 1781 chars
+2025-06-28 16:44:02,441 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:44:02,441 - ollama_integration - WARNING - Response too long from Analytical_Debater: 2252 chars
+2025-06-28 16:44:02,441 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:44:02,442 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:44:02,535 - debate_workflow - INFO - Consensus analysis: similarity=0.765, reached=False
+2025-06-28 16:44:02,536 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:44:15,138 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:44:15,143 - ollama_integration - WARNING - Response too long from Orchestrator: 2322 chars
+2025-06-28 16:44:15,143 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:44:15,144 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:44:26,099 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:44:26,099 - ollama_integration - WARNING - Response too long from Creative_Debater: 2823 chars
+2025-06-28 16:44:34,818 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:44:34,818 - ollama_integration - WARNING - Response too long from Practical_Debater: 2173 chars
+2025-06-28 16:44:37,369 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:44:37,370 - ollama_integration - WARNING - Response too long from Analytical_Debater: 2895 chars
+2025-06-28 16:44:37,370 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:44:37,371 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:44:37,447 - debate_workflow - INFO - Consensus analysis: similarity=0.784, reached=False
+2025-06-28 16:44:37,448 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:44:49,709 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:44:49,710 - ollama_integration - WARNING - Response too long from Orchestrator: 2107 chars
+2025-06-28 16:44:49,710 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:44:49,711 - debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-28 16:45:02,012 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:45:02,012 - ollama_integration - WARNING - Response too long from Creative_Debater: 3099 chars
+2025-06-28 16:45:09,271 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:45:09,272 - ollama_integration - WARNING - Response too long from Practical_Debater: 1846 chars
+2025-06-28 16:45:12,779 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:45:12,779 - ollama_integration - WARNING - Response too long from Analytical_Debater: 3035 chars
+2025-06-28 16:45:12,780 - debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-28 16:45:12,780 - debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-28 16:45:12,841 - debate_workflow - INFO - Consensus analysis: similarity=0.831, reached=False
+2025-06-28 16:45:12,842 - debate_workflow - INFO - Handling max rounds reached
+2025-06-28 16:45:26,920 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:45:26,920 - ollama_integration - WARNING - Response too long from Orchestrator: 3270 chars
+2025-06-28 16:45:26,921 - debate_workflow - INFO - Max rounds handling completed
+2025-06-28 16:45:26,921 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-28 16:45:26,921 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 16:50:43,465 - main - INFO - Initializing LLM Debate System...
+2025-06-28 16:50:44,079 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:50:44,080 - ollama_integration - INFO - Loading required models: ['llama3.2:3b', 'gemma2:2b', 'phi3:mini', 'tinyllama:1.1b']
+2025-06-28 16:50:44,527 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 16:50:44,529 - ollama_integration - INFO - Loading model llama3.2:3b...
+2025-06-28 16:50:46,646 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:50:46,646 - ollama_integration - INFO - Successfully loaded model llama3.2:3b
+2025-06-28 16:50:46,647 - ollama_integration - INFO - Loading model gemma2:2b...
+2025-06-28 16:50:49,137 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:50:49,137 - ollama_integration - INFO - Successfully loaded model gemma2:2b
+2025-06-28 16:50:49,137 - ollama_integration - INFO - Loading model phi3:mini...
+2025-06-28 16:50:50,873 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:50:50,873 - ollama_integration - INFO - Successfully loaded model phi3:mini
+2025-06-28 16:50:50,873 - ollama_integration - INFO - Loading model tinyllama:1.1b...
+2025-06-28 16:50:52,161 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:50:52,162 - ollama_integration - INFO - Successfully loaded model tinyllama:1.1b
+2025-06-28 16:50:52,162 - ollama_integration - INFO - Currently loaded models: ['tinyllama:1.1b', 'phi3:mini', 'llama3.2:3b', 'gemma2:2b']
+2025-06-28 16:50:52,162 - ollama_integration - INFO - All required models loaded successfully
+2025-06-28 16:50:52,162 - main - INFO - System initialized successfully
+2025-06-28 16:50:52,163 - main - INFO - Starting debate: What is the best programming language?
+2025-06-28 16:50:52,163 - debate_workflow - INFO - Starting debate: What is the best programming language?
+2025-06-28 16:50:52,165 - debate_workflow - INFO - Initializing debate for question: What is the best programming language?
+2025-06-28 16:50:52,166 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:50:56,676 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:50:56,677 - ollama_integration - WARNING - Response too long from Practical_Debater: 1680 chars
+2025-06-28 16:50:57,922 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:50:57,922 - ollama_integration - WARNING - Response too long from Creative_Debater: 1155 chars
+2025-06-28 16:51:06,812 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:06,813 - ollama_integration - WARNING - Response too long from Analytical_Debater: 1431 chars
+2025-06-28 16:51:06,813 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:51:06,814 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:51:06,889 - debate_workflow - INFO - Consensus analysis: similarity=0.554, reached=False
+2025-06-28 16:51:06,890 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:51:14,510 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:14,511 - ollama_integration - WARNING - Response too long from Orchestrator: 2375 chars
+2025-06-28 16:51:14,511 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:51:14,512 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:51:25,225 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:25,226 - ollama_integration - WARNING - Response too long from Creative_Debater: 2958 chars
+2025-06-28 16:51:30,419 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:30,420 - ollama_integration - WARNING - Response too long from Practical_Debater: 1045 chars
+2025-06-28 16:51:33,877 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:33,878 - ollama_integration - WARNING - Response too long from Analytical_Debater: 2547 chars
+2025-06-28 16:51:33,878 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:51:33,879 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:51:33,933 - debate_workflow - INFO - Consensus analysis: similarity=0.639, reached=False
+2025-06-28 16:51:33,934 - debate_workflow - INFO - Handling max rounds reached
+2025-06-28 16:51:47,300 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:47,301 - ollama_integration - WARNING - Response too long from Orchestrator: 2854 chars
+2025-06-28 16:51:47,301 - debate_workflow - INFO - Max rounds handling completed
+2025-06-28 16:51:47,301 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 2 rounds
+2025-06-28 16:51:47,302 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 16:51:47,302 - main - INFO - Starting debate: What are the benefits of renewable energy?
+2025-06-28 16:51:47,302 - debate_workflow - INFO - Starting debate: What are the benefits of renewable energy?
+2025-06-28 16:51:47,303 - debate_workflow - INFO - Initializing debate for question: What are the benefits of renewable energy?
+2025-06-28 16:51:47,303 - debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 16:51:51,870 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:58,814 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:51:58,814 - ollama_integration - WARNING - Response too long from Practical_Debater: 2048 chars
+2025-06-28 16:52:00,256 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:52:00,256 - ollama_integration - WARNING - Response too long from Analytical_Debater: 2212 chars
+2025-06-28 16:52:00,257 - debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 16:52:00,257 - debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 16:52:00,305 - debate_workflow - INFO - Consensus analysis: similarity=0.750, reached=False
+2025-06-28 16:52:00,306 - debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 16:52:13,030 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:52:13,031 - ollama_integration - WARNING - Response too long from Orchestrator: 2466 chars
+2025-06-28 16:52:13,031 - debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 16:52:13,032 - debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 16:52:26,321 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:52:26,322 - ollama_integration - WARNING - Response too long from Creative_Debater: 3618 chars
+2025-06-28 16:52:33,037 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:52:33,037 - ollama_integration - WARNING - Response too long from Practical_Debater: 1780 chars
+2025-06-28 16:52:35,834 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:52:35,835 - ollama_integration - WARNING - Response too long from Analytical_Debater: 2834 chars
+2025-06-28 16:52:35,835 - debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 16:52:35,836 - debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 16:52:35,891 - debate_workflow - INFO - Consensus analysis: similarity=0.619, reached=False
+2025-06-28 16:52:35,892 - debate_workflow - INFO - Handling max rounds reached
+2025-06-28 16:52:50,096 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 16:52:50,097 - ollama_integration - WARNING - Response too long from Orchestrator: 3616 chars
+2025-06-28 16:52:50,097 - debate_workflow - INFO - Max rounds handling completed
+2025-06-28 16:52:50,098 - debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 2 rounds
+2025-06-28 16:52:50,098 - main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 16:52:50,099 - ollama_integration - INFO - Clearing loaded models tracking to free memory...
+2025-06-28 16:52:50,099 - ollama_integration - INFO - All models removed from tracking
+2025-06-28 16:52:50,237 - ollama_integration - INFO - All models unloaded
+2025-06-28 16:52:50,237 - main - INFO - System cleanup completed

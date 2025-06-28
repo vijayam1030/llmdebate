@@ -55,14 +55,21 @@ A sophisticated multi-LLM debate system built with LangChain, LangGraph, and loc
 
 2. **Start the Web Interface**:
    ```bash
-   # Option 1: Direct command
-   streamlit run streamlit_app.py
+   # Option 1: Simple reliable UI (wraps CLI)
+   streamlit run streamlit_app_simple.py
    
-   # Option 2: Use the launcher script (Windows)
-   run_ui.bat
+   # Option 2: Robust UI (external process)
+   streamlit run streamlit_app_robust.py
+   
+   # Option 3: ASCII-safe UI (no Unicode issues on Windows)
+   streamlit run streamlit_app_ascii.py
+   
+   # Option 4: Use launcher scripts (Windows)
+   run_ui.bat          # Default UI
+   run_ui_ascii.bat    # ASCII-safe UI for Windows
    ```
 
-3. **Open Your Browser**: Navigate to `http://localhost:8501`
+3. **Open Your Browser**: Navigate to `http://localhost:8501` (or port shown in terminal)
 
 ### Smart Launcher (CLI)
 
@@ -178,7 +185,15 @@ python main.py --help
 
 ### 2. Web Interface (Streamlit)
 ```bash
+# Most reliable (CLI wrapper approach)
+streamlit run streamlit_app_simple.py
+
+# Original (may have conflicts with some setups)
 streamlit run streamlit_app.py
+
+# Alternative conflict-free versions
+streamlit run streamlit_app_robust.py
+streamlit run streamlit_app_fixed.py
 ```
 - Navigate to `http://localhost:8501`
 - Interactive web interface with real-time charts
@@ -338,7 +353,29 @@ llm-debate/
    python main.py --lightweight --max-size 2.0
    ```
 
-4. **Slow Performance**
+4. **Unicode/Encoding Errors on Windows**
+   ```
+   # Error: 'charmap' codec can't encode character
+   
+   # Solution 1: Use ASCII-safe UI
+   streamlit run streamlit_app_ascii.py
+   
+   # Solution 2: Use batch launcher
+   run_ui_ascii.bat
+   
+   # Solution 3: Set environment variable
+   set PYTHONIOENCODING=utf-8
+   ```
+
+5. **Streamlit Torch/AsyncIO Conflicts**
+   ```bash
+   # Use conflict-free versions:
+   streamlit run streamlit_app_simple.py    # Most reliable
+   streamlit run streamlit_app_robust.py    # External process
+   streamlit run streamlit_app_ascii.py     # Windows-safe
+   ```
+
+6. **Slow Performance**
    - Reduce `MAX_ROUNDS` in config
    - Use smaller models
    - Adjust `MAX_RESPONSE_LENGTH`

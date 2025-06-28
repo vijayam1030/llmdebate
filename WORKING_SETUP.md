@@ -2,7 +2,10 @@
 
 ## ✅ SUCCESS! Large Model Issues Resolved
 
-Your LLM Debate System is now fully working with **small models only** and **no 70GB dependencies**!
+You**For web interface (most reliable):**
+```bash
+streamlit run streamlit_app_simple.py
+```M Debate System is now fully working with **small models only** and **no 70GB dependencies**!
 
 ### 🧪 **Test Results:**
 ```
@@ -29,11 +32,26 @@ python run_small_debate.py "Should we use renewable energy?"
 
 ### **3. Web Interface**
 ```bash
-streamlit run streamlit_launcher.py
-```
-*If you encounter torch/asyncio conflicts, use:*
-```bash
+# Most reliable (CLI wrapper - RECOMMENDED)
+streamlit run streamlit_app_cli_wrapper.py
+
+# Simple UI (CLI wrapper)
+streamlit run streamlit_app_simple.py
+
+# Advanced conflict resolution
+streamlit run streamlit_app_robust.py
+
+# ASCII-safe (no Unicode issues on Windows)
+streamlit run streamlit_app_ascii.py
+
+# Subprocess-based approach
 streamlit run streamlit_app_fixed.py
+```
+
+**Windows batch launchers:**
+```bash
+run_ui.bat          # Default web UI
+run_ui_ascii.bat    # ASCII-safe UI (recommended for Windows)
 ```
 
 ### **4. Original CLI (with small models configured)**
@@ -79,6 +97,8 @@ python main.py
 ✅ **CLI interface optimized**  
 ✅ **No more large model dependencies**  
 ✅ **Proper cleanup and error handling**  
+✅ **Unicode encoding issues fixed (Windows compatible)**  
+✅ **Multiple robust web UI options**  
 
 ## 🎯 **Recommended Usage**
 
@@ -87,9 +107,9 @@ python main.py
 python simple_launcher.py "What are the benefits of AI?"
 ```
 
-**For web interface:**
+**For web interface (most reliable on Windows):**
 ```bash
-streamlit run streamlit_launcher.py
+streamlit run streamlit_app_cli_wrapper.py
 ```
 
 **Your system is now ready for production use with efficient small models!** 🚀
@@ -106,6 +126,7 @@ This confirms all 14 small models are detected and configured properly.
 - **Clean codebase**: No bytecode or temporary files in version control
 - **Large token limits**: Optimized for detailed, comprehensive responses
 - **Torch conflicts resolved**: Alternative Streamlit launcher available
+- **Unicode encoding fixed**: All Windows 'charmap' codec errors resolved
 - **"Response too long" warnings**: Normal behavior, doesn't affect functionality
 
 ---

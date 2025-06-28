@@ -360,7 +360,13 @@ class ModelFactory:
         return True
     
     async def cleanup_models(self):
-        """Cleanup and unload all models"""
+        """
+        Cleanup and unload all models
+        
+        Note: This should only be called when the application exits,
+        not after each debate. Models should stay loaded for efficiency
+        across multiple debates.
+        """
         await self.ollama_manager.unload_all_models()
         logger.info("All models unloaded")
 

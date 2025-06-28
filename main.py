@@ -69,12 +69,17 @@ class LLMDebateSystem:
         return result
     
     async def cleanup(self):
-        """Cleanup resources"""
-        if hasattr(self, 'llm_manager') and self.llm_manager:
-            try:
-                await self.llm_manager.cleanup_models()
-            except Exception as e:
-                logger.warning(f"Cleanup warning: {e}")
+        """
+        Cleanup resources
+        
+        Note: This should only be called when the application exits,
+        not after each debate. Models should stay loaded for efficiency
+        across multiple debates.
+        """
+        try:
+            await model_factory.cleanup_models()
+        except Exception as e:
+            logger.warning(f"Cleanup warning: {e}")
         logger.info("System cleanup completed")
     
     def print_debate_summary(self, result: DebateResult):

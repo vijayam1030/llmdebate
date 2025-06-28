@@ -406,11 +406,11 @@ Bridge theory with practice in your arguments."""
     
     def print_available_models_summary(self):
         """Print a summary of available models and their capabilities"""
-        print("\n🤖 Available Local Models Analysis")
+        print("\nAvailable Local Models Analysis")
         print("=" * 50)
         
         if not self.available_models:
-            print("❌ No models found. Please install some models with 'ollama pull <model>'")
+            print("No models found. Please install some models with 'ollama pull <model>'")
             return
         
         orchestrator_models = []
@@ -428,30 +428,30 @@ Bridge theory with practice in your arguments."""
             if info.suitable_for_debater:
                 debater_models.append((model, info))
         
-        print(f"\n🧠 ORCHESTRATOR CANDIDATES ({len(orchestrator_models)}):")
+        print(f"\nORCHESTRATOR CANDIDATES ({len(orchestrator_models)}):")
         for model, info in sorted(orchestrator_models, key=lambda x: x[1].size_category, reverse=True):
-            print(f"  ✅ {model} ({info.estimated_params}) - {info.size_category}")
+            print(f"  {model} ({info.estimated_params}) - {info.size_category}")
         
-        print(f"\n👥 DEBATER CANDIDATES ({len(debater_models)}):")
+        print(f"\nDEBATER CANDIDATES ({len(debater_models)}):")
         for model, info in sorted(debater_models, key=lambda x: x[1].estimated_params):
             personality = info.personality_match or "general"
-            print(f"  ✅ {model} ({info.estimated_params}) - {personality}")
+            print(f"  {model} ({info.estimated_params}) - {personality}")
         
         if unknown_models:
-            print(f"\n❓ UNKNOWN MODELS ({len(unknown_models)}):")
+            print(f"\nUNKNOWN MODELS ({len(unknown_models)}):")
             for model in unknown_models:
-                print(f"  ⚠️  {model} - capabilities unknown")
+                print(f"  {model} - capabilities unknown")
         
         # Show recommended configuration
         orchestrator, debaters = self.create_dynamic_config()
         if orchestrator and debaters:
-            print(f"\n🎯 RECOMMENDED CONFIGURATION:")
+            print(f"\nRECOMMENDED CONFIGURATION:")
             print(f"  Orchestrator: {orchestrator.model}")
             print(f"  Debaters:")
             for debater in debaters:
-                print(f"    • {debater.model} ({debater.personality})")
+                print(f"    - {debater.model} ({debater.personality})")
         else:
-            print(f"\n❌ INSUFFICIENT MODELS for debate system")
+            print(f"\nINSUFFICIENT MODELS for debate system")
             print("Need at least 1 orchestrator-capable model and 2 debater-capable models")
     
     def get_models_under_size_limit(self, max_size_gb: float = 4.0) -> List[str]:
@@ -573,7 +573,7 @@ Bridge theory with practice in your arguments."""
         # Select orchestrator from small models
         orchestrator_model = self.select_orchestrator_small(max_size_gb)
         if not orchestrator_model:
-            print(f"❌ No suitable orchestrator model found under {max_size_gb}GB")
+            print(f"No suitable orchestrator model found under {max_size_gb}GB")
             return None, []
         
         orchestrator_config = ModelConfig(
@@ -593,7 +593,7 @@ Be concise, objective, and focus on finding common ground."""
         # Select debaters from small models
         debater_selections = self.select_debaters_small(3, max_size_gb)
         if len(debater_selections) < 2:
-            print(f"❌ Not enough debater models under {max_size_gb}GB (found {len(debater_selections)}, need at least 2)")
+            print(f"Not enough debater models under {max_size_gb}GB (found {len(debater_selections)}, need at least 2)")
             return orchestrator_config, []
         
         debater_configs = []
@@ -623,23 +623,23 @@ async def create_dynamic_debate_config(prefer_small_models: bool = False, max_si
     """Create dynamic configuration and return it"""
     selector = DynamicModelSelector()
     
-    print("🔍 Scanning for available local models...")
+    print("Scanning for available local models...")
     available = await selector.scan_available_models()
     
     if not available:
-        print("❌ No models found locally")
+        print("No models found locally")
         return None, []
     
     if prefer_small_models:
-        print(f"\n🔧 Filtering for models under {max_size_gb}GB...")
+        print(f"\nFiltering for models under {max_size_gb}GB...")
         small_models = selector.get_models_under_size_limit(max_size_gb)
         print(f"Found {len(small_models)} models under {max_size_gb}GB:")
         for model in small_models:
-            print(f"  • {model}")
+            print(f"  - {model}")
         
         if not small_models:
-            print(f"❌ No models found under {max_size_gb}GB")
-            print("💡 Consider installing smaller models:")
+            print(f"No models found under {max_size_gb}GB")
+            print("Consider installing smaller models:")
             print("  ollama pull llama3.2:3b      # 3B model (~1.9GB)")
             print("  ollama pull phi3:mini        # 3.8B model (~2.2GB)")
             print("  ollama pull gemma2:2b        # 2B model (~1.4GB)")
@@ -649,7 +649,7 @@ async def create_dynamic_debate_config(prefer_small_models: bool = False, max_si
         orchestrator, debaters = selector.create_small_model_config(max_size_gb)
         
         if orchestrator and len(debaters) >= 2:
-            print(f"\n✅ Small model configuration created successfully!")
+            print(f"\nSmall model configuration created successfully!")
             print(f"Using {orchestrator.model} as orchestrator (optimized for <{max_size_gb}GB)")
             print(f"Using {len(debaters)} debaters (all under {max_size_gb}GB)")
             
@@ -668,11 +668,11 @@ async def create_dynamic_debate_config(prefer_small_models: bool = False, max_si
                     total_estimated_gb += model_sizes[debater.model]
             
             if total_estimated_gb > 0:
-                print(f"📊 Estimated total memory usage: ~{total_estimated_gb:.1f}GB")
+                print(f"Estimated total memory usage: ~{total_estimated_gb:.1f}GB")
             
             return orchestrator, debaters
         else:
-            print(f"\n❌ Could not create valid small model configuration")
+            print(f"\nCould not create valid small model configuration")
             return None, []
     else:
         # Regular configuration (existing logic)
