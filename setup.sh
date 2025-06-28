@@ -44,7 +44,7 @@ fi
 # Download required models
 echo "🤖 Downloading required Ollama models..."
 
-models=("llama3.1:70b" "llama3.1:8b" "mistral:7b" "phi3:medium")
+models=("llama3.2:3b" "gemma2:2b" "phi3:mini" "tinyllama:1.1b")
 
 for model in "${models[@]}"; do
     echo "Downloading $model..."

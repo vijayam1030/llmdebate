@@ -1,7 +1,38 @@
 @echo off
-REM LLM Debate System Setup Script for Windows
+REM LLM Debate System Setup Script for Windowecho Downloading small models for efficient local debate system...
+echo.
 
-echo 🎯 LLM Debate System Setup
+echo Downloading llama3.2:3b...
+ollama pull llama3.2:3b
+if %ERRORLEVEL% EQU 0 (
+    echo ✅ llama3.2:3b downloaded successfully
+) else (
+    echo ⚠️ Failed to download llama3.2:3b - will be downloaded when first used
+)
+
+echo Downloading gemma2:2b...
+ollama pull gemma2:2b
+if %ERRORLEVEL% EQU 0 (
+    echo ✅ gemma2:2b downloaded successfully
+) else (
+    echo ⚠️ Failed to download gemma2:2b - will be downloaded when first used
+)
+
+echo Downloading phi3:mini...
+ollama pull phi3:mini
+if %ERRORLEVEL% EQU 0 (
+    echo ✅ phi3:mini downloaded successfully
+) else (
+    echo ⚠️ Failed to download phi3:mini - will be downloaded when first used
+)
+
+echo Downloading tinyllama:1.1b...
+ollama pull tinyllama:1.1b
+if %ERRORLEVEL% EQU 0 (
+    echo ✅ tinyllama:1.1b downloaded successfully
+) else (
+    echo ⚠️ Failed to download tinyllama:1.1b - will be downloaded when first used
+)ho 🎯 LLM Debate System Setup
 echo ==========================
 
 REM Check Python version
@@ -52,38 +83,38 @@ if %ERRORLEVEL% neq 0 (
 echo ✅ Dependencies installed successfully
 
 REM Download required models
-echo 🤖 Downloading required Ollama models...
+echo 🤖 Downloading small Ollama models for efficient local debates...
 
-echo Downloading llama3.1:70b...
-ollama pull llama3.1:70b
+echo Downloading llama3.2:3b...
+ollama pull llama3.2:3b
 if %ERRORLEVEL% equ 0 (
-    echo ✅ llama3.1:70b downloaded successfully
+    echo ✅ llama3.2:3b downloaded successfully
 ) else (
-    echo ⚠️ Failed to download llama3.1:70b - will be downloaded when first used
+    echo ⚠️ Failed to download llama3.2:3b - will be downloaded when first used
 )
 
-echo Downloading llama3.1:8b...
-ollama pull llama3.1:8b
+echo Downloading gemma2:2b...
+ollama pull gemma2:2b
 if %ERRORLEVEL% equ 0 (
-    echo ✅ llama3.1:8b downloaded successfully
+    echo ✅ gemma2:2b downloaded successfully
 ) else (
-    echo ⚠️ Failed to download llama3.1:8b - will be downloaded when first used
+    echo ⚠️ Failed to download gemma2:2b - will be downloaded when first used
 )
 
-echo Downloading mistral:7b...
-ollama pull mistral:7b
+echo Downloading phi3:mini...
+ollama pull phi3:mini
 if %ERRORLEVEL% equ 0 (
-    echo ✅ mistral:7b downloaded successfully
+    echo ✅ phi3:mini downloaded successfully
 ) else (
-    echo ⚠️ Failed to download mistral:7b - will be downloaded when first used
+    echo ⚠️ Failed to download phi3:mini - will be downloaded when first used
 )
 
-echo Downloading phi3:medium...
-ollama pull phi3:medium
+echo Downloading tinyllama:1.1b...
+ollama pull tinyllama:1.1b
 if %ERRORLEVEL% equ 0 (
-    echo ✅ phi3:medium downloaded successfully
+    echo ✅ tinyllama:1.1b downloaded successfully
 ) else (
-    echo ⚠️ Failed to download phi3:medium - will be downloaded when first used
+    echo ⚠️ Failed to download tinyllama:1.1b - will be downloaded when first used
 )
 
 REM Create .env file if it doesn't exist

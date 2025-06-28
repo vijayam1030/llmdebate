@@ -67,7 +67,7 @@ class DebateState(BaseModel):
     """Current state of the debate in LangGraph"""
     question: str
     current_round: int = 0
-    max_rounds: int = 5
+    max_rounds: int = 3
     consensus_threshold: float = 0.85
     debater_responses: List[DebaterResponse] = Field(default_factory=list)
     consensus_scores: List[float] = Field(default_factory=list)

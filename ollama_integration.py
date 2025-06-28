@@ -9,8 +9,7 @@ import httpx
 from langchain_community.llms import Ollama
 from langchain.schema import BaseMessage, HumanMessage, SystemMessage
 from langchain.callbacks.manager import CallbackManagerForLLMRun
-from config import Config
-from models import ModelConfig
+from config import Config, ModelConfig
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +20,7 @@ class OllamaManager:
         self.base_url = base_url or Config.OLLAMA_BASE_URL
         self.timeout = Config.OLLAMA_TIMEOUT
         self.models_cache = {}
+        self.loaded_models = set()  # Track which models are loaded
         
     async def check_ollama_connection(self) -> bool:
         """Check if Ollama server is running"""
@@ -77,6 +77,172 @@ class OllamaManager:
                     logger.error(f"Failed to pull model {model}")
         
         return model_status
+    
+    async def load_model(self, model_name: str) -> bool:
+        """Load a specific model into memory"""
+        try:
+            if model_name in self.loaded_models:
+                logger.info(f"Model {model_name} already loaded")
+                return True
+                
+            logger.info(f"Loading model {model_name}...")
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                # Make a small request to load the model
+                payload = {
+                    "model": model_name,
+                    "prompt": "Hello",
+                    "stream": False,
+                    "options": {"num_predict": 1}
+                }
+                response = await client.post(f"{self.base_url}/api/generate", json=payload)
+                
+                if response.status_code == 200:
+                    self.loaded_models.add(model_name)
+                    logger.info(f"Successfully loaded model {model_name}")
+                    return True
+                else:
+                    logger.error(f"Failed to load model {model_name}: {response.status_code}")
+                    return False
+                    
+        except Exception as e:
+            logger.error(f"Error loading model {model_name}: {e}")
+            return False
+    
+    async def unload_model(self, model_name: str) -> bool:
+        """Unload a model from memory (note: Ollama may not support explicit unloading)"""
+        try:
+            if model_name not in self.loaded_models:
+                logger.info(f"Model {model_name} not loaded")
+                return True
+                
+            # For now, we'll just remove it from our tracking
+            # Ollama typically manages memory automatically
+            logger.info(f"Unloading model {model_name} from tracking...")
+            self.loaded_models.discard(model_name)
+            logger.info(f"Model {model_name} removed from loaded set")
+            return True
+                    
+        except Exception as e:
+            logger.warning(f"Error unloading model {model_name}: {e}")
+            # Remove from loaded set anyway since we can't be sure
+            self.loaded_models.discard(model_name)
+            return True
+    
+    async def unload_all_models(self) -> bool:
+        """Unload all loaded models"""
+        logger.info("Clearing loaded models tracking to free memory...")
+        
+        # Clear the tracking set
+        self.loaded_models.clear()
+        logger.info("All models removed from tracking")
+        
+        # Force garbage collection to help free memory
+        import gc
+        gc.collect()
+        
+        return True
+    
+    async def get_loaded_models(self) -> List[str]:
+        """Get list of currently loaded models"""
+        return list(self.loaded_models)
+    
+    async def load_required_models(self, required_models: List[str]) -> bool:
+        """Load only the required models and unload others"""
+        logger.info(f"Loading required models: {required_models}")
+        
+        # Get all available models
+        available_models = await self.list_available_models()
+        
+        # Check which required models are available
+        missing_models = [model for model in required_models if model not in available_models]
+        if missing_models:
+            logger.error(f"Required models not available: {missing_models}")
+            return False
+        
+        # Unload models that are not required
+        current_loaded = list(self.loaded_models)
+        models_to_unload = [model for model in current_loaded if model not in required_models]
+        
+        for model in models_to_unload:
+            await self.unload_model(model)
+        
+        # Load required models
+        success = True
+        for model in required_models:
+            if not await self.load_model(model):
+                success = False
+        
+        logger.info(f"Currently loaded models: {list(self.loaded_models)}")
+        return success
+
+class DirectOllamaLLM:
+    """Direct Ollama LLM implementation that bypasses LangChain"""
+    
+    def __init__(self, model_config: ModelConfig, base_url: str = "http://localhost:11434", ollama_manager: OllamaManager = None):
+        self.model_config = model_config
+        self.base_url = base_url
+        self.model = model_config.model
+        self.system_prompt = model_config.system_prompt
+        self.ollama_manager = ollama_manager or ollama_manager
+        
+    async def ainvoke(self, input_text: str, config: Optional[dict] = None, **kwargs) -> str:
+        """Direct async invoke method"""
+        try:
+            # In lightweight mode, ensure this model is loaded
+            if self.ollama_manager and hasattr(model_factory, 'use_lightweight_mode') and model_factory.use_lightweight_mode:
+                # Unload current model if different
+                if (model_factory.current_loaded_model and 
+                    model_factory.current_loaded_model != self.model):
+                    await self.ollama_manager.unload_model(model_factory.current_loaded_model)
+                
+                # Load this model
+                if not await self.ollama_manager.load_model(self.model):
+                    raise Exception(f"Failed to load model {self.model}")
+                
+                model_factory.current_loaded_model = self.model
+            
+            # Format the prompt with system prompt
+            full_prompt = ""
+            if self.system_prompt:
+                full_prompt += f"System: {self.system_prompt}\n\n"
+            full_prompt += f"Human: {input_text}\n\nAssistant: "
+            
+            # Prepare the request
+            payload = {
+                "model": self.model,
+                "prompt": full_prompt,
+                "stream": False,
+                "options": {
+                    "temperature": self.model_config.temperature,
+                    "num_predict": Config.MAX_RESPONSE_LENGTH
+                }
+            }
+            
+            # Make the request
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{self.base_url}/api/generate",
+                    json=payload
+                )
+                
+                if response.status_code == 200:
+                    result = response.json()
+                    response_text = result.get("response", "").strip()
+                    
+                    # Validate response length
+                    if len(response_text) < Config.MIN_RESPONSE_LENGTH:
+                        logger.warning(f"Response too short from {self.model_config.name}: {len(response_text)} chars")
+                    elif len(response_text) > Config.MAX_RESPONSE_LENGTH:
+                        logger.warning(f"Response too long from {self.model_config.name}: {len(response_text)} chars")
+                        response_text = response_text[:Config.MAX_RESPONSE_LENGTH] + "..."
+                    
+                    return response_text
+                else:
+                    raise Exception(f"Ollama call failed with status code {response.status_code}: {response.text}")
+                    
+        except Exception as e:
+            logger.error(f"Error calling {self.model_config.name}: {e}")
+            raise
 
 class CustomOllamaLLM(Ollama):
     """Custom Ollama LLM with enhanced features"""
@@ -88,8 +254,9 @@ class CustomOllamaLLM(Ollama):
             temperature=model_config.temperature,
             **kwargs
         )
-        self.model_config = model_config
-        self.system_prompt = model_config.system_prompt
+        # Use object.__setattr__ to bypass Pydantic validation
+        object.__setattr__(self, '_model_config', model_config)
+        object.__setattr__(self, 'system_prompt', model_config.system_prompt)
         
     def format_messages(self, messages: List[BaseMessage]) -> str:
         """Format messages for Ollama"""
@@ -111,29 +278,48 @@ class CustomOllamaLLM(Ollama):
         formatted += "Assistant: "
         return formatted
     
-    async def _acall(
+    async def ainvoke(
         self,
-        prompt: str,
-        stop: Optional[List[str]] = None,
-        run_manager: Optional[CallbackManagerForLLMRun] = None,
+        input: str,
+        config: Optional[dict] = None,
         **kwargs: Any,
     ) -> str:
-        """Async call to Ollama model"""
+        """Async invoke method for LangChain compatibility"""
         try:
-            # Use the parent class's async implementation
-            response = await super()._acall(prompt, stop, run_manager, **kwargs)
+            # Use direct HTTP call to Ollama API
+            import httpx
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                payload = {
+                    "model": self.model,
+                    "prompt": f"{self.system_prompt}\n\nHuman: {input}\n\nAssistant: " if self.system_prompt else f"Human: {input}\n\nAssistant: ",
+                    "stream": False,
+                    "options": {
+                        "temperature": self.temperature,
+                    }
+                }
+                
+                response = await client.post(
+                    f"{self.base_url}/api/generate",
+                    json=payload
+                )
+                
+                if response.status_code != 200:
+                    raise Exception(f"Ollama call failed with status code {response.status_code}.")
+                
+                result = response.json()
+                generated_text = result.get("response", "")
             
             # Validate response length
-            if len(response) < Config.MIN_RESPONSE_LENGTH:
-                logger.warning(f"Response too short from {self.model_config.name}: {len(response)} chars")
-            elif len(response) > Config.MAX_RESPONSE_LENGTH:
-                logger.warning(f"Response too long from {self.model_config.name}: {len(response)} chars")
-                response = response[:Config.MAX_RESPONSE_LENGTH] + "..."
+            if len(generated_text) < Config.MIN_RESPONSE_LENGTH:
+                logger.warning(f"Response too short from {self._model_config.name}: {len(generated_text)} chars")
+            elif len(generated_text) > Config.MAX_RESPONSE_LENGTH:
+                logger.warning(f"Response too long from {self._model_config.name}: {len(generated_text)} chars")
+                generated_text = generated_text[:Config.MAX_RESPONSE_LENGTH] + "..."
             
-            return response.strip()
+            return generated_text.strip()
             
         except Exception as e:
-            logger.error(f"Error calling {self.model_config.name}: {e}")
+            logger.error(f"Error calling {self._model_config.name}: {e}")
             raise
 
 class ModelFactory:
@@ -142,36 +328,41 @@ class ModelFactory:
     def __init__(self, ollama_manager: OllamaManager):
         self.ollama_manager = ollama_manager
         self._models = {}
+        self.use_lightweight_mode = False  # Load models on demand
+        self.current_loaded_model = None  # Track single loaded model in lightweight mode
     
-    def create_orchestrator(self) -> CustomOllamaLLM:
+    def create_orchestrator(self) -> DirectOllamaLLM:
         """Create the orchestrator LLM"""
         if "orchestrator" not in self._models:
-            self._models["orchestrator"] = CustomOllamaLLM(Config.ORCHESTRATOR_MODEL)
+            self._models["orchestrator"] = DirectOllamaLLM(Config.ORCHESTRATOR_MODEL, ollama_manager=self.ollama_manager)
         return self._models["orchestrator"]
     
-    def create_debater(self, debater_config: ModelConfig) -> CustomOllamaLLM:
+    def create_debater(self, debater_config: ModelConfig) -> DirectOllamaLLM:
         """Create a debater LLM"""
         if debater_config.name not in self._models:
-            self._models[debater_config.name] = CustomOllamaLLM(debater_config)
+            self._models[debater_config.name] = DirectOllamaLLM(debater_config, ollama_manager=self.ollama_manager)
         return self._models[debater_config.name]
     
-    def create_all_debaters(self) -> List[CustomOllamaLLM]:
+    def create_all_debaters(self) -> List[DirectOllamaLLM]:
         """Create all debater LLMs"""
         return [self.create_debater(config) for config in Config.DEBATER_MODELS]
     
     async def initialize_all_models(self) -> bool:
-        """Initialize and verify all models are available"""
+        """Initialize and verify all models are available, loading only required ones"""
         required_models = Config.get_available_models()
-        model_status = await self.ollama_manager.ensure_models_available(required_models)
         
-        all_available = all(model_status.values())
-        if all_available:
-            logger.info("All required models are available")
-        else:
-            missing_models = [model for model, available in model_status.items() if not available]
-            logger.error(f"Missing models: {missing_models}")
+        # Use the new load_required_models method to manage memory efficiently
+        if not await self.ollama_manager.load_required_models(required_models):
+            logger.error("Failed to load required models")
+            return False
         
-        return all_available
+        logger.info("All required models loaded successfully")
+        return True
+    
+    async def cleanup_models(self):
+        """Cleanup and unload all models"""
+        await self.ollama_manager.unload_all_models()
+        logger.info("All models unloaded")
 
 # Singleton instances
 ollama_manager = OllamaManager()

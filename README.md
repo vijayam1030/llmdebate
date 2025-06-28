@@ -11,6 +11,8 @@ A sophisticated multi-LLM debate system built with LangChain, LangGraph, and loc
 - **🔒 100% Local**: No internet required - uses Ollama for local LLM inference
 - **📈 MCP Integration**: Model Context Protocol for advanced context sharing
 - **🎨 Beautiful UI**: Modern Streamlit interface with charts and visualizations
+- **🔧 Dynamic Configuration**: Automatically adapts to available local models
+- **⚡ Smart Launcher**: Pre-flight checks and model management
 
 ## 🏗️ Architecture
 
@@ -23,10 +25,16 @@ A sophisticated multi-LLM debate system built with LangChain, LangGraph, and loc
 6. **Final Summary**: Comprehensive summary when consensus is reached
 
 ### Model Configuration
-- **Orchestrator**: `llama3.1:70b` (or configurable large model)
-- **Analytical Debater**: `llama3.1:8b` - Facts and logic focused
-- **Creative Debater**: `mistral:7b` - Alternative perspectives and innovation
-- **Practical Debater**: `phi3:medium` - Real-world applications and solutions
+- **Dynamic Mode** (Default): Automatically detects and uses available models
+- **Static Mode**: Uses predefined models from config.py
+
+**Recommended Models:**
+- **Orchestrator**: `llama3.2:3b` (or any available small model)
+- **Analytical Debater**: `gemma2:2b` - Facts and logic focused
+- **Creative Debater**: `phi3:mini` - Alternative perspectives and innovation
+- **Practical Debater**: `tinyllama:1.1b` - Real-world applications and solutions
+
+**Minimum Requirement:** Any 2+ models will work with dynamic configuration!
 
 ## 📋 Prerequisites
 
@@ -39,7 +47,24 @@ A sophisticated multi-LLM debate system built with LangChain, LangGraph, and loc
 
 ## ⚡ Quick Start
 
-### Smart Launcher (Recommended)
+### Web UI (Recommended)
+1. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Start the Web Interface**:
+   ```bash
+   # Option 1: Direct command
+   streamlit run streamlit_app.py
+   
+   # Option 2: Use the launcher script (Windows)
+   run_ui.bat
+   ```
+
+3. **Open Your Browser**: Navigate to `http://localhost:8501`
+
+### Smart Launcher (CLI)
 
 The smart launcher automatically checks if all required models are available before running:
 
@@ -127,11 +152,11 @@ chmod +x setup.sh
 # Install dependencies
 pip install -r requirements.txt
 
-# Download required models
-ollama pull llama3.1:70b
-ollama pull llama3.1:8b
-ollama pull mistral:7b
-ollama pull phi3:medium
+# Download recommended small models (efficient for local use)
+ollama pull llama3.2:3b     # Orchestrator (small but capable)
+ollama pull gemma2:2b       # Analytical debater
+ollama pull phi3:mini       # Creative debater  
+ollama pull tinyllama:1.1b  # Practical debater
 
 # Create environment file
 cp .env.example .env
@@ -199,11 +224,11 @@ python check_models.py --auto-download
 
 ### Manual Model Download
 ```bash
-# Download all required models manually
-ollama pull llama3.1:70b    # Orchestrator (large)
-ollama pull llama3.1:8b     # Analytical Debater
-ollama pull mistral:7b      # Creative Debater  
-ollama pull phi3:medium     # Practical Debater
+# Download all small models manually (recommended)
+ollama pull llama3.2:3b     # Orchestrator (small)
+ollama pull gemma2:2b       # Analytical Debater
+ollama pull phi3:mini       # Creative Debater  
+ollama pull tinyllama:1.1b  # Practical Debater
 
 # Check what's installed
 ollama list
@@ -214,9 +239,9 @@ ollama list
 Edit `config.py` to customize:
 
 ```python
-# Model selection
-ORCHESTRATOR_MODEL.model = "llama3.1:70b"  # Large orchestrator
-DEBATER_MODELS[0].model = "llama3.1:8b"    # Analytical debater
+# Model selection (now using small models)
+ORCHESTRATOR_MODEL.model = "llama3.2:3b"  # Small orchestrator
+DEBATER_MODELS[0].model = "gemma2:2b"      # Analytical debater
 
 # Debate parameters
 MAX_ROUNDS = 5                   # Maximum debate rounds
@@ -298,16 +323,19 @@ llm-debate/
 
 2. **Model Not Found**
    ```bash
-   # Download missing models
-   ollama pull llama3.1:70b
+   # Download missing small models
+   ollama pull llama3.2:3b
+   ollama pull gemma2:2b
+   ollama pull phi3:mini
+   ollama pull tinyllama:1.1b
    ollama list  # Check installed models
    ```
 
 3. **Memory Issues**
    ```bash
-   # Use smaller models if needed
-   # Edit config.py to use lighter models:
-   # ORCHESTRATOR_MODEL.model = "llama3.1:8b"
+   # Use ultra-small models if needed
+   # Or use lightweight mode:
+   python main.py --lightweight --max-size 2.0
    ```
 
 4. **Slow Performance**

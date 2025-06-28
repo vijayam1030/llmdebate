@@ -10,10 +10,10 @@ from langchain.agents import AgentExecutor, create_react_agent
 from langchain.tools import Tool
 from langchain.prompts import PromptTemplate
 
-from models import DebaterResponse, MCPContext, ModelConfig
+from models import DebaterResponse, MCPContext
+from config import Config, ModelConfig
 from ollama_integration import CustomOllamaLLM, model_factory
 from consensus_engine import consensus_engine
-from config import Config
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class DebaterAgent:
         """Generate initial response to the debate question"""
         try:
             prompt = self._create_initial_prompt(question)
-            response = await self.llm._acall(prompt)
+            response = await self.llm.ainvoke(prompt)
             
             debater_response = DebaterResponse(
                 debater_name=self.config.name,
@@ -59,7 +59,7 @@ class DebaterAgent:
         """Generate rebuttal based on other debaters' responses and orchestrator feedback"""
         try:
             prompt = self._create_rebuttal_prompt(question, other_responses, orchestrator_feedback)
-            response = await self.llm._acall(prompt)
+            response = await self.llm.ainvoke(prompt)
             
             debater_response = DebaterResponse(
                 debater_name=self.config.name,
@@ -225,7 +225,7 @@ class OrchestratorAgent:
         
         try:
             prompt = self._create_summary_prompt(question, all_responses)
-            summary = await self.llm._acall(prompt)
+            summary = await self.llm.ainvoke(prompt)
             return summary
             
         except Exception as e:
@@ -333,7 +333,7 @@ Feedback:
 """
         
         try:
-            feedback = await self.llm._acall(prompt)
+            feedback = await self.llm.ainvoke(prompt)
             return feedback
         except Exception as e:
             logger.error(f"Error generating feedback: {e}")

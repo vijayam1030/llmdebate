@@ -23,10 +23,10 @@ class Config:
     OLLAMA_BASE_URL = "http://localhost:11434"
     OLLAMA_TIMEOUT = 60
     
-    # Orchestrator Model (Large Local Model)
+    # Orchestrator Model (Small Local Model)
     ORCHESTRATOR_MODEL = ModelConfig(
         name="Orchestrator",
-        model="llama3.1:70b",  # or "mixtral:8x7b", "qwen2.5:72b"
+        model="llama3.2:3b",  # Small, efficient orchestrator model
         temperature=0.3,
         max_tokens=2000,
         personality="analytical and diplomatic",
@@ -38,11 +38,11 @@ class Config:
 Be objective, thorough, and focus on finding common ground."""
     )
     
-    # Debater Models (Smaller Local Models)
+    # Debater Models (Small Local Models)
     DEBATER_MODELS = [
         ModelConfig(
             name="Analytical_Debater",
-            model="llama3.1:8b",
+            model="gemma2:2b",
             temperature=0.6,
             max_tokens=800,
             personality="analytical and fact-focused",
@@ -52,7 +52,7 @@ Be thorough but concise in your responses."""
         ),
         ModelConfig(
             name="Creative_Debater", 
-            model="mistral:7b",
+            model="phi3:mini",
             temperature=0.8,
             max_tokens=800,
             personality="creative and perspective-oriented",
@@ -62,7 +62,7 @@ Challenge assumptions while remaining constructive."""
         ),
         ModelConfig(
             name="Practical_Debater",
-            model="phi3:medium",
+            model="tinyllama:1.1b",
             temperature=0.7,
             max_tokens=800,
             personality="practical and solution-focused",
@@ -73,7 +73,7 @@ Bridge theory with practice in your arguments."""
     ]
     
     # Debate Configuration
-    MAX_ROUNDS = 5
+    MAX_ROUNDS = 3
     CONSENSUS_THRESHOLD = 0.85  # Similarity threshold for consensus
     MIN_RESPONSE_LENGTH = 50
     MAX_RESPONSE_LENGTH = 1000

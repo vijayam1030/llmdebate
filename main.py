@@ -68,6 +68,15 @@ class LLMDebateSystem:
         
         return result
     
+    async def cleanup(self):
+        """Cleanup resources"""
+        if hasattr(self, 'llm_manager') and self.llm_manager:
+            try:
+                await self.llm_manager.cleanup_models()
+            except Exception as e:
+                logger.warning(f"Cleanup warning: {e}")
+        logger.info("System cleanup completed")
+    
     def print_debate_summary(self, result: DebateResult):
         """Print a formatted summary of the debate"""
         print("\n" + "="*80)
