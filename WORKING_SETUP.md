@@ -95,5 +95,10 @@ python test_small_only.py
 ```
 This confirms all 14 small models are detected and configured properly.
 
+## 🔧 **Development Notes**
+- **`.gitignore`**: Added to exclude `__pycache__/`, logs, and cache files
+- **Memory efficient**: Only small models under 4GB are used
+- **Clean codebase**: No bytecode or temporary files in version control
+
 ---
 **✨ Perfect! Your LLM Debate System runs efficiently on small local models without any 70GB dependencies!**

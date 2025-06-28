@@ -5,7 +5,6 @@ Simple Streamlit launcher that uses small models and avoids torch import issues
 import streamlit as st
 import sys
 import os
-import asyncio
 
 # Set page config first
 st.set_page_config(
@@ -15,21 +14,45 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-async def setup_small_models():
-    """Setup small model configuration"""
+def setup_small_models_sync():
+    """Setup small model configuration synchronously"""
     try:
+        import asyncio
         from dynamic_config import create_small_model_config_only
         from config import Config
         
-        # Create small model config
-        orchestrator_config, debater_configs = await create_small_model_config_only(4.0)
+        async def _setup():
+            # Create small model config
+            orchestrator_config, debater_configs = await create_small_model_config_only(4.0)
+            
+            if orchestrator_config and len(debater_configs) >= 2:
+                # Update global config
+                Config.ORCHESTRATOR_MODEL = orchestrator_config
+                Config.DEBATER_MODELS = debater_configs
+                return True
+            return False
         
-        if orchestrator_config and len(debater_configs) >= 2:
-            # Update global config
-            Config.ORCHESTRATOR_MODEL = orchestrator_config
-            Config.DEBATER_MODELS = debater_configs
-            return True
-        return False
+        # Run async function safely
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                # If loop is already running, we need to create a new thread
+                import threading
+                import concurrent.futures
+                
+                def run_in_thread():
+                    new_loop = asyncio.new_event_loop()
+                    return new_loop.run_until_complete(_setup())
+                
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    future = executor.submit(run_in_thread)
+                    return future.result()
+            else:
+                return loop.run_until_complete(_setup())
+        except RuntimeError:
+            # No loop exists, create one
+            return asyncio.run(_setup())
+            
     except Exception as e:
         st.error(f"Error setting up small models: {e}")
         return False
@@ -42,7 +65,7 @@ def main():
     if 'models_configured' not in st.session_state:
         st.info("🔧 Configuring small models...")
         try:
-            if asyncio.run(setup_small_models()):
+            if setup_small_models_sync():
                 st.session_state.models_configured = True
                 st.success("✅ Small models configured successfully!")
                 
@@ -64,6 +87,7 @@ ollama pull tinyllama:1.1b
                 return
         except Exception as e:
             st.error(f"Configuration error: {e}")
+            st.error(f"Error details: {str(e)}")
             return
     
     # Show system status
@@ -84,12 +108,32 @@ ollama pull tinyllama:1.1b
                 async def run_debate():
                     system = LLMDebateSystem()
                     if await system.initialize():
-                        result = await system.conduct_debate(question)
+                        result = await system.conduct_debate(question, max_rounds=3)
                         await system.cleanup()
                         return result
                     return None
                 
-                result = asyncio.run(run_debate())
+                # Use event loop properly for Streamlit
+                try:
+                    # Try to use existing loop
+                    loop = asyncio.get_event_loop()
+                    if loop.is_running():
+                        # Create new thread for async execution
+                        import threading
+                        import concurrent.futures
+                        
+                        def run_in_thread():
+                            new_loop = asyncio.new_event_loop()
+                            return new_loop.run_until_complete(run_debate())
+                        
+                        with concurrent.futures.ThreadPoolExecutor() as executor:
+                            future = executor.submit(run_in_thread)
+                            result = future.result()
+                    else:
+                        result = loop.run_until_complete(run_debate())
+                except RuntimeError:
+                    # No loop exists, create one
+                    result = asyncio.run(run_debate())
                 
                 if result:
                     st.success("✅ Debate completed!")
