@@ -58,7 +58,8 @@ async def run_debate(question, max_rounds=3):
             from dynamic_config import create_small_model_config_only
             from config import Config
             
-            # Setup small models            orchestrator_config, debater_configs = await create_small_model_config_only(4.0)
+            # Setup small models
+            orchestrator_config, debater_configs = await create_small_model_config_only(4.0)
             if orchestrator_config and len(debater_configs) >= 2:
                 Config.ORCHESTRATOR_MODEL = orchestrator_config
                 Config.DEBATER_MODELS = debater_configs
