@@ -90,6 +90,13 @@ def run_async_safely(coro):
 async def initialize_system_async():
     """Initialize the debate system asynchronously"""
     try:
+        # Add the current directory to Python path to fix import issues
+        import sys
+        import os
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        if current_dir not in sys.path:
+            sys.path.insert(0, current_dir)
+        
         from main import LLMDebateSystem
         from dynamic_config import create_small_model_config_only
         from config import Config
@@ -187,7 +194,7 @@ def main():
             st.info("Ready for first debate")
     
     # Configuration info
-    with st.expander("Model Persistence Benefits"):
+    with st.expander("Model Persistence Benefits & Features"):
         if st.session_state.system_initialized:
             st.markdown("""
             **✅ Models Currently Loaded in Session:**
@@ -195,6 +202,12 @@ def main():
             - No loading/unloading between debates
             - Expected debate time: ~30-45 seconds
             - Models stay loaded until you close this tab
+            
+            **📋 Enhanced Summary Features:**
+            - **Full-length summaries** (no truncation limits)
+            - **Enhanced formatting** with styled display
+            - **Smart expansion** for long summaries
+            - **Summary statistics** (length, words, lines)
             
             **Performance:**
             - First debate: Fast (models already loaded)
@@ -209,6 +222,12 @@ def main():
             - No external processes or servers needed
             - Thread-safe async execution
             - Streamlit native session state
+            
+            **📋 Summary Features:**
+            - **Full debate summaries** without length limits
+            - **Enhanced display** with proper formatting
+            - **Expandable sections** for long content
+            - **Statistics tracking** for content analysis
             """)
     
     # Initialization section
@@ -330,20 +349,84 @@ ollama pull tinyllama:1.1b
                                     final_score = scores[-1] if scores else 0
                                     st.metric("Final Consensus", f"{final_score:.3f}")
                                 
-                                # Debate summary
+                                # Debate summary - Force maximum width with CSS injection
                                 if result.get("summary"):
                                     st.subheader("📋 Debate Summary")
-                                    st.write(result["summary"])
+                                    
+                                    # Inject CSS to force full width
+                                    st.markdown("""
+                                    <style>
+                                    .stTextArea > div > div > textarea {
+                                        width: 100% !important;
+                                        max-width: none !important;
+                                    }
+                                    .summary-container {
+                                        width: 100vw !important;
+                                        margin-left: calc(-50vw + 50%) !important;
+                                        padding: 20px calc(50vw - 50%) !important;
+                                        background-color: #f8f9fa;
+                                        border-left: 5px solid #007acc;
+                                        margin-top: 15px;
+                                        margin-bottom: 15px;
+                                    }
+                                    </style>
+                                    """, unsafe_allow_html=True)
+                                    
+                                    summary_text = result["summary"]
+                                    
+                                    # Method 1: Custom HTML container for maximum width
+                                    st.markdown(f"""
+                                    <div class="summary-container">
+                                    <h4>📄 Complete Summary</h4>
+                                    <div style="line-height: 1.8; font-size: 16px; white-space: pre-wrap; font-family: 'Source Sans Pro', sans-serif;">
+                                    {summary_text}
+                                    </div>
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                    
+                                    # Method 2: Also provide text_area as backup
+                                    with st.expander("📝 Copy/Edit Summary", expanded=False):
+                                        st.text_area(
+                                            "Summary Text:", 
+                                            value=summary_text,
+                                            height=max(200, min(len(summary_text.split('\n')) * 25, 500)),
+                                            key="summary_text_area"
+                                        )
+                                        
+                                        # Add summary stats
+                                        summary_stats_col1, summary_stats_col2, summary_stats_col3 = st.columns(3)
+                                        with summary_stats_col1:
+                                            st.metric("Summary Length", f"{len(summary_text)} chars")
+                                        with summary_stats_col2:
+                                            word_count = len(summary_text.split())
+                                            st.metric("Word Count", f"{word_count} words")
+                                        with summary_stats_col3:
+                                            lines = summary_text.count('\n') + 1
+                                            st.metric("Lines", f"{lines}")
                                 
-                                # Consensus evolution
+                                # Consensus evolution - Enhanced layout
                                 if result.get("consensus_scores"):
                                     st.subheader("📈 Consensus Evolution")
                                     scores = result["consensus_scores"]
                                     
-                                    for i, score in enumerate(scores, 1):
-                                        progress = min(score, 1.0)
-                                        st.write(f"Round {i}: {score:.3f}")
-                                        st.progress(progress)
+                                    # Create two columns for better layout
+                                    consensus_col1, consensus_col2 = st.columns([3, 1])
+                                    
+                                    with consensus_col1:
+                                        for i, score in enumerate(scores, 1):
+                                            progress = min(score, 1.0)
+                                            st.markdown(f"**Round {i}:** {score:.3f}")
+                                            st.progress(progress)
+                                            st.write("")  # Add spacing
+                                    
+                                    with consensus_col2:
+                                        # Summary stats
+                                        if len(scores) > 1:
+                                            improvement = scores[-1] - scores[0]
+                                            st.metric("Overall Change", f"{improvement:+.3f}")
+                                            st.metric("Best Round", f"{max(scores):.3f}")
+                                            trend = "📈 Improving" if improvement > 0.05 else "📉 Declining" if improvement < -0.05 else "➡️ Stable"
+                                            st.metric("Trend", trend)
                                 
                                 # Success indicators
                                 st.subheader("🏆 Performance Highlights")
