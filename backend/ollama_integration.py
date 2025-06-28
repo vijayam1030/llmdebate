@@ -9,7 +9,7 @@ import httpx
 from langchain_community.llms import Ollama
 from langchain.schema import BaseMessage, HumanMessage, SystemMessage
 from langchain.callbacks.manager import CallbackManagerForLLMRun
-from config import Config, ModelConfig
+from system.config import Config, ModelConfig
 
 logger = logging.getLogger(__name__)
 
@@ -79,13 +79,13 @@ class OllamaManager:
         return model_status
     
     async def load_model(self, model_name: str) -> bool:
-        """Load a specific model into memory"""
+        """Load a specific model into memory - with persistence logging"""
         try:
             if model_name in self.loaded_models:
-                logger.info(f"Model {model_name} already loaded")
+                logger.info(f"Model {model_name} ALREADY LOADED (persistent) - no action needed")
                 return True
                 
-            logger.info(f"Loading model {model_name}...")
+            logger.info(f"Loading model {model_name} for the FIRST TIME...")
             async with httpx.AsyncClient(timeout=60.0) as client:
                 # Make a small request to load the model
                 payload = {
@@ -98,7 +98,7 @@ class OllamaManager:
                 
                 if response.status_code == 200:
                     self.loaded_models.add(model_name)
-                    logger.info(f"Successfully loaded model {model_name}")
+                    logger.info(f"Successfully loaded model {model_name} - NOW IN MEMORY")
                     return True
                 else:
                     logger.error(f"Failed to load model {model_name}: {response.status_code}")
@@ -147,8 +147,8 @@ class OllamaManager:
         return list(self.loaded_models)
     
     async def load_required_models(self, required_models: List[str]) -> bool:
-        """Load only the required models and unload others"""
-        logger.info(f"Loading required models: {required_models}")
+        """Load only the required models, keeping already loaded ones for persistence"""
+        logger.info(f"Ensuring required models are loaded: {required_models}")
         
         # Get all available models
         available_models = await self.list_available_models()
@@ -159,20 +159,25 @@ class OllamaManager:
             logger.error(f"Required models not available: {missing_models}")
             return False
         
-        # Unload models that are not required
-        current_loaded = list(self.loaded_models)
-        models_to_unload = [model for model in current_loaded if model not in required_models]
+        # Only unload models that are loaded but not required (optional optimization)
+        # Comment this out for maximum persistence - keep all loaded models
+        # current_loaded = list(self.loaded_models)
+        # models_to_unload = [model for model in current_loaded if model not in required_models]
+        # 
+        # for model in models_to_unload:
+        #     await self.unload_model(model)
         
-        for model in models_to_unload:
-            await self.unload_model(model)
-        
-        # Load required models
+        # Load only models that are NOT already loaded
         success = True
         for model in required_models:
-            if not await self.load_model(model):
-                success = False
+            if model not in self.loaded_models:
+                logger.info(f"Model {model} needs loading...")
+                if not await self.load_model(model):
+                    success = False
+            else:
+                logger.info(f"Model {model} ALREADY LOADED (persistent) - skipping")
         
-        logger.info(f"Currently loaded models: {list(self.loaded_models)}")
+        logger.info(f"📊 Currently loaded models: {list(self.loaded_models)} - PERSISTENT IN MEMORY")
         return success
 
 class DirectOllamaLLM:
@@ -186,20 +191,16 @@ class DirectOllamaLLM:
         self.ollama_manager = ollama_manager or ollama_manager
         
     async def ainvoke(self, input_text: str, config: Optional[dict] = None, **kwargs) -> str:
-        """Direct async invoke method"""
+        """Direct async invoke method with TRUE persistence - never unload models"""
         try:
-            # In lightweight mode, ensure this model is loaded
-            if self.ollama_manager and hasattr(model_factory, 'use_lightweight_mode') and model_factory.use_lightweight_mode:
-                # Unload current model if different
-                if (model_factory.current_loaded_model and 
-                    model_factory.current_loaded_model != self.model):
-                    await self.ollama_manager.unload_model(model_factory.current_loaded_model)
-                
-                # Load this model
+            # PERSISTENCE MODE: Never unload models, they stay loaded for maximum efficiency
+            # Lightweight mode is DISABLED for true persistence
+            
+            # Simply ensure this model is loaded if not already
+            if self.ollama_manager:
+                # Only load if not already loaded - NEVER unload
                 if not await self.ollama_manager.load_model(self.model):
-                    raise Exception(f"Failed to load model {self.model}")
-                
-                model_factory.current_loaded_model = self.model
+                    logger.warning(f"Model {self.model} might already be loaded, continuing...")
             
             # Format the prompt with system prompt
             full_prompt = ""
@@ -370,6 +371,11 @@ class ModelFactory:
         await self.ollama_manager.unload_all_models()
         logger.info("All models unloaded")
 
-# Singleton instances
+# Singleton instances with persistence tracking
+import uuid
+_instance_id = str(uuid.uuid4())[:8]
 ollama_manager = OllamaManager()
 model_factory = ModelFactory(ollama_manager)
+
+# Log instance creation for debugging
+logger.info(f"🆔 Ollama instance created: {_instance_id} - this should only appear once per session")

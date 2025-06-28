@@ -25,7 +25,7 @@ if sys.platform.startswith('win'):
 # Set page config first
 st.set_page_config(
     page_title="LLM Debate System (Session Persistence)",
-    page_icon="💾",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -77,7 +77,7 @@ def run_async_safely(coro):
         time.sleep(0.5)
     
     progress_bar.progress(1.0)
-    progress_text.text("✅ Complete!")
+    progress_text.text("Complete!")
     
     # Join thread
     thread.join(timeout=1)
@@ -97,9 +97,9 @@ async def initialize_system_async():
         if current_dir not in sys.path:
             sys.path.insert(0, current_dir)
         
-        from main import LLMDebateSystem
-        from dynamic_config import create_small_model_config_only
-        from config import Config
+        from system.main import LLMDebateSystem
+        from system.dynamic_config import create_small_model_config_only
+        from system.config import Config
         
         # Setup small models
         orchestrator_config, debater_configs = await create_small_model_config_only(4.0)
@@ -164,7 +164,7 @@ def main():
     # Initialize session state
     initialize_session_state()
     
-    st.title("💾 LLM Debate System")
+    st.title("LLM Debate System")
     st.markdown("*Session-Based Model Persistence - No External Processes*")
     
     # System status check
@@ -187,7 +187,7 @@ def main():
             st.warning("⏳ AI system not initialized")
     
     with col3:
-        st.info("💾 Session-based persistence")
+        st.info("Session-based persistence")
         if st.session_state.total_debates > 0:
             st.info(f"Debates run: {st.session_state.total_debates}")
         else:
@@ -197,13 +197,13 @@ def main():
     with st.expander("Model Persistence Benefits & Features"):
         if st.session_state.system_initialized:
             st.markdown("""
-            **✅ Models Currently Loaded in Session:**
+            **Models Currently Loaded in Session:**
             - Models are loaded and persistent in this browser session
             - No loading/unloading between debates
             - Expected debate time: ~30-45 seconds
             - Models stay loaded until you close this tab
             
-            **📋 Enhanced Summary Features:**
+            **Enhanced Summary Features:**
             - **Full-length summaries** (no truncation limits)
             - **Enhanced formatting** with styled display
             - **Smart expansion** for long summaries
@@ -216,14 +216,14 @@ def main():
             """)
         else:
             st.markdown("""
-            **🔧 Session Persistence System:**
+            **Session Persistence System:**
             - Models load once per browser session
             - Stay loaded until you close the tab
             - No external processes or servers needed
             - Thread-safe async execution
             - Streamlit native session state
             
-            **📋 Summary Features:**
+            **Summary Features:**
             - **Full debate summaries** without length limits
             - **Enhanced display** with proper formatting
             - **Expandable sections** for long content
@@ -255,12 +255,12 @@ ollama pull tinyllama:1.1b
         
         st.info("This will load AI models once into your browser session. They will stay loaded for all subsequent debates.")
         
-        if st.button("🚀 Initialize AI System", type="primary", use_container_width=True):
+        if st.button("Initialize AI System", type="primary", use_container_width=True):
             if not check_ollama_status():
                 st.error("Ollama server not running. Please start it first.")
             else:
                 try:
-                    with st.spinner("🔧 Initializing AI system... (this will take 60-90 seconds)"):
+                    with st.spinner("Initializing AI system... (this will take 60-90 seconds)"):
                         system, error = run_async_safely(initialize_system_async())
                         
                         if system:
@@ -330,7 +330,7 @@ ollama pull tinyllama:1.1b
                                 if duration < 45:
                                     st.info("⚡ Lightning fast! Models stayed loaded throughout.")
                                 elif duration < 60:
-                                    st.info("🚀 Fast completion thanks to persistent models!")
+                                    st.info("Fast completion thanks to persistent models!")
                                 
                                 # Metrics
                                 col1, col2, col3, col4 = st.columns(4)
@@ -351,7 +351,7 @@ ollama pull tinyllama:1.1b
                                 
                                 # Debate summary - Force maximum width with CSS injection
                                 if result.get("summary"):
-                                    st.subheader("📋 Debate Summary")
+                                    st.subheader("Debate Summary")
                                     
                                     # Inject CSS to force full width
                                     st.markdown("""
@@ -377,7 +377,7 @@ ollama pull tinyllama:1.1b
                                     # Method 1: Custom HTML container for maximum width
                                     st.markdown(f"""
                                     <div class="summary-container">
-                                    <h4>📄 Complete Summary</h4>
+                                    <h4>Complete Summary</h4>
                                     <div style="line-height: 1.8; font-size: 16px; white-space: pre-wrap; font-family: 'Source Sans Pro', sans-serif;">
                                     {summary_text}
                                     </div>
@@ -430,10 +430,10 @@ ollama pull tinyllama:1.1b
                                 
                                 # Success indicators
                                 st.subheader("🏆 Performance Highlights")
-                                st.write("✅ Models stayed persistent (no loading/unloading)")
-                                st.write("✅ Session-based architecture")
-                                st.write("✅ Thread-safe async execution")
-                                st.write("✅ Zero external dependencies")
+                                st.write("Models stayed persistent (no loading/unloading)")
+                                st.write("Session-based architecture")
+                                st.write("Thread-safe async execution")
+                                st.write("Zero external dependencies")
                                 
                             else:
                                 st.error("❌ Debate failed")
@@ -470,14 +470,14 @@ ollama pull tinyllama:1.1b
                 - Models loaded: {st.session_state.models_loaded_count}
                 - Debates completed: {st.session_state.total_debates}
                 - System initialized: {st.session_state.system_initialized}
-                - Models persistent: ✅ Yes
+                - Models persistent: Yes
                 """)
 
     # Footer
     st.divider()
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("*💾 Session-Based Model Persistence - Simple & Reliable*")
+        st.markdown("*Session-Based Model Persistence - Simple & Reliable*")
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,7 @@ streamlit run streamlit_app_session.py
 ### **Any Platform**
 ```bash
 # Install dependencies:
-pip install -r system/requirements.txt
+pip install -r config/requirements.txt
 
 # Run the web interface:
 streamlit run streamlit_app_session.py
@@ -38,7 +38,7 @@ streamlit run streamlit_app_session.py
 ├── consensus_engine.py         🎯 Agreement analysis
 └── ollama_integration.py       🔗 Model interface
 
-📁 /system/                     ⚙️ Configuration
+📁 /config/                     ⚙️ Configuration
 ├── config.py                   📋 Settings
 ├── dynamic_config.py           🔄 Auto-config
 ├── main.py                     🎯 Core system
@@ -72,7 +72,7 @@ streamlit run streamlit_app_session.py
 
 ## 🔧 Configuration
 
-The system auto-configures using small models. Manual config in `/system/config.py` if needed.
+The system auto-configures using small models. Manual config in `/config/config.py` if needed.
 
 **Recommended Models** (install with `ollama pull <model>`):
 - `tinyllama:1.1b` - Ultra-fast, 1.1GB
@@ -90,7 +90,7 @@ The system auto-configures using small models. Manual config in `/system/config.
 ## 🏗️ Development
 
 - **Backend**: Core logic in `/backend/`
-- **System**: Settings in `/system/`  
+- **Config**: Settings in `/config/`  
 - **Tests**: Utilities in `/scripts/`
 - **Docs**: Guides in `/docs/`
 

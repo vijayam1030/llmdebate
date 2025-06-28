@@ -17,7 +17,7 @@ from .models import (
 from .agents import DebaterAgent, OrchestratorAgent
 from .consensus_engine import consensus_engine
 from .ollama_integration import model_factory
-from config import Config
+from system.config import Config
 
 logger = logging.getLogger(__name__)
 

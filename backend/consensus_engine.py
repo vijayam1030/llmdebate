@@ -10,7 +10,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 import re
 from .models import DebaterResponse, ConsensusAnalysis
-from config import Config
+from system.config import Config
 
 logger = logging.getLogger(__name__)
 

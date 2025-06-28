@@ -1,5 +1,5 @@
 """
-Main application for the LLM Debate System
+Main apfrom .config import Configlication for the LLM Debate System
 """
 
 import asyncio
@@ -10,7 +10,7 @@ from typing import Optional
 
 from dotenv import load_dotenv
 
-from config import Config
+from .config import Config
 from backend.models import DebateResult, DebateStatus
 from backend.debate_workflow import debate_workflow
 from backend.ollama_integration import ollama_manager, model_factory
@@ -35,6 +35,10 @@ class LLMDebateSystem:
     
     async def initialize(self) -> bool:
         """Initialize the system and check all dependencies"""
+        if self.initialized:
+            logger.info("System already initialized - skipping reinitalization for model persistence")
+            return True
+            
         logger.info("Initializing LLM Debate System...")
         
         try:
@@ -85,7 +89,7 @@ class LLMDebateSystem:
     def print_debate_summary(self, result: DebateResult):
         """Print a formatted summary of the debate"""
         print("\n" + "="*80)
-        print("🎯 DEBATE SUMMARY")
+        print("DEBATE SUMMARY")
         print("="*80)
         print(f"Question: {result.original_question}")
         print(f"Status: {result.final_status.value}")
@@ -95,14 +99,14 @@ class LLMDebateSystem:
         if result.consensus_evolution:
             print(f"Consensus Evolution: {' → '.join([f'{score:.3f}' for score in result.consensus_evolution])}")
         
-        print("\n📋 FINAL SUMMARY:")
+        print("\nFINAL SUMMARY:")
         print("-" * 50)
         if result.final_summary:
             print(result.final_summary)
         else:
             print("No summary available")
         
-        print("\n🔄 DEBATE ROUNDS:")
+        print("\nDEBATE ROUNDS:")
         print("-" * 50)
         for i, round_data in enumerate(result.rounds, 1):
             print(f"\nRound {i}:")
@@ -110,10 +114,10 @@ class LLMDebateSystem:
                 print(f"  • {response.debater_name}: {response.response[:100]}...")
             
             if round_data.consensus_analysis:
-                print(f"  📊 Consensus: {round_data.consensus_analysis.average_similarity:.3f}")
+                print(f"  Consensus: {round_data.consensus_analysis.average_similarity:.3f}")
             
             if round_data.orchestrator_feedback:
-                print(f"  🎭 Feedback: {round_data.orchestrator_feedback[:100]}...")
+                print(f"  Feedback: {round_data.orchestrator_feedback[:100]}...")
         
         print("\n" + "="*80)
 
@@ -121,16 +125,16 @@ async def interactive_mode():
     """Run the system in interactive mode"""
     system = LLMDebateSystem()
     
-    print("🎯 LLM Debate System - Interactive Mode")
+    print("LLM Debate System - Interactive Mode")
     print("=====================================")
     
     # Initialize system
     print("Initializing system...")
     if not await system.initialize():
-        print("❌ System initialization failed. Please check your Ollama installation.")
+        print("System initialization failed. Please check your Ollama installation.")
         return
     
-    print("✅ System initialized successfully!")
+    print("System initialized successfully!")
     print("\nAvailable models:")
     available_models = await ollama_manager.list_available_models()
     for model in available_models:
@@ -155,7 +159,7 @@ async def interactive_mode():
             if max_rounds_input.isdigit():
                 max_rounds = int(max_rounds_input)
             
-            print(f"\n🚀 Starting debate with {len(Config.DEBATER_MODELS)} debaters...")
+            print(f"\nStarting debate with {len(Config.DEBATER_MODELS)} debaters...")
             
             # Conduct debate
             result = await system.conduct_debate(question, max_rounds)
@@ -164,7 +168,7 @@ async def interactive_mode():
             system.print_debate_summary(result)
             
             # Ask if user wants to save results
-            save_input = input("\n💾 Save results to file? (y/n): ").strip().lower()
+            save_input = input("\nSave results to file? (y/n): ").strip().lower()
             if save_input in ['y', 'yes']:
                 filename = f"debate_result_{int(result.start_time.timestamp())}.txt"
                 with open(filename, 'w', encoding='utf-8') as f:
@@ -179,19 +183,19 @@ async def interactive_mode():
                         f.write(f"\nRound {i}:\n")
                         for response in round_data.debater_responses:
                             f.write(f"{response.debater_name}: {response.response}\n\n")
-                print(f"✅ Results saved to {filename}")
+                print(f"Results saved to {filename}")
             
         except KeyboardInterrupt:
             print("\n\n👋 Interrupted by user. Goodbye!")
             break
         except Exception as e:
             logger.error(f"Error in interactive mode: {e}")
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
 
 def print_help():
     """Print help information"""
     print("""
-🎯 LLM Debate System - Help
+LLM Debate System - Help
 ==========================
 
 Usage:
@@ -223,12 +227,12 @@ async def single_question_mode(question: str):
     """Run a single debate question"""
     system = LLMDebateSystem()
     
-    print(f"🎯 Conducting debate: {question}")
+    print(f"Conducting debate: {question}")
     print("=" * 60)
     
     # Initialize system
     if not await system.initialize():
-        print("❌ System initialization failed.")
+        print("System initialization failed.")
         return
     
     # Conduct debate
@@ -261,5 +265,5 @@ if __name__ == "__main__":
         print("\n👋 Goodbye!")
     except Exception as e:
         logger.error(f"Fatal error: {e}")
-        print(f"❌ Fatal error: {e}")
+        print(f"Fatal error: {e}")
         sys.exit(1)

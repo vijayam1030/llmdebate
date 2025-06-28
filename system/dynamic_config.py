@@ -8,7 +8,7 @@ from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 
 from backend.ollama_integration import ollama_manager
-from config import ModelConfig
+from .config import ModelConfig
 
 logger = logging.getLogger(__name__)
 
@@ -681,12 +681,12 @@ async def create_dynamic_debate_config(prefer_small_models: bool = False, max_si
         orchestrator, debaters = selector.create_dynamic_config()
         
         if orchestrator and len(debaters) >= 2:
-            print(f"\n✅ Dynamic configuration created successfully!")
+            print(f"\nDynamic configuration created successfully!")
             print(f"Using {orchestrator.model} as orchestrator")
             print(f"Using {len(debaters)} debaters")
             return orchestrator, debaters
         else:
-            print(f"\n❌ Could not create valid configuration")
+            print(f"\nCould not create valid configuration")
             print("Please install more models or check your Ollama installation")
             return None, []
 
@@ -699,7 +699,7 @@ if __name__ == "__main__":
         orchestrator, debaters = await create_dynamic_debate_config()
         
         if orchestrator and debaters:
-            print("\n📋 Generated Configuration:")
+            print("\nGenerated Configuration:")
             print(f"ORCHESTRATOR_MODEL = {orchestrator}")
             print(f"DEBATER_MODELS = {debaters}")
     

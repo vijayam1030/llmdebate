@@ -11,7 +11,7 @@ from langchain.tools import Tool
 from langchain.prompts import PromptTemplate
 
 from .models import DebaterResponse, MCPContext
-from config import Config, ModelConfig
+from system.config import Config, ModelConfig
 from .ollama_integration import CustomOllamaLLM, model_factory
 from .consensus_engine import consensus_engine
 

@@ -1,11 +1,11 @@
 @echo off
 REM Launch the session-based Streamlit UI
 echo.
-echo 🚀 LLM Debate System - Session UI Launcher
+echo LLM Debate System - Session UI Launcher
 echo ==========================================
 echo.
-echo 📍 Starting session-based UI (true model persistence)
-echo ⏱️  This may take a moment...
+echo Starting session-based UI (true model persistence)
+echo This may take a moment...
 echo.
 
 REM Change to script directory
