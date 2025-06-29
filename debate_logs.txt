@@ -2212,3 +2212,373 @@ models_loaded.3
 2025-06-29 12:35:19,905 - api.main - INFO - Status check - debate_system: True
 2025-06-29 12:35:26,200 - api.main - INFO - Status check - debate_system: True
 2025-06-29 12:35:30,366 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:37:56,341 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:05,883 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:06,362 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:16,008 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:16,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:24,296 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:26,359 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:34,362 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:37,599 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:48,357 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:38:58,370 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:39:08,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:39:18,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:39:28,357 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:39:38,356 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:39:48,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:39:58,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:40:08,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:40:18,365 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:40:28,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:40:56,332 - api.main - INFO - Shutting down LLM Debate System...
+2025-06-29 12:40:56,333 - api.main - INFO - ngrok tunnel stopped
+2025-06-29 12:41:57,880 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 12:41:57,883 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 12:41:57,884 - api.main - INFO - Initializing LLM Debate System...
+2025-06-29 12:41:57,885 - api.main - INFO - Starting ngrok tunnel...
+2025-06-29 12:41:58,375 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:41:58,376 - system.dynamic_config - INFO - Found 20 available models
+2025-06-29 12:41:58,377 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-29 12:41:58,377 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-29 12:41:58,377 - system.main - INFO - Initializing LLM Debate System...
+2025-06-29 12:41:58,835 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:41:58,835 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-29 12:41:59,327 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:41:59,329 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-29 12:41:59,330 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-29 12:42:00,750 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:42:00,750 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-29 12:42:00,751 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-29 12:42:00,751 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-29 12:42:02,964 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:42:02,965 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-29 12:42:02,965 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-29 12:42:02,965 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-29 12:42:05,014 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:42:05,014 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-29 12:42:05,014 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-29 12:42:05,014 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-29 12:42:07,806 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:42:07,807 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-29 12:42:07,807 - backend.ollama_integration - INFO - Currently loaded models: ['gemma2:2b', 'llama3.2:1b', 'llama3.2:3b', 'phi3:mini'] - PERSISTENT IN MEMORY
+2025-06-29 12:42:07,807 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-29 12:42:07,807 - system.main - INFO - System initialized successfully
+2025-06-29 12:42:07,808 - api.main - INFO - System initialized successfully!
+2025-06-29 12:42:36,228 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:42:45,842 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:42:46,356 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:42:54,708 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:43:05,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:43:15,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:43:20,295 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:43:21,716 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:43:32,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:43:42,359 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:43:52,361 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:44:02,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:44:12,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:44:22,356 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:44:31,993 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:44:42,365 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:44:52,364 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:45:02,359 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:45:12,359 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:45:22,360 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:52:00,522 - api.main - INFO - Shutting down LLM Debate System...
+2025-06-29 12:52:00,522 - api.main - INFO - ngrok tunnel stopped
+2025-06-29 12:52:16,012 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 12:52:16,015 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 12:52:16,016 - api.main - INFO - Initializing LLM Debate System...
+2025-06-29 12:52:16,016 - api.main - INFO - Starting ngrok tunnel...
+2025-06-29 12:52:16,515 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:52:16,516 - system.dynamic_config - INFO - Found 20 available models
+2025-06-29 12:52:16,517 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-29 12:52:16,518 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-29 12:52:16,518 - system.main - INFO - Initializing LLM Debate System...
+2025-06-29 12:52:16,973 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:52:16,976 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-29 12:52:17,424 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:52:17,425 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-29 12:52:17,425 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-29 12:52:18,833 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:52:18,833 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-29 12:52:18,834 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-29 12:52:18,834 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-29 12:52:21,317 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:52:21,318 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-29 12:52:21,318 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-29 12:52:21,318 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-29 12:52:23,735 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:52:23,735 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-29 12:52:23,736 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-29 12:52:23,736 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-29 12:52:26,111 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:52:26,111 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-29 12:52:26,112 - backend.ollama_integration - INFO - Currently loaded models: ['phi3:mini', 'llama3.2:1b', 'llama3.2:3b', 'gemma2:2b'] - PERSISTENT IN MEMORY
+2025-06-29 12:52:26,112 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-29 12:52:26,112 - system.main - INFO - System initialized successfully
+2025-06-29 12:52:26,112 - api.main - INFO - System initialized successfully!
+2025-06-29 12:52:39,269 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:52:48,762 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:52:49,354 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:52:58,401 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:53:08,403 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:53:18,404 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:53:29,354 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:53:39,359 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:53:49,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:53:59,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:09,365 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:19,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:30,369 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:47,053 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:48,415 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:55,733 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:57,890 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:54:58,992 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:00,370 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:07,613 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:11,366 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:17,360 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:21,364 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:31,358 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:41,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:55:51,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:56:01,362 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:56:11,361 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:56:21,356 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:56:31,361 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:56:41,362 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:56:51,361 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:57:53,824 - api.main - INFO - Shutting down LLM Debate System...
+2025-06-29 12:57:53,824 - api.main - INFO - ngrok tunnel stopped
+2025-06-29 12:58:02,675 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 12:58:02,679 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 12:58:02,680 - api.main - INFO - Initializing LLM Debate System...
+2025-06-29 12:58:02,681 - api.main - INFO - Starting ngrok tunnel...
+2025-06-29 12:58:03,165 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:58:03,165 - system.dynamic_config - INFO - Found 20 available models
+2025-06-29 12:58:03,167 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-29 12:58:03,167 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-29 12:58:03,167 - system.main - INFO - Initializing LLM Debate System...
+2025-06-29 12:58:03,661 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:58:03,662 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-29 12:58:04,111 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 12:58:04,111 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-29 12:58:04,112 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-29 12:58:05,515 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:58:05,516 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-29 12:58:05,516 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-29 12:58:05,516 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-29 12:58:07,665 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:58:07,665 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-29 12:58:07,666 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-29 12:58:07,666 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-29 12:58:10,061 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:58:10,061 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-29 12:58:10,061 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-29 12:58:10,062 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-29 12:58:12,406 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 12:58:12,407 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-29 12:58:12,407 - backend.ollama_integration - INFO - Currently loaded models: ['phi3:mini', 'llama3.2:3b', 'gemma2:2b', 'llama3.2:1b'] - PERSISTENT IN MEMORY
+2025-06-29 12:58:12,407 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-29 12:58:12,408 - system.main - INFO - System initialized successfully
+2025-06-29 12:58:12,408 - api.main - INFO - System initialized successfully!
+2025-06-29 12:58:51,329 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:01,356 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:01,939 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:05,550 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:06,422 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:11,588 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:12,413 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:15,819 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:17,667 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:23,675 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:26,365 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:33,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:36,366 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:43,671 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:46,365 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:53,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 12:59:56,370 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:00:03,669 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:00:06,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:00:13,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:00:16,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:00:23,686 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:00:26,354 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:01:07,798 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:01:13,993 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:01:26,867 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:01:34,662 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:01:35,421 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:01:35,967 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:29:44,276 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:29:48,419 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:29:52,692 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:29:54,371 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:29:59,366 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:03,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:04,359 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:09,364 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:14,367 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:19,366 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:24,359 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:29,687 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:34,367 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:39,363 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:44,362 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:49,368 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:54,364 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:30:59,679 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:31:30,374 - api.main - INFO - Status check - debate_system: True
+2025-06-29 13:31:30,381 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:05:19,889 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:05:30,358 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:05:40,355 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:05:50,358 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:06:00,367 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:06:10,369 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:06:20,371 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:06:22,007 - api.main - INFO - Shutting down LLM Debate System...
+2025-06-29 14:06:22,008 - api.main - INFO - ngrok tunnel stopped
+2025-06-29 14:06:29,789 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 14:06:29,793 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 14:06:29,794 - api.main - INFO - Initializing LLM Debate System...
+2025-06-29 14:06:29,794 - api.main - INFO - Starting ngrok tunnel...
+2025-06-29 14:06:30,293 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:06:30,293 - system.dynamic_config - INFO - Found 20 available models
+2025-06-29 14:06:30,295 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-29 14:06:30,295 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-29 14:06:30,295 - system.main - INFO - Initializing LLM Debate System...
+2025-06-29 14:06:30,769 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:06:30,771 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-29 14:06:31,248 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:06:31,248 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-29 14:06:31,248 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-29 14:06:32,715 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:32,715 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-29 14:06:32,716 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-29 14:06:32,716 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-29 14:06:34,956 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:34,956 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-29 14:06:34,956 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-29 14:06:34,957 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-29 14:06:37,507 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:37,508 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-29 14:06:37,508 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-29 14:06:37,508 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-29 14:06:40,043 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:40,043 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-29 14:06:40,044 - backend.ollama_integration - INFO - Currently loaded models: ['phi3:mini', 'llama3.2:3b', 'llama3.2:1b', 'gemma2:2b'] - PERSISTENT IN MEMORY
+2025-06-29 14:06:40,044 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-29 14:06:40,044 - system.main - INFO - System initialized successfully
+2025-06-29 14:06:40,044 - api.main - INFO - System initialized successfully!
+2025-06-29 14:06:49,106 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 14:06:49,110 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 14:06:49,111 - api.main - INFO - Initializing LLM Debate System...
+2025-06-29 14:06:49,111 - api.main - INFO - Starting ngrok tunnel...
+2025-06-29 14:06:49,602 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:06:49,603 - system.dynamic_config - INFO - Found 20 available models
+2025-06-29 14:06:49,604 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-29 14:06:49,604 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-29 14:06:49,605 - system.main - INFO - Initializing LLM Debate System...
+2025-06-29 14:06:50,074 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:06:50,074 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-29 14:06:50,543 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:06:50,543 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-29 14:06:50,544 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-29 14:06:52,528 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:52,528 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-29 14:06:52,529 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-29 14:06:52,529 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-29 14:06:54,656 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:54,657 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-29 14:06:54,657 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-29 14:06:54,657 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-29 14:06:57,121 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:57,121 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-29 14:06:57,121 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-29 14:06:57,122 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-29 14:06:59,508 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:06:59,509 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-29 14:06:59,509 - backend.ollama_integration - INFO - Currently loaded models: ['gemma2:2b', 'phi3:mini', 'llama3.2:1b', 'llama3.2:3b'] - PERSISTENT IN MEMORY
+2025-06-29 14:06:59,509 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-29 14:06:59,509 - system.main - INFO - System initialized successfully
+2025-06-29 14:06:59,509 - api.main - INFO - System initialized successfully!
+2025-06-29 14:07:00,669 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:07:05,574 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:07:10,353 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:07:15,362 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:07:20,934 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:07:30,583 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:11:42,122 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:11:45,526 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:11:48,212 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:11:55,362 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:11:58,508 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:13:27,349 - api.main - INFO - Shutting down LLM Debate System...
+2025-06-29 14:13:27,349 - api.main - INFO - ngrok tunnel stopped
+2025-06-29 14:13:36,078 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 14:13:36,082 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-29 14:13:36,082 - api.main - INFO - Initializing LLM Debate System...
+2025-06-29 14:13:36,083 - api.main - INFO - Starting ngrok tunnel...
+2025-06-29 14:13:36,581 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:13:36,581 - system.dynamic_config - INFO - Found 20 available models
+2025-06-29 14:13:36,583 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-29 14:13:36,583 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-29 14:13:36,583 - system.main - INFO - Initializing LLM Debate System...
+2025-06-29 14:13:37,050 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:13:37,051 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-29 14:13:37,496 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-29 14:13:37,496 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-29 14:13:37,497 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-29 14:13:38,890 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:13:38,891 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-29 14:13:38,891 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-29 14:13:38,891 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-29 14:13:41,084 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:13:41,084 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-29 14:13:41,085 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-29 14:13:41,085 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-29 14:13:43,484 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:13:43,484 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-29 14:13:43,484 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-29 14:13:43,485 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-29 14:13:45,813 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:13:45,813 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-29 14:13:45,813 - backend.ollama_integration - INFO - Currently loaded models: ['llama3.2:1b', 'llama3.2:3b', 'phi3:mini', 'gemma2:2b'] - PERSISTENT IN MEMORY
+2025-06-29 14:13:45,813 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-29 14:13:45,813 - system.main - INFO - System initialized successfully
+2025-06-29 14:13:45,813 - api.main - INFO - System initialized successfully!
+2025-06-29 14:14:06,224 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:14:15,932 - api.main - INFO - Status check - debate_system: True
+2025-06-29 14:14:38,783 - api.main - INFO - Starting debate 589e2590-2ee6-45c9-a1d7-08a6c60ecea4: should schools be required after ai revolutions
+2025-06-29 14:14:38,783 - system.main - INFO - Starting debate: should schools be required after ai revolutions
+2025-06-29 14:14:38,784 - backend.debate_workflow - INFO - Starting debate: should schools be required after ai revolutions
+2025-06-29 14:14:38,787 - backend.debate_workflow - INFO - Initializing debate for question: should schools be required after ai revolutions
+2025-06-29 14:14:38,788 - backend.debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-29 14:14:38,788 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-29 14:14:39,118 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-29 14:14:39,455 - backend.ollama_integration - INFO - Loading model tinyllama:1.1b for the FIRST TIME...
+2025-06-29 14:14:44,920 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:14:44,921 - backend.ollama_integration - WARNING - Response too long from Creative_Debater: 1389 chars
+2025-06-29 14:14:47,593 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:14:47,593 - backend.ollama_integration - INFO - Successfully loaded model tinyllama:1.1b - NOW IN MEMORY
+2025-06-29 14:14:53,141 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:14:53,141 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 2452 chars
+2025-06-29 14:14:53,172 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:14:53,173 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 1848 chars
+2025-06-29 14:14:53,173 - backend.debate_workflow - INFO - Collected 3 initial responses
+2025-06-29 14:14:53,174 - backend.debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-29 14:14:53,266 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.662, reached=False
+2025-06-29 14:14:53,267 - backend.debate_workflow - INFO - Handling max rounds reached
+2025-06-29 14:14:53,267 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-29 14:15:07,744 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-29 14:15:07,745 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 3457 chars
+2025-06-29 14:15:07,745 - backend.debate_workflow - INFO - Max rounds handling completed
+2025-06-29 14:15:07,746 - backend.debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 1 rounds
+2025-06-29 14:15:07,746 - system.main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-29 14:15:07,746 - api.main - INFO - Debate 589e2590-2ee6-45c9-a1d7-08a6c60ecea4 completed successfully
