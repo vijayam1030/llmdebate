@@ -1,0 +1,11 @@
+# Exclude problematic folders completely
+backend/
+api/
+system/
+.venv/
+node_modules/
+*.log
+*.pyc
+__pycache__/
+.git/
+.angular/
