@@ -96,4 +96,22 @@ The system auto-configures using small models. Manual config in `/config/config.
 
 ---
 
+## 🛠️ Troubleshooting: ngrok/Public URL Stops Working
+
+If your public (ngrok) URL stops working after some time, but the local URL (http://localhost:...) still works, this is expected behavior for free ngrok tunnels. Free ngrok tunnels automatically expire after 1-2 hours.
+
+**What to do:**
+1. **Restart ngrok:**
+   - Close the ngrok window or stop the ngrok process.
+   - Restart ngrok using your usual command or script.
+   - Copy the new public URL and update it in the UI if needed.
+2. **Why this happens:**
+   - Free ngrok accounts have time-limited tunnels. This is not a bug in the debate system.
+3. **Persistent URLs:**
+   - For always-on, unchanging URLs, consider upgrading to a paid ngrok plan or using alternatives like [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/) or [localtunnel](https://github.com/localtunnel/localtunnel).
+
+**Tip:** If you share the ngrok URL, let users know it may change if the tunnel restarts.
+
+---
+
 **Clean, fast, and efficient AI debates with local models! 🎉**

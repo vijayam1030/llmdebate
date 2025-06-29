@@ -16,6 +16,7 @@ from contextlib import asynccontextmanager
 import threading
 import subprocess
 import json
+from dotenv import load_dotenv
 
 # Import our existing system
 import sys
@@ -26,6 +27,9 @@ from system.main import LLMDebateSystem
 from system.config import Config, ModelConfig
 from system.dynamic_config import create_small_model_config_only
 from backend.models import DebateResult, DebateStatus
+
+# Load environment variables from .env
+load_dotenv()
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -42,6 +46,11 @@ def start_ngrok():
     global ngrok_url, ngrok_process
     
     try:
+        # Inject ngrok authtoken if provided
+        ngrok_token = os.getenv('NGROK_AUTHTOKEN')
+        if ngrok_token:
+            subprocess.run(['ngrok', 'config', 'add-authtoken', ngrok_token], check=False)
+        
         # Start ngrok tunnel
         logger.info("Starting ngrok tunnel...")
         ngrok_process = subprocess.Popen(
