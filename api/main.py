@@ -13,6 +13,9 @@ import logging
 import uuid
 from datetime import datetime
 from contextlib import asynccontextmanager
+import threading
+import subprocess
+import json
 
 # Import our existing system
 import sys
@@ -31,12 +34,117 @@ logger = logging.getLogger(__name__)
 # Global variables for session management
 debate_system: Optional[LLMDebateSystem] = None
 current_debates: Dict[str, Dict[str, Any]] = {}
+ngrok_url: Optional[str] = None
+ngrok_process = None
+
+def start_ngrok():
+    """Start ngrok tunnel and return the public URL"""
+    global ngrok_url, ngrok_process
+    
+    try:
+        # Start ngrok tunnel
+        logger.info("Starting ngrok tunnel...")
+        ngrok_process = subprocess.Popen(
+            ['ngrok', 'http', '8000', '--log=stdout'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        
+        # Give ngrok a moment to start
+        import time
+        time.sleep(5)
+        
+        # Try multiple times to get the URL since ngrok might take a moment
+        for attempt in range(3):
+            try:
+                # Use requests instead of curl for better error handling
+                import requests
+                response = requests.get('http://localhost:4040/api/tunnels', timeout=3)
+                
+                if response.status_code == 200:
+                    tunnels_data = response.json()
+                    tunnels = tunnels_data.get('tunnels', [])
+                    
+                    for tunnel in tunnels:
+                        if tunnel.get('proto') == 'https':
+                            ngrok_url = tunnel.get('public_url')
+                            logger.info(f"🌐 ngrok tunnel started: {ngrok_url}")
+                            return ngrok_url
+                            
+            except Exception as e:
+                logger.warning(f"Attempt {attempt + 1}: Could not get ngrok URL via API: {e}")
+                if attempt < 2:  # Sleep between attempts
+                    time.sleep(2)
+            
+        # Check if ngrok is running
+        if ngrok_process and ngrok_process.poll() is None:
+            logger.info("🌐 ngrok tunnel started (URL will be available in ngrok dashboard)")
+            return None  # Will be populated once ngrok fully starts
+            
+    except FileNotFoundError:
+        logger.warning("ngrok not found in PATH. Please install ngrok to enable public URL sharing.")
+    except Exception as e:
+        logger.error(f"Failed to start ngrok: {e}")
+    
+    return None
+
+def check_ngrok_url():
+    """Check if ngrok URL is available"""
+    global ngrok_url
+    
+    if ngrok_url:  # Already have URL
+        return ngrok_url
+        
+    try:
+        import requests
+        response = requests.get('http://localhost:4040/api/tunnels', timeout=2)
+        
+        if response.status_code == 200:
+            tunnels_data = response.json()
+            tunnels = tunnels_data.get('tunnels', [])
+            
+            for tunnel in tunnels:
+                if tunnel.get('proto') == 'https':
+                    ngrok_url = tunnel.get('public_url')
+                    if ngrok_url:
+                        logger.info(f"🌐 ngrok URL detected: {ngrok_url}")
+                        return ngrok_url
+                        
+    except Exception:
+        pass  # Silent fail for periodic checks
+    
+    return None
+
+def stop_ngrok():
+    """Stop ngrok tunnel"""
+    global ngrok_process
+    if ngrok_process:
+        try:
+            ngrok_process.terminate()
+            ngrok_process.wait(timeout=5)
+            logger.info("ngrok tunnel stopped")
+        except Exception as e:
+            logger.error(f"Error stopping ngrok: {e}")
+            try:
+                ngrok_process.kill()
+            except:
+                pass
+        finally:
+            ngrok_process = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Initialize the debate system on startup"""
-    global debate_system
+    global debate_system, ngrok_url
     logger.info("Initializing LLM Debate System...")
+    
+    # Start ngrok tunnel in background
+    def start_ngrok_background():
+        start_ngrok()
+    
+    ngrok_thread = threading.Thread(target=start_ngrok_background, daemon=True)
+    ngrok_thread.start()
     
     try:
         # Create small model config
@@ -109,6 +217,7 @@ Be objective, thorough, and focus on finding common ground."""
     
     # Cleanup on shutdown
     logger.info("Shutting down LLM Debate System...")
+    stop_ngrok()
 
 # FastAPI app with lifespan
 app = FastAPI(
@@ -157,6 +266,7 @@ class SystemStatusResponse(BaseModel):
     initialized: bool
     models_loaded: List[str]
     config: Dict[str, Any]
+    ngrok_url: Optional[str] = None
 
 @app.get("/api")
 async def api_root():
@@ -168,11 +278,15 @@ async def get_system_status():
     """Get system initialization status"""
     logger.info(f"Status check - debate_system: {debate_system is not None}")
     
+    # Check for ngrok URL if we don't have it yet
+    check_ngrok_url()
+    
     if debate_system is None:
         return SystemStatusResponse(
             initialized=False,
             models_loaded=[],
-            config={"error": "System not initialized - check server logs"}
+            config={"error": "System not initialized - check server logs"},
+            ngrok_url=ngrok_url
         )
     
     try:
@@ -192,14 +306,16 @@ async def get_system_status():
         return SystemStatusResponse(
             initialized=True,
             models_loaded=models_list,
-            config=config_dict
+            config=config_dict,
+            ngrok_url=ngrok_url
         )
     except Exception as e:
         logger.error(f"Error getting system status: {e}")
         return SystemStatusResponse(
             initialized=False,
             models_loaded=[],
-            config={"error": str(e)}
+            config={"error": str(e)},
+            ngrok_url=ngrok_url
         )
 
 @app.post("/api/debate/start", response_model=DebateResponse)

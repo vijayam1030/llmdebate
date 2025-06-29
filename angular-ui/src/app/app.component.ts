@@ -16,11 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { interval, Subscription } from 'rxjs';
 import { switchMap, takeWhile } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
 
 interface SystemStatus {
   initialized: boolean;
   models_loaded: string[];
   config: any;
+  ngrok_url?: string;
 }
 
 interface DebateRequest {
@@ -50,6 +52,7 @@ interface DebateStatus {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,
@@ -64,6 +67,30 @@ interface DebateStatus {
     MatChipsModule
   ],
   template: `
+    <!-- SHARABLE APP LINK BAR (NEW UI) -->
+    <div class="ngrok-bar" style="background:#e3f2fd;padding:8px 16px;display:flex;align-items:center;gap:12px;">
+      <mat-icon color="primary">link</mat-icon>
+      <span style="font-weight:600;">Sharable App Link:</span>
+      <input
+        matInput
+        [value]="sharableUrl"
+        placeholder="ngrok/public URL or localhost will appear here"
+        style="min-width:260px;max-width:400px;flex:1;"
+        readonly
+      />
+      <button mat-stroked-button color="primary" (click)="copySharableUrl()" [disabled]="!sharableUrl">
+        <mat-icon>content_copy</mat-icon> Copy
+      </button>
+      <span *ngIf="sharableUrl" style="margin-left:8px;">
+        <a [href]="sharableUrl" target="_blank" style="color:#1976d2;text-decoration:none;">
+          <mat-icon style="font-size:16px;width:16px;height:16px;">open_in_new</mat-icon>
+          Open
+        </a>
+      </span>
+      <span *ngIf="systemStatus?.ngrok_url" style="margin-left:8px;color:#4caf50;font-size:12px;">
+        ✓ ngrok Detected
+      </span>
+    </div>
     <!-- Main Container -->
     <div class="app-container">
       <!-- Header -->
@@ -364,6 +391,8 @@ interface DebateStatus {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
+  ngrokUrl: string = '';
+  sharableUrl: string = '';
   systemStatus: SystemStatus | null = null;
   debateForm: FormGroup;
   isDebating = false;
@@ -395,6 +424,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Clean up after 2 minutes
     setTimeout(() => statusInterval.unsubscribe(), 120000);
+
+    // Set initial sharableUrl to window location
+    this.sharableUrl = window.location.origin;
   }
 
   ngOnDestroy() {
@@ -407,6 +439,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.http.get<SystemStatus>(`${this.apiUrl}/status`).subscribe({
       next: (status) => {
         this.systemStatus = status;
+        // Auto-populate ngrok URL if available from backend
+        if (status.ngrok_url) {
+          this.ngrokUrl = status.ngrok_url;
+          this.sharableUrl = status.ngrok_url;
+        } else {
+          this.sharableUrl = window.location.origin;
+        }
       },
       error: (error) => {
         console.error('Failed to get system status:', error);
@@ -481,5 +520,12 @@ export class AppComponent implements OnInit, OnDestroy {
       question: '',
       maxRounds: 3
     });
+  }
+
+  copySharableUrl() {
+    if (this.sharableUrl) {
+      navigator.clipboard.writeText(this.sharableUrl);
+      this.snackBar.open('App link copied to clipboard!', 'Close', { duration: 2000 });
+    }
   }
 }

@@ -18,3 +18,4 @@ aiohttp>=3.8.0
 typing-extensions>=4.5.0
 plotly>=5.15.0
 pandas>=2.0.0
+pyngrok>=6.0.0
