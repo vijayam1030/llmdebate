@@ -1643,3 +1643,214 @@ models_loaded.3
 2025-06-28 20:43:31,796 - backend.debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
 2025-06-28 20:43:31,797 - system.main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
 2025-06-28 20:43:31,797 - api.main - INFO - Debate 4df52b05-c424-49fd-81ae-3d3d2422f4d9 completed successfully
+2025-06-28 21:09:35,931 - api.main - INFO - Starting debate 8b1b34cf-b73b-4c5f-a755-4d163992aa88: should ai be regulated
+2025-06-28 21:09:35,931 - system.main - INFO - Starting debate: should ai be regulated
+2025-06-28 21:09:35,931 - backend.debate_workflow - INFO - Starting debate: should ai be regulated
+2025-06-28 21:09:35,933 - backend.debate_workflow - INFO - Initializing debate for question: should ai be regulated
+2025-06-28 21:09:35,933 - backend.debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 21:09:35,933 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:09:36,128 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:09:36,325 - backend.ollama_integration - INFO - Model tinyllama:1.1b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:09:39,321 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:09:49,644 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:09:49,645 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 2218 chars
+2025-06-28 21:09:50,596 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:09:50,597 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 4426 chars
+2025-06-28 21:09:50,597 - backend.debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 21:09:50,598 - backend.debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 21:09:50,649 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.675, reached=False
+2025-06-28 21:09:50,650 - backend.debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 21:09:50,692 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:03,369 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:10:03,369 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 2607 chars
+2025-06-28 21:10:03,370 - backend.debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 21:10:03,370 - backend.debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 21:10:03,370 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:03,548 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:03,716 - backend.ollama_integration - INFO - Model tinyllama:1.1b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:13,275 - api.main - INFO - Status check - debate_system: True
+2025-06-28 21:10:16,670 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:10:16,671 - backend.ollama_integration - WARNING - Response too long from Creative_Debater: 3673 chars
+2025-06-28 21:10:23,776 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:10:23,777 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 1921 chars
+2025-06-28 21:10:27,979 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:10:27,980 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 3645 chars
+2025-06-28 21:10:27,980 - backend.debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 21:10:27,981 - backend.debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 21:10:28,037 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.722, reached=False
+2025-06-28 21:10:28,038 - backend.debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 21:10:28,087 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:39,261 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:10:39,262 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 1835 chars
+2025-06-28 21:10:39,262 - backend.debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 21:10:39,263 - backend.debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-28 21:10:39,263 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:39,453 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:39,640 - backend.ollama_integration - INFO - Model tinyllama:1.1b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:10:52,734 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:10:52,735 - backend.ollama_integration - WARNING - Response too long from Creative_Debater: 3513 chars
+2025-06-28 21:10:58,466 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:10:58,466 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 1268 chars
+2025-06-28 21:11:04,357 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:11:04,357 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 4354 chars
+2025-06-28 21:11:04,358 - backend.debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-28 21:11:04,359 - backend.debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-28 21:11:04,415 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.769, reached=False
+2025-06-28 21:11:04,416 - backend.debate_workflow - INFO - Handling max rounds reached
+2025-06-28 21:11:04,416 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:11:16,681 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:11:16,681 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 3452 chars
+2025-06-28 21:11:16,682 - backend.debate_workflow - INFO - Max rounds handling completed
+2025-06-28 21:11:16,682 - backend.debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-28 21:11:16,683 - system.main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 21:11:16,683 - api.main - INFO - Debate 8b1b34cf-b73b-4c5f-a755-4d163992aa88 completed successfully
+2025-06-28 21:15:09,705 - system.main - INFO - Initializing LLM Debate System...
+2025-06-28 21:15:10,183 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:15:10,184 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 21:15:10,633 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:15:10,634 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-28 21:15:10,634 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-28 21:15:12,874 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:15:12,874 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-28 21:15:12,875 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-28 21:15:12,875 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-28 21:15:14,975 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:15:14,976 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-28 21:15:14,976 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-28 21:15:14,976 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-28 21:15:16,976 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:15:16,976 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-28 21:15:16,977 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-28 21:15:16,977 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-28 21:15:19,357 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:15:19,358 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-28 21:15:19,358 - backend.ollama_integration - INFO - Currently loaded models: ['llama3.2:3b', 'llama3.2:1b', 'gemma2:2b', 'phi3:mini'] - PERSISTENT IN MEMORY
+2025-06-28 21:15:19,358 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-28 21:15:19,358 - system.main - INFO - System initialized successfully
+2025-06-28 21:16:16,322 - api.main - INFO - Shutting down LLM Debate System...
+2025-06-28 21:16:23,532 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-28 21:16:23,536 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-28 21:16:23,536 - api.main - INFO - Initializing LLM Debate System...
+2025-06-28 21:16:24,000 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:16:24,001 - system.dynamic_config - INFO - Found 20 available models
+2025-06-28 21:16:24,002 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-28 21:16:24,002 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-28 21:16:24,002 - system.main - INFO - Initializing LLM Debate System...
+2025-06-28 21:16:24,452 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:16:24,452 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 21:16:24,924 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:16:24,925 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-28 21:16:24,925 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-28 21:16:27,221 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:27,221 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-28 21:16:27,221 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-28 21:16:27,221 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-28 21:16:29,375 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:29,376 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-28 21:16:29,376 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-28 21:16:29,376 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-28 21:16:31,459 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:31,459 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-28 21:16:31,460 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-28 21:16:31,460 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-28 21:16:33,899 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:33,899 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-28 21:16:33,899 - backend.ollama_integration - INFO - Currently loaded models: ['llama3.2:1b', 'gemma2:2b', 'phi3:mini', 'llama3.2:3b'] - PERSISTENT IN MEMORY
+2025-06-28 21:16:33,899 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-28 21:16:33,900 - system.main - INFO - System initialized successfully
+2025-06-28 21:16:33,900 - api.main - INFO - System initialized successfully!
+2025-06-28 21:16:34,395 - api.main - INFO - Status check - debate_system: True
+2025-06-28 21:16:35,499 - api.main - INFO - Angular dist folder found at: c:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-28 21:16:35,504 - api.main - INFO - Angular static files will be mounted from: c:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-28 21:16:35,505 - api.main - INFO - Initializing LLM Debate System...
+2025-06-28 21:16:36,104 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:16:36,105 - system.dynamic_config - INFO - Found 20 available models
+2025-06-28 21:16:36,112 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-28 21:16:36,112 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-28 21:16:36,113 - system.main - INFO - Initializing LLM Debate System...
+2025-06-28 21:16:36,703 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:16:36,704 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-28 21:16:37,287 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-28 21:16:37,288 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-28 21:16:37,289 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-28 21:16:39,469 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:39,470 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-28 21:16:39,470 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-28 21:16:39,470 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-28 21:16:41,864 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:41,864 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-28 21:16:41,865 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-28 21:16:41,865 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-28 21:16:44,151 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:44,152 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-28 21:16:44,152 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-28 21:16:44,152 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-28 21:16:44,397 - api.main - INFO - Status check - debate_system: True
+2025-06-28 21:16:46,777 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:16:46,778 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-28 21:16:46,778 - backend.ollama_integration - INFO - Currently loaded models: ['phi3:mini', 'llama3.2:3b', 'llama3.2:1b', 'gemma2:2b'] - PERSISTENT IN MEMORY
+2025-06-28 21:16:46,778 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-28 21:16:46,778 - system.main - INFO - System initialized successfully
+2025-06-28 21:16:46,779 - api.main - INFO - System initialized successfully!
+2025-06-28 21:17:04,954 - api.main - INFO - Starting debate 7003ac47-1cf3-428b-a8d1-105bfa5dfaaa: should schools be there after ai revolution
+2025-06-28 21:17:04,954 - system.main - INFO - Starting debate: should schools be there after ai revolution
+2025-06-28 21:17:04,955 - backend.debate_workflow - INFO - Starting debate: should schools be there after ai revolution
+2025-06-28 21:17:04,957 - backend.debate_workflow - INFO - Initializing debate for question: should schools be there after ai revolution
+2025-06-28 21:17:04,958 - backend.debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-28 21:17:04,958 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:17:05,330 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:17:05,749 - backend.ollama_integration - INFO - Loading model tinyllama:1.1b for the FIRST TIME...
+2025-06-28 21:17:10,081 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:17:13,111 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:17:13,112 - backend.ollama_integration - INFO - Successfully loaded model tinyllama:1.1b - NOW IN MEMORY
+2025-06-28 21:17:18,558 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:17:18,559 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 1753 chars
+2025-06-28 21:17:20,995 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:17:20,996 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 4391 chars
+2025-06-28 21:17:20,996 - backend.debate_workflow - INFO - Collected 3 initial responses
+2025-06-28 21:17:20,998 - backend.debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-28 21:17:21,178 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.589, reached=False
+2025-06-28 21:17:21,180 - backend.debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 21:17:21,328 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:17:34,821 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:17:34,822 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 2620 chars
+2025-06-28 21:17:34,823 - backend.debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 21:17:34,824 - backend.debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-28 21:17:34,824 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:17:35,188 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:17:35,611 - backend.ollama_integration - INFO - Model tinyllama:1.1b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:17:48,886 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:17:48,888 - backend.ollama_integration - WARNING - Response too long from Creative_Debater: 3583 chars
+2025-06-28 21:17:58,939 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:17:58,940 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 3150 chars
+2025-06-28 21:18:00,793 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:18:00,794 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 2834 chars
+2025-06-28 21:18:00,794 - backend.debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-28 21:18:00,795 - backend.debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-28 21:18:00,953 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.760, reached=False
+2025-06-28 21:18:00,954 - backend.debate_workflow - INFO - Generating orchestrator feedback
+2025-06-28 21:18:01,103 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:18:13,812 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:18:13,813 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 2172 chars
+2025-06-28 21:18:13,814 - backend.debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-28 21:18:13,815 - backend.debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-28 21:18:13,815 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:18:14,132 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:18:14,462 - backend.ollama_integration - INFO - Model tinyllama:1.1b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:18:31,189 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:18:31,191 - backend.ollama_integration - WARNING - Response too long from Creative_Debater: 4501 chars
+2025-06-28 21:18:39,495 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:18:39,496 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 2180 chars
+2025-06-28 21:18:44,126 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:18:44,127 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 3823 chars
+2025-06-28 21:18:44,127 - backend.debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-28 21:18:44,129 - backend.debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-28 21:18:44,269 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.772, reached=False
+2025-06-28 21:18:44,271 - backend.debate_workflow - INFO - Handling max rounds reached
+2025-06-28 21:18:44,272 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-28 21:18:59,270 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-28 21:18:59,271 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 3421 chars
+2025-06-28 21:18:59,272 - backend.debate_workflow - INFO - Max rounds handling completed
+2025-06-28 21:18:59,273 - backend.debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-28 21:18:59,273 - system.main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-28 21:18:59,274 - api.main - INFO - Debate 7003ac47-1cf3-428b-a8d1-105bfa5dfaaa completed successfully
