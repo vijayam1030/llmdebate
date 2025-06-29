@@ -1,0 +1,44 @@
+# LLM Debate System: Common Commands and Explanations
+# This file lists all key commands discussed in this chat, with comments for each.
+
+# 1. Install Python dependencies for the backend
+pip install -r system/requirements.txt  # Installs all required Python packages for the backend
+
+# 2. Build the Angular frontend (must be run in the angular-ui directory)
+npm run build  # Builds the Angular app and outputs static files to angular-ui/dist
+
+# 3. Start the Angular development server (for local development only)
+npm start  # Runs Angular dev server at http://localhost:4200 (hot reload, not for production)
+
+# 4. Start the FastAPI backend (serves API and built Angular UI)
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload  # Starts backend at http://localhost:8000
+
+# 5. Start ngrok tunnel to expose backend (run in a separate terminal)
+ngrok http 8000  # Exposes http://localhost:8000 to a public ngrok URL for sharing
+
+# 6. Clean and rebuild the Angular UI (to ensure backend serves latest UI)
+rm -rf angular-ui/dist  # (Linux/macOS) Deletes old build output
+# On Windows, use: rmdir /s /q angular-ui\dist
+npm run build  # Rebuilds the Angular app
+
+# 7. Restart backend after rebuilding frontend
+# (No command needed if using --reload, but restart if needed)
+
+# 8. Open the app in a browser
+# - For local dev: http://localhost:4200 (dev server)
+# - For backend-served UI: http://localhost:8000
+# - For public sharing: <ngrok URL>
+
+# 9. (Optional) Check backend logs for errors
+# (No command, just watch the terminal where backend runs)
+
+# 10. (Optional) Clear browser cache or use incognito to avoid old UI
+# (No command, just browser action)
+
+# 11. (Optional) Stop ngrok or backend
+# Ctrl+C in the terminal running ngrok or backend
+
+# 12. (Optional) Install Node.js dependencies (if not already done)
+npm install  # Installs all Node.js packages for Angular UI
+
+# End of command list
