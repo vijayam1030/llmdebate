@@ -400,7 +400,20 @@ export class AppComponent implements OnInit, OnDestroy {
   debateResult: any = null;
   currentQuestion = '';
   private pollSubscription?: Subscription;
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = this.getApiUrl();
+
+  private getApiUrl(): string {
+    const hostname = window.location.hostname;
+    const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+    
+    if (isLocalhost) {
+      console.log('🏠 Running on localhost - using local API');
+      return 'http://localhost:8000/api';
+    } else {
+      console.log('🌐 Running on external URL - using same origin API');
+      return `${window.location.origin}/api`;
+    }
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -436,19 +449,33 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   checkSystemStatus() {
+    console.log('🔍 Checking system status...');
+    console.log('📡 API URL:', this.apiUrl);
+    console.log('🌐 Window location:', window.location.href);
+    console.log('🏠 Window hostname:', window.location.hostname);
+    
     this.http.get<SystemStatus>(`${this.apiUrl}/status`).subscribe({
       next: (status) => {
+        console.log('✅ Status response received:', status);
+        console.log('🏃 System initialized:', status.initialized);
+        console.log('🔗 Ngrok URL from backend:', status.ngrok_url);
+        
         this.systemStatus = status;
         // Auto-populate ngrok URL if available from backend
         if (status.ngrok_url) {
           this.ngrokUrl = status.ngrok_url;
           this.sharableUrl = status.ngrok_url;
+          console.log('✨ Updated sharable URL to:', this.sharableUrl);
         } else {
           this.sharableUrl = window.location.origin;
+          console.log('🏠 Using window origin as sharable URL:', this.sharableUrl);
         }
       },
       error: (error) => {
-        console.error('Failed to get system status:', error);
+        console.error('❌ Failed to get system status:', error);
+        console.error('🔍 Error details:', error.message);
+        console.error('🌐 Request URL:', `${this.apiUrl}/status`);
+        
         this.systemStatus = {
           initialized: false,
           models_loaded: [],

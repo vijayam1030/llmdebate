@@ -3,7 +3,7 @@ FastAPI Backend for LLM Debate System
 Replaces Streamlit with a REST API
 """
 
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -274,20 +274,27 @@ async def api_root():
     return {"message": "LLM Debate System API", "version": "1.0.0"}
 
 @app.get("/api/status", response_model=SystemStatusResponse)
-async def get_system_status():
+async def get_system_status(request: Request):
     """Get system initialization status"""
-    logger.info(f"Status check - debate_system: {debate_system is not None}")
+    client_ip = request.client.host if request.client else "unknown"
+    user_agent = request.headers.get("user-agent", "unknown")
+    logger.info(f"📊 Status check from {client_ip} - User-Agent: {user_agent}")
+    logger.info(f"🔍 debate_system initialized: {debate_system is not None}")
     
     # Check for ngrok URL if we don't have it yet
     check_ngrok_url()
+    logger.info(f"🌐 Current ngrok_url: {ngrok_url}")
     
     if debate_system is None:
-        return SystemStatusResponse(
+        logger.warning("⚠️ System not initialized - returning error status")
+        response = SystemStatusResponse(
             initialized=False,
             models_loaded=[],
             config={"error": "System not initialized - check server logs"},
             ngrok_url=ngrok_url
         )
+        logger.info(f"📤 Returning status response: {response.model_dump()}")
+        return response
     
     try:
         # Extract model names from ModelConfig objects
@@ -303,12 +310,15 @@ async def get_system_status():
             "debater_max_tokens": getattr(Config, 'DEBATER_MAX_TOKENS', Config.DEBATER_MODELS[0].max_tokens if Config.DEBATER_MODELS else 800)
         }
         
-        return SystemStatusResponse(
+        response = SystemStatusResponse(
             initialized=True,
             models_loaded=models_list,
             config=config_dict,
             ngrok_url=ngrok_url
         )
+        logger.info(f"✅ System initialized - returning success status")
+        logger.info(f"📤 Returning status response: {response.model_dump()}")
+        return response
     except Exception as e:
         logger.error(f"Error getting system status: {e}")
         return SystemStatusResponse(
