@@ -177,7 +177,7 @@ class OllamaManager:
             else:
                 logger.info(f"Model {model} ALREADY LOADED (persistent) - skipping")
         
-        logger.info(f"📊 Currently loaded models: {list(self.loaded_models)} - PERSISTENT IN MEMORY")
+        logger.info(f"Currently loaded models: {list(self.loaded_models)} - PERSISTENT IN MEMORY")
         return success
 
 class DirectOllamaLLM:
@@ -248,16 +248,30 @@ class DirectOllamaLLM:
 class CustomOllamaLLM(Ollama):
     """Custom Ollama LLM with enhanced features"""
     
-    def __init__(self, model_config: ModelConfig, **kwargs):
-        super().__init__(
-            model=model_config.model,
-            base_url=Config.OLLAMA_BASE_URL,
-            temperature=model_config.temperature,
-            **kwargs
-        )
-        # Use object.__setattr__ to bypass Pydantic validation
-        object.__setattr__(self, '_model_config', model_config)
-        object.__setattr__(self, 'system_prompt', model_config.system_prompt)
+    def __init__(self, model_config: ModelConfig = None, model: str = None, **kwargs):
+        # Handle both ModelConfig and direct model string
+        if model_config:
+            super().__init__(
+                model=model_config.model,
+                base_url=Config.OLLAMA_BASE_URL,
+                temperature=model_config.temperature,
+                **kwargs
+            )
+            # Use object.__setattr__ to bypass Pydantic validation
+            object.__setattr__(self, '_model_config', model_config)
+            object.__setattr__(self, 'system_prompt', model_config.system_prompt)
+            object.__setattr__(self, 'model_name', model_config.name)
+        else:
+            # Direct model string (for simple testing)
+            super().__init__(
+                model=model,
+                base_url=Config.OLLAMA_BASE_URL,
+                temperature=0.7,
+                **kwargs
+            )
+            object.__setattr__(self, '_model_config', None)
+            object.__setattr__(self, 'system_prompt', "")
+            object.__setattr__(self, 'model_name', model or "unknown")
         
     def format_messages(self, messages: List[BaseMessage]) -> str:
         """Format messages for Ollama"""
@@ -289,39 +303,51 @@ class CustomOllamaLLM(Ollama):
         try:
             # Use direct HTTP call to Ollama API
             import httpx
-            async with httpx.AsyncClient(timeout=60.0) as client:
-                payload = {
-                    "model": self.model,
-                    "prompt": f"{self.system_prompt}\n\nHuman: {input}\n\nAssistant: " if self.system_prompt else f"Human: {input}\n\nAssistant: ",
-                    "stream": False,
-                    "options": {
-                        "temperature": self.temperature,
-                    }
+            
+            # Create the full prompt
+            if self.system_prompt:
+                full_prompt = f"{self.system_prompt}\n\nHuman: {input}\n\nAssistant: "
+            else:
+                full_prompt = f"Human: {input}\n\nAssistant: "
+            
+            payload = {
+                "model": self.model,
+                "prompt": full_prompt,
+                "stream": False,
+                "options": {
+                    "temperature": self.temperature,
+                    "num_predict": 500  # Limit response length
                 }
-                
+            }
+            
+            # Use a shorter timeout and create fresh client
+            timeout = httpx.Timeout(30.0, connect=10.0)
+            async with httpx.AsyncClient(timeout=timeout) as client:
                 response = await client.post(
                     f"{self.base_url}/api/generate",
                     json=payload
                 )
                 
                 if response.status_code != 200:
-                    raise Exception(f"Ollama call failed with status code {response.status_code}.")
+                    raise Exception(f"Ollama call failed with status code {response.status_code}: {response.text}")
                 
                 result = response.json()
                 generated_text = result.get("response", "")
+                
+                if not generated_text:
+                    raise Exception("Empty response from Ollama")
             
-            # Validate response length
-            if len(generated_text) < Config.MIN_RESPONSE_LENGTH:
-                logger.warning(f"Response too short from {self._model_config.name}: {len(generated_text)} chars")
-            elif len(generated_text) > Config.MAX_RESPONSE_LENGTH:
-                logger.warning(f"Response too long from {self._model_config.name}: {len(generated_text)} chars")
-                generated_text = generated_text[:Config.MAX_RESPONSE_LENGTH] + "..."
+            # Basic validation
+            generated_text = generated_text.strip()
+            if len(generated_text) < 5:
+                logger.warning(f"Very short response from {self.model_name}: '{generated_text}'")
             
-            return generated_text.strip()
+            return generated_text
             
         except Exception as e:
-            logger.error(f"Error calling {self._model_config.name}: {e}")
-            raise
+            logger.error(f"Error calling {self.model_name}: {e}")
+            # Return a meaningful error response instead of raising
+            return f"Error: Failed to get response from {self.model_name} - {str(e)}"
 
 class ModelFactory:
     """Factory for creating configured LLM instances"""

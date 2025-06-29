@@ -51,6 +51,7 @@ class DebateResult(BaseModel):
     total_rounds: int
     final_status: DebateStatus
     rounds: List[DebateRound]
+    consensus_reached: bool = False  # Whether consensus was achieved
     final_summary: Optional[str] = None
     consensus_evolution: List[float] = Field(default_factory=list)  # consensus scores per round
     start_time: datetime = Field(default_factory=datetime.now)

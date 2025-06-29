@@ -326,6 +326,21 @@ class DebateWorkflow:
         
         start_time = datetime.now()
         
+        # Validate inputs
+        if not question or len(question.strip()) < 5:
+            logger.error("Invalid question provided")
+            result = DebateResult(
+                original_question=question,
+                total_rounds=0,
+                final_status=DebateStatus.ERROR,
+                rounds=[],
+                consensus_reached=False,
+                final_summary="Error: Invalid question provided",
+                start_time=start_time
+            )
+            result.finalize()
+            return result
+        
         # Create initial state
         initial_state = DebateState(
             question=question,
@@ -334,6 +349,11 @@ class DebateWorkflow:
         )
         
         try:
+            # Validate that we have agents initialized
+            if not self.debater_agents or not self.orchestrator_agent:
+                logger.error("Agents not properly initialized")
+                raise RuntimeError("Debate agents not initialized")
+            
             # Run the workflow
             config = {"configurable": {"thread_id": f"debate_{start_time.timestamp()}"}}
             final_state_dict = await self.graph.ainvoke(initial_state.dict(), config)
@@ -351,6 +371,7 @@ class DebateWorkflow:
                 total_rounds=final_state.current_round,
                 final_status=final_state.status,
                 rounds=final_state.rounds_history,
+                consensus_reached=(final_state.status == DebateStatus.CONSENSUS_REACHED),
                 final_summary=final_state.final_summary,
                 consensus_evolution=final_state.consensus_scores,
                 start_time=start_time
@@ -362,6 +383,8 @@ class DebateWorkflow:
             
         except Exception as e:
             logger.error(f"Error in debate workflow: {e}")
+            import traceback
+            traceback.print_exc()
             
             # Create error result
             result = DebateResult(
@@ -369,6 +392,7 @@ class DebateWorkflow:
                 total_rounds=0,
                 final_status=DebateStatus.ERROR,
                 rounds=[],
+                consensus_reached=False,
                 final_summary=f"Debate failed due to error: {str(e)}",
                 start_time=start_time
             )

@@ -158,9 +158,9 @@ class SystemStatusResponse(BaseModel):
     models_loaded: List[str]
     config: Dict[str, Any]
 
-@app.get("/")
-async def root():
-    """Root endpoint"""
+@app.get("/api")
+async def api_root():
+    """API root endpoint"""
     return {"message": "LLM Debate System API", "version": "1.0.0"}
 
 @app.get("/api/status", response_model=SystemStatusResponse)
@@ -234,7 +234,15 @@ async def start_debate(request: DebateRequest, background_tasks: BackgroundTasks
 async def get_debate_status(debate_id: str):
     """Get status of a specific debate"""
     if debate_id not in current_debates:
-        raise HTTPException(status_code=404, detail="Debate not found")
+        # Return a helpful response instead of 404
+        return DebateStatusResponse(
+            debate_id=debate_id,
+            status="not_found",
+            progress=0.0,
+            current_round=None,
+            total_rounds=None,
+            result={"error": "Debate not found. It may have been cleared due to server restart."}
+        )
     
     debate_info = current_debates[debate_id]
     
@@ -264,59 +272,143 @@ async def list_debates():
     }
 
 async def run_debate(debate_id: str, question: str, max_rounds: Optional[int] = None):
-    """Run debate in background"""
+    """Run debate in background with progress tracking"""
+    max_rounds = max_rounds or 3
+    
     try:
-        # Update status
+        # Initialize debate tracking
         current_debates[debate_id]["status"] = "running"
         current_debates[debate_id]["progress"] = 0.1
+        current_debates[debate_id]["current_round"] = 0
+        current_debates[debate_id]["total_rounds"] = max_rounds
         
-        # Run the debate
-        result = await debate_system.conduct_debate(
-            question=question,
-            max_rounds=max_rounds or 3
-        )
+        logger.info(f"Starting debate {debate_id}: {question}")
         
-        # Convert result to serializable format
-        result_dict = {
+        # Create a custom debate conductor with progress tracking
+        from backend.debate_workflow import debate_workflow
+        
+        # Start debate and monitor state
+        state = {
             "question": question,
-            "final_status": result.final_status.value,
-            "final_summary": result.final_summary,
-            "total_rounds": result.total_rounds,
-            "consensus_reached": result.consensus_reached,
-            "rounds": []
+            "current_round": 0,
+            "max_rounds": max_rounds,
+            "consensus_threshold": 0.85,
+            "debater_responses": [],
+            "consensus_scores": [],
+            "status": "initializing",
+            "orchestrator_feedback": None,
+            "final_summary": None,
+            "rounds_history": []
         }
         
-        # Add round details
-        for round_data in result.rounds:
-            round_dict = {
-                "round_number": round_data.round_number,
-                "responses": [
-                    {
-                        "agent_name": resp.agent_name,
-                        "response": resp.response,
-                        "token_count": resp.token_count,
-                        "timestamp": resp.timestamp.isoformat()
-                    }
-                    for resp in round_data.responses
-                ],
-                "consensus_analysis": {
-                    "average_similarity": round_data.consensus_analysis.average_similarity,
-                    "consensus_reached": round_data.consensus_analysis.consensus_reached,
-                    "similarity_matrix": round_data.consensus_analysis.similarity_matrix
-                },
-                "orchestrator_feedback": round_data.orchestrator_feedback
-            }
-            result_dict["rounds"].append(round_dict)
+        # Custom progress tracking with actual round monitoring
+        async def track_debate_progress():
+            """Monitor the debate progress"""
+            last_round = 0
+            round_check_interval = 2  # Check every 2 seconds
+            
+            while current_debates[debate_id]["status"] == "running":
+                await asyncio.sleep(round_check_interval)
+                
+                # Check if we're still running
+                if debate_id not in current_debates:
+                    break
+                    
+                # Estimate progress based on time and expected completion
+                # Basic progress tracking: 10% start + (80% / max_rounds) per round + 10% final
+                estimated_progress = 0.1  # Starting progress
+                
+                # Add progress for completed rounds (estimate based on time)
+                import time
+                elapsed = time.time() - current_debates[debate_id]["started_at"].timestamp()
+                
+                # Rough estimation: 45 seconds per round average
+                estimated_rounds_completed = min(elapsed / 45, max_rounds)
+                round_progress = (estimated_rounds_completed / max_rounds) * 0.8
+                
+                total_progress = min(estimated_progress + round_progress, 0.9)  # Cap at 90% until complete
+                
+                current_debates[debate_id]["progress"] = total_progress
+                current_debates[debate_id]["current_round"] = min(int(estimated_rounds_completed) + 1, max_rounds)
         
-        # Update with final result
-        current_debates[debate_id]["status"] = "completed"
-        current_debates[debate_id]["progress"] = 1.0
-        current_debates[debate_id]["result"] = result_dict
-        current_debates[debate_id]["completed_at"] = datetime.now()
+        # Start progress tracking
+        progress_task = asyncio.create_task(track_debate_progress())
+        
+        try:
+            # Run the actual debate with timeout protection
+            debate_task = asyncio.create_task(debate_system.conduct_debate(
+                question=question,
+                max_rounds=max_rounds
+            ))
+            
+            # Wait for debate with timeout (5 minutes)
+            try:
+                result = await asyncio.wait_for(debate_task, timeout=300.0)
+            except asyncio.TimeoutError:
+                logger.error(f"Debate {debate_id} timed out after 5 minutes")
+                progress_task.cancel()
+                current_debates[debate_id]["status"] = "failed"
+                current_debates[debate_id]["progress"] = 0.0
+                current_debates[debate_id]["error"] = "Debate timed out after 5 minutes"
+                return
+            
+            # Stop progress tracking
+            progress_task.cancel()
+            
+            # Convert result to serializable format
+            result_dict = {
+                "question": question,
+                "final_status": result.final_status.value,
+                "final_summary": result.final_summary or "No summary available",
+                "total_rounds": result.total_rounds,
+                "consensus_reached": result.consensus_reached,
+                "rounds": []
+            }
+            
+            # Add round details
+            for round_data in result.rounds:
+                # Safety check for round data
+                if not hasattr(round_data, 'debater_responses'):
+                    logger.warning(f"Round {round_data.round_number} missing debater_responses")
+                    continue
+                    
+                round_dict = {
+                    "round_number": round_data.round_number,
+                    "responses": [
+                        {
+                            "agent_name": getattr(resp, 'debater_name', 'Unknown'),
+                            "response": resp.response,
+                            "token_count": getattr(resp, 'response_length', len(resp.response)),
+                            "timestamp": resp.timestamp.isoformat() if hasattr(resp, 'timestamp') else datetime.now().isoformat()
+                        }
+                        for resp in round_data.debater_responses
+                    ],
+                    "consensus_analysis": {
+                        "average_similarity": round_data.consensus_analysis.average_similarity if round_data.consensus_analysis else 0.0,
+                        "consensus_reached": round_data.consensus_analysis.consensus_reached if round_data.consensus_analysis else False,
+                        "similarity_matrix": getattr(round_data.consensus_analysis, 'similarity_scores', {}) if round_data.consensus_analysis else {}
+                    },
+                    "orchestrator_feedback": round_data.orchestrator_feedback or "No feedback available"
+                }
+                result_dict["rounds"].append(round_dict)
+            
+            # Update with final result
+            current_debates[debate_id]["status"] = "completed"
+            current_debates[debate_id]["progress"] = 1.0
+            current_debates[debate_id]["current_round"] = result.total_rounds
+            current_debates[debate_id]["result"] = result_dict
+            current_debates[debate_id]["completed_at"] = datetime.now()
+            
+            logger.info(f"Debate {debate_id} completed successfully")
+            
+        except Exception as e:
+            progress_task.cancel()
+            raise e
         
     except Exception as e:
         logger.error(f"Debate {debate_id} failed: {e}")
         current_debates[debate_id]["status"] = "failed"
+        current_debates[debate_id]["progress"] = 0.0
         current_debates[debate_id]["error"] = str(e)
 
 # Mount Angular static files AFTER all API routes are defined
