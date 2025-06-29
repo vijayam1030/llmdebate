@@ -1,35 +1,61 @@
-# 🎯 LLM Debate System (Small Models Only)
+# 🎯 LLM Debate System - Angular Edition
 
-**A clean, organized AI debate system using only small local Ollama models (<4GB each)**
+**A modern AI debate system with Angular frontend and FastAPI backend using local Ollama models**
 
 ## 🚀 Quick Start
 
 ### **Windows (Easiest)**
 ```bash
 # Double-click:
-bin\launch.bat
+start_angular_ui.bat
 
 # Or from command line:
-streamlit run streamlit_app_session.py
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 
 ### **Any Platform**
 ```bash
-# Install dependencies:
+# Install Python dependencies:
 pip install -r system/requirements.txt
 
-# Run the web interface:
-streamlit run streamlit_app_session.py
+# Install Angular dependencies (first time only):
+cd angular-ui && npm install && cd ..
+
+# Build Angular frontend (first time only):
+cd angular-ui && npx ng build && cd ..
+
+# Run the server:
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
+
+## 🌐 Access the Application
+
+Open your browser and go to: **http://localhost:8000**
 
 ## 📁 Project Structure
 
 ```
 📁 Root (Clean!)
-├── streamlit_app_session.py    ⭐ Main web interface
+├── api/                        🚀 FastAPI backend
+│   └── main.py                    REST API server
+├── angular-ui/                 🎨 Angular frontend
+│   ├── src/                       Source code
+│   └── dist/                      Built files (served by API)
+├── start_angular_ui.bat        ⭐ Main launcher
+├── system/                     🔧 Core system files
+├── backend/                    🤖 Debate logic
+├── ui/                         📁 Legacy Streamlit UIs
+├── legacy/                     📁 Old/archived files
 ├── README.md                   📖 This file
-├── .env                        🔧 Environment config
-└── .gitignore
+└── .env                        🔧 Environment config
+
+📁 /api/                        🚀 FastAPI Backend
+├── main.py                     🌐 REST API server with endpoints
+
+📁 /angular-ui/                 🎨 Angular Frontend  
+├── src/app/                    📱 Angular components
+├── dist/                       📦 Built files (auto-served)
+└── package.json                📋 Node dependencies
 
 📁 /backend/                    🔧 Core system logic
 ├── agents.py                   🤖 AI agents
@@ -42,8 +68,7 @@ streamlit run streamlit_app_session.py
 ├── config.py                   📋 Settings
 ├── dynamic_config.py           🔄 Auto-config
 ├── main.py                     🎯 Core system
-├── requirements.txt            📦 Dependencies
-└── launch_session_ui.py        🚀 Python launcher
+└── requirements.txt            📦 Dependencies
 
 📁 /bin/                        💻 Executables  
 ├── launch.bat                  🖱️ Easy Windows launcher
@@ -93,6 +118,40 @@ The system auto-configures using small models. Manual config in `/system/config.
 - **System**: Settings in `/system/`  
 - **Tests**: Utilities in `/scripts/`
 - **Docs**: Guides in `/docs/`
+
+---
+
+## ✨ Modern Angular Features
+
+### 🎨 **Beautiful Material Design UI**
+- Clean, responsive interface with Angular Material components
+- Real-time progress tracking with visual progress bars
+- Tabbed results view for organized debate analysis
+- Mobile-friendly responsive design
+
+### 🚀 **Advanced Functionality** 
+- **Real-time Updates**: Live debate progress with automatic polling
+- **REST API**: Clean separation between frontend and backend
+- **Session Management**: Persistent model loading and state
+- **Error Handling**: User-friendly error messages and notifications
+- **Expandable Results**: Collapsible rounds view for detailed analysis
+
+### 🔧 **Developer Benefits**
+- **FastAPI Backend**: Modern async Python REST API
+- **Angular Frontend**: TypeScript, reactive forms, HTTP client
+- **Hot Reload**: Development server with live updates
+- **Production Ready**: Optimized builds served directly by FastAPI
+- **API Documentation**: Automatic Swagger/OpenAPI docs at `/docs`
+
+## 🎯 **Key Advantages Over Streamlit**
+
+✅ **Better Performance**: Faster loading and smoother interactions  
+✅ **Modern UI/UX**: Professional Material Design interface  
+✅ **Mobile Responsive**: Works perfectly on phones and tablets  
+✅ **Real-time Updates**: Live progress without page refreshes  
+✅ **Better Error Handling**: User-friendly error messages  
+✅ **API First**: RESTful design for easy integration  
+✅ **Production Ready**: Optimized builds and professional deployment
 
 ---
 

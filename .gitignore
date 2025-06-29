@@ -166,3 +166,31 @@ models/
 
 # Ollama specific
 ollama_data/
+
+# Node.js and Angular
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+angular-ui/node_modules/
+angular-ui/dist/
+angular-ui/.angular/
+angular-ui/npm-debug.log*
+angular-ui/yarn-debug.log*
+angular-ui/yarn-error.log*
+
+# Angular build outputs
+angular-ui/dist/
+angular-ui/tmp/
+angular-ui/out-tsc/
+angular-ui/bazel-out/
+
+# Angular cache
+angular-ui/.angular/cache/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Package manager lockfiles (optional - comment out if you want to track them)
+# package-lock.json
+# yarn.lock

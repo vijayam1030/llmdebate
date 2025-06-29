@@ -78,6 +78,10 @@ Bridge theory with practice in your arguments."""
     MIN_RESPONSE_LENGTH = 50
     MAX_RESPONSE_LENGTH = 1000
     
+    # Max token settings (extracted from model configs for API compatibility)
+    ORCHESTRATOR_MAX_TOKENS = 2000
+    DEBATER_MAX_TOKENS = 800
+    
     # Consensus Detection
     SIMILARITY_METHOD = "semantic"  # "semantic" or "keyword"
     EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
