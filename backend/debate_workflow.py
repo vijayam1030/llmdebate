@@ -354,9 +354,14 @@ class DebateWorkflow:
                 logger.error("Agents not properly initialized")
                 raise RuntimeError("Debate agents not initialized")
             
-            # Run the workflow
+            # Run the workflow with overall timeout
             config = {"configurable": {"thread_id": f"debate_{start_time.timestamp()}"}}
-            final_state_dict = await self.graph.ainvoke(initial_state.dict(), config)
+            
+            # Add overall debate timeout (5 minutes)
+            final_state_dict = await asyncio.wait_for(
+                self.graph.ainvoke(initial_state.dict(), config),
+                timeout=300.0  # 5 minutes total timeout
+            )
             
             # Convert dict back to DebateState if needed
             if isinstance(final_state_dict, dict):
@@ -379,6 +384,22 @@ class DebateWorkflow:
             result.finalize()
             
             logger.info(f"Debate completed: {result.final_status} in {result.total_rounds} rounds")
+            return result
+            
+        except asyncio.TimeoutError:
+            logger.error("Debate workflow timed out after 5 minutes")
+            
+            # Create timeout result
+            result = DebateResult(
+                original_question=question,
+                total_rounds=0,
+                final_status=DebateStatus.ERROR,
+                rounds=[],
+                consensus_reached=False,
+                final_summary="Debate timed out after 5 minutes due to processing delays.",
+                start_time=start_time
+            )
+            result.finalize()
             return result
             
         except Exception as e:

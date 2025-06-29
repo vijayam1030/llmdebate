@@ -2,6 +2,7 @@
 LangChain agents for debater LLMs and orchestrator
 """
 
+import asyncio
 import logging
 from typing import List, Dict, Any, Optional
 from datetime import datetime
@@ -30,7 +31,12 @@ class DebaterAgent:
         """Generate initial response to the debate question"""
         try:
             prompt = self._create_initial_prompt(question)
-            response = await self.llm.ainvoke(prompt)
+            
+            # Add timeout for the LLM call
+            response = await asyncio.wait_for(
+                self.llm.ainvoke(prompt), 
+                timeout=45.0  # 45 second timeout
+            )
             
             debater_response = DebaterResponse(
                 debater_name=self.config.name,
@@ -45,9 +51,31 @@ class DebaterAgent:
             
             return debater_response
             
+        except asyncio.TimeoutError:
+            logger.error(f"Timeout generating initial response for {self.config.name} after 45 seconds")
+            # Return a fallback response instead of raising
+            fallback_response = DebaterResponse(
+                debater_name=self.config.name,
+                model=self.config.model,
+                response=f"I believe {question} requires careful consideration. Due to processing constraints, I cannot provide my full analysis at this time, but I'm prepared to engage in this important debate.",
+                round_number=1,
+                response_length=100
+            )
+            self.response_history.append(fallback_response)
+            return fallback_response
+            
         except Exception as e:
             logger.error(f"Error generating initial response for {self.config.name}: {e}")
-            raise
+            # Return a fallback response instead of raising
+            fallback_response = DebaterResponse(
+                debater_name=self.config.name,
+                model=self.config.model,
+                response=f"I encountered a technical issue while preparing my initial response to {question}, but I'm ready to participate in this debate to the best of my ability.",
+                round_number=1,
+                response_length=100
+            )
+            self.response_history.append(fallback_response)
+            return fallback_response
     
     async def generate_rebuttal(
         self, 
@@ -59,7 +87,12 @@ class DebaterAgent:
         """Generate rebuttal based on other debaters' responses and orchestrator feedback"""
         try:
             prompt = self._create_rebuttal_prompt(question, other_responses, orchestrator_feedback)
-            response = await self.llm.ainvoke(prompt)
+            
+            # Add timeout for the LLM call
+            response = await asyncio.wait_for(
+                self.llm.ainvoke(prompt), 
+                timeout=45.0  # 45 second timeout
+            )
             
             debater_response = DebaterResponse(
                 debater_name=self.config.name,
@@ -74,9 +107,31 @@ class DebaterAgent:
             
             return debater_response
             
+        except asyncio.TimeoutError:
+            logger.error(f"Timeout generating rebuttal for {self.config.name} after 45 seconds")
+            # Return a fallback response instead of raising
+            fallback_response = DebaterResponse(
+                debater_name=self.config.name,
+                model=self.config.model,
+                response=f"I apologize, but I was unable to provide a detailed rebuttal due to processing constraints. However, I maintain my position on {question}.",
+                round_number=round_number,
+                response_length=100
+            )
+            self.response_history.append(fallback_response)
+            return fallback_response
+            
         except Exception as e:
             logger.error(f"Error generating rebuttal for {self.config.name}: {e}")
-            raise
+            # Return a fallback response instead of raising
+            fallback_response = DebaterResponse(
+                debater_name=self.config.name,
+                model=self.config.model,
+                response=f"I encountered an error while formulating my rebuttal, but I continue to stand by my previous arguments regarding {question}.",
+                round_number=round_number,
+                response_length=100
+            )
+            self.response_history.append(fallback_response)
+            return fallback_response
     
     def _create_initial_prompt(self, question: str) -> str:
         """Create prompt for initial response"""
@@ -221,16 +276,30 @@ class OrchestratorAgent:
         question: str, 
         all_responses: List[DebaterResponse]
     ) -> str:
-        """Generate final summary when consensus is reached"""
-        
+        """Generate final summary when consensus is reached, with fallback and logging"""
         try:
             prompt = self._create_summary_prompt(question, all_responses)
-            summary = await self.llm.ainvoke(prompt)
-            return summary
-            
+            try:
+                summary = await self.llm.ainvoke(prompt)
+                if summary and summary.strip():
+                    return summary
+            except Exception as e:
+                logger.error(f"Error generating final summary with orchestrator model: {e}")
+                logger.error(f"Summary prompt was:\n{prompt}")
+                # Try fallback model if available
+                try:
+                    fallback_model = model_factory.create_debater(Config.DEBATER_MODELS[0])
+                    logger.info(f"Trying fallback model {Config.DEBATER_MODELS[0].model} for summary generation")
+                    summary = await fallback_model.ainvoke(prompt)
+                    if summary and summary.strip():
+                        return summary + "\n\n(Note: This summary was generated by a fallback model due to an error with the main orchestrator.)"
+                except Exception as e2:
+                    logger.error(f"Fallback summary generation also failed: {e2}")
+                    logger.error(f"Fallback prompt was:\n{prompt}")
         except Exception as e:
-            logger.error(f"Error generating final summary: {e}")
-            return "Unable to generate summary due to technical error."
+            logger.error(f"Error in generate_final_summary: {e}")
+        # Final guaranteed fallback
+        return "Summary not available."
     
     def _create_summary_prompt(self, question: str, all_responses: List[DebaterResponse]) -> str:
         """Create prompt for final summary generation"""

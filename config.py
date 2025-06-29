@@ -20,13 +20,13 @@ class Config:
     """Configuration class for LLM Debate System with Ollama"""
     
     # Ollama Configuration
-    OLLAMA_BASE_URL = "http://localhost:11434"
+    OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", os.getenv("OLLAMA_URL", "http://localhost:11434"))
     OLLAMA_TIMEOUT = 60
     
     # Orchestrator Model (Small Local Model)
     ORCHESTRATOR_MODEL = ModelConfig(
         name="Orchestrator",
-        model="llama3.2:3b",  # Small, efficient orchestrator model
+        model="gemma2:2b",  # Changed from llama3.2:3b to available model
         temperature=0.3,
         max_tokens=2000,  # Restored to original size for detailed responses
         personality="analytical and diplomatic",
@@ -52,7 +52,7 @@ Be thorough but concise in your responses."""
         ),
         ModelConfig(
             name="Creative_Debater", 
-            model="phi3:mini",
+            model="tinyllama:1.1b",  # Changed from phi3:mini to available model
             temperature=0.8,
             max_tokens=800,  # Restored to original size for detailed responses
             personality="creative and perspective-oriented",

@@ -28,12 +28,13 @@ RUN mkdir -p logs
 ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
 ENV OLLAMA_URL=http://host.docker.internal:11434
+ENV OLLAMA_BASE_URL=http://host.docker.internal:11434
 
 EXPOSE 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=2 \
-    CMD curl -f http://localhost:8000/api/status || exit 1
+    CMD curl -f http://localhost:8000/system/status || exit 1
 
 # Run the FastAPI app
 CMD ["python", "-m", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

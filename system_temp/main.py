@@ -44,7 +44,7 @@ class LLMDebateSystem:
         try:
             # Check Ollama connection
             if not await ollama_manager.check_ollama_connection():
-                logger.error("Cannot connect to Ollama. Please ensure Ollama is running on localhost:11434")
+                logger.error(f"Cannot connect to Ollama. Please ensure Ollama is running on {Config.OLLAMA_BASE_URL}")
                 return False
             
             # Initialize all models
@@ -215,7 +215,7 @@ Features:
   • Detailed logging and analytics
 
 Requirements:
-  • Ollama installed and running (localhost:11434)
+  • Ollama installed and running ({Config.OLLAMA_BASE_URL})
   • Required models downloaded (see config.py)
   
 Models used:

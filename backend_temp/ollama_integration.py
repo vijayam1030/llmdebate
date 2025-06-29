@@ -183,9 +183,9 @@ class OllamaManager:
 class DirectOllamaLLM:
     """Direct Ollama LLM implementation that bypasses LangChain"""
     
-    def __init__(self, model_config: ModelConfig, base_url: str = "http://localhost:11434", ollama_manager: OllamaManager = None):
+    def __init__(self, model_config: ModelConfig, base_url: str = None, ollama_manager: OllamaManager = None):
         self.model_config = model_config
-        self.base_url = base_url
+        self.base_url = base_url or Config.OLLAMA_BASE_URL
         self.model = model_config.model
         self.system_prompt = model_config.system_prompt
         self.ollama_manager = ollama_manager or ollama_manager
