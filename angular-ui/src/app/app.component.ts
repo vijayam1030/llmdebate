@@ -415,11 +415,35 @@ export class AppComponent implements OnInit, OnDestroy {
     
     if (isLocalhost) {
       console.log('🏠 Running on localhost - using local API');
-      return 'http://localhost:8000/api';
+      return 'http://localhost:8001/api';
     } else {
-      console.log('🌐 Running on external URL - using same origin API');
+      // When accessed via frontend Cloudflare URL, we need to use the backend Cloudflare URL
+      // Since we don't know it dynamically, try same origin first, then fallback to localhost
+      console.log('🌐 Running on external URL - trying same origin API first');
       return `${window.location.origin}/api`;
     }
+  }
+
+  private async tryBackendUrls(): Promise<string> {
+    const possibleUrls = [
+      'http://localhost:8001/api',
+      `${window.location.origin}/api`,
+      // Add more backend URLs here if needed
+    ];
+
+    for (const url of possibleUrls) {
+      try {
+        console.log(`🔍 Trying backend URL: ${url}`);
+        const response = await this.http.get(`${url}/status`).toPromise();
+        console.log(`✅ Backend URL working: ${url}`);
+        return url;
+      } catch (error) {
+        console.log(`❌ Backend URL failed: ${url}`, error);
+      }
+    }
+    
+    console.warn('⚠️ No working backend URL found, using default');
+    return possibleUrls[0];
   }
 
   constructor(
@@ -434,9 +458,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Clear any cached URLs on startup
+    this.ngrokUrl = '';
+    this.sharableUrl = window.location.origin;
+    
     this.checkSystemStatus();
-    // Poll system status every 10 seconds until initialized
-    const statusInterval = interval(10000).pipe(
+    // Poll system status every 5 seconds for faster updates
+    const statusInterval = interval(5000).pipe(
       takeWhile(() => !this.systemStatus?.initialized, true)
     ).subscribe(() => {
       this.checkSystemStatus();
@@ -444,9 +472,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Clean up after 2 minutes
     setTimeout(() => statusInterval.unsubscribe(), 120000);
-
-    // Set initial sharableUrl to window location
-    this.sharableUrl = window.location.origin;
   }
 
   ngOnDestroy() {
@@ -466,46 +491,80 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('✅ Status response received:', status);
         console.log('🏃 System initialized:', status.initialized);
         console.log('🔗 Ngrok URL from backend:', status.ngrok_url);
+        console.log('🔗 Cloudflare URLs from backend:', status.cloudflare_urls);
         
         this.systemStatus = status;
-        
-        // Prioritize Cloudflare frontend URL over everything else
-        if (status.cloudflare_urls?.frontend) {
-          this.sharableUrl = status.cloudflare_urls.frontend;
-          console.log('✨ Using Cloudflare frontend URL:', this.sharableUrl);
-        } else if (status.ngrok_url) {
-          this.ngrokUrl = status.ngrok_url;
-          this.sharableUrl = status.ngrok_url;
-          console.log('⚠️ Falling back to ngrok URL:', this.sharableUrl);
-        } else {
-          this.sharableUrl = window.location.origin;
-          console.log('🏠 Using local URL:', this.sharableUrl);
-        }
-        
-        // Override ngrok if Cloudflare is available
-        if (status.cloudflare_urls?.frontend && status.ngrok_url) {
-          console.log('🔄 Overriding ngrok with Cloudflare URL');
-          this.sharableUrl = status.cloudflare_urls.frontend;
-        }
         
         // Log Cloudflare URLs for debugging
         if (status.cloudflare_urls) {
           console.log('🔗 Cloudflare frontend URL:', status.cloudflare_urls.frontend);
           console.log('🔗 Cloudflare backend URL:', status.cloudflare_urls.backend);
         }
+        
+        this.updateUrlsFromStatus(status);
       },
       error: (error) => {
         console.error('❌ Failed to get system status:', error);
         console.error('🔍 Error details:', error.message);
         console.error('🌐 Request URL:', `${this.apiUrl}/status`);
         
-        this.systemStatus = {
-          initialized: false,
-          models_loaded: [],
-          config: { error: 'Failed to connect to server' }
-        };
+        // If we're on external URL and API fails, try localhost as fallback
+        if (!this.apiUrl.includes('localhost') && !this.systemStatus) {
+          console.log('🔄 Trying localhost fallback...');
+          const fallbackUrl = 'http://localhost:8001/api';
+          this.http.get<SystemStatus>(`${fallbackUrl}/status`).subscribe({
+            next: (status) => {
+              console.log('✅ Fallback status response received:', status);
+              this.systemStatus = status;
+              this.updateUrlsFromStatus(status);
+            },
+            error: (fallbackError) => {
+              console.error('❌ Fallback also failed:', fallbackError);
+              this.systemStatus = {
+                initialized: false,
+                models_loaded: [],
+                config: { error: 'Failed to connect to both remote and local server' }
+              };
+            }
+          });
+        } else {
+          this.systemStatus = {
+            initialized: false,
+            models_loaded: [],
+            config: { error: 'Failed to connect to server' }
+          };
+        }
       }
     });
+  }
+
+  private updateUrlsFromStatus(status: SystemStatus) {
+    // Extract URL update logic into separate method
+    // Clear any existing ngrok URL first
+    this.ngrokUrl = '';
+    
+    // Use Cloudflare backend URL since it serves the complete app
+    if (status.cloudflare_urls?.backend) {
+      this.sharableUrl = status.cloudflare_urls.backend;
+      console.log('✨ Using Cloudflare backend URL (serves full app):', this.sharableUrl);
+    } else if (status.cloudflare_urls?.frontend) {
+      this.sharableUrl = status.cloudflare_urls.frontend;
+      console.log('✨ Using Cloudflare frontend URL:', this.sharableUrl);
+    } else if (status.ngrok_url) {
+      this.ngrokUrl = status.ngrok_url;
+      this.sharableUrl = status.ngrok_url;
+      console.log('⚠️ Falling back to ngrok URL:', this.sharableUrl);
+    } else {
+      this.sharableUrl = window.location.origin;
+      console.log('🏠 Using local URL:', this.sharableUrl);
+    }
+    
+    // Force Cloudflare backend URL if available (serves complete app)
+    if (status.cloudflare_urls?.backend) {
+      this.sharableUrl = status.cloudflare_urls.backend;
+      this.ngrokUrl = '';  // Clear ngrok URL
+      console.log('🔄 Force using Cloudflare backend URL (complete app):', this.sharableUrl);
+    }
   }
 
   startDebate() {
