@@ -23,6 +23,10 @@ interface SystemStatus {
   models_loaded: string[];
   config: any;
   ngrok_url?: string;
+  cloudflare_urls?: {
+    backend?: string;
+    frontend?: string;
+  };
 }
 
 interface DebateRequest {
@@ -89,6 +93,9 @@ interface DebateStatus {
       </span>
       <span *ngIf="systemStatus?.ngrok_url" style="margin-left:8px;color:#4caf50;font-size:12px;">
         ✓ ngrok Detected
+      </span>
+      <span *ngIf="systemStatus?.cloudflare_urls?.frontend" style="margin-left:8px;color:#ff5722;font-size:12px;">
+        ✓ Cloudflare Detected
       </span>
     </div>
     <!-- Main Container -->
@@ -461,14 +468,30 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('🔗 Ngrok URL from backend:', status.ngrok_url);
         
         this.systemStatus = status;
-        // Auto-populate ngrok URL if available from backend
-        if (status.ngrok_url) {
+        
+        // Prioritize Cloudflare frontend URL over everything else
+        if (status.cloudflare_urls?.frontend) {
+          this.sharableUrl = status.cloudflare_urls.frontend;
+          console.log('✨ Using Cloudflare frontend URL:', this.sharableUrl);
+        } else if (status.ngrok_url) {
           this.ngrokUrl = status.ngrok_url;
           this.sharableUrl = status.ngrok_url;
-          console.log('✨ Updated sharable URL to:', this.sharableUrl);
+          console.log('⚠️ Falling back to ngrok URL:', this.sharableUrl);
         } else {
           this.sharableUrl = window.location.origin;
-          console.log('🏠 Using window origin as sharable URL:', this.sharableUrl);
+          console.log('🏠 Using local URL:', this.sharableUrl);
+        }
+        
+        // Override ngrok if Cloudflare is available
+        if (status.cloudflare_urls?.frontend && status.ngrok_url) {
+          console.log('🔄 Overriding ngrok with Cloudflare URL');
+          this.sharableUrl = status.cloudflare_urls.frontend;
+        }
+        
+        // Log Cloudflare URLs for debugging
+        if (status.cloudflare_urls) {
+          console.log('🔗 Cloudflare frontend URL:', status.cloudflare_urls.frontend);
+          console.log('🔗 Cloudflare backend URL:', status.cloudflare_urls.backend);
         }
       },
       error: (error) => {

@@ -17,6 +17,7 @@ import threading
 import subprocess
 import json
 from dotenv import load_dotenv
+from cloudflared_tunnel import get_cloudflare_urls
 
 # Import our existing system
 import sys
@@ -40,6 +41,9 @@ debate_system: Optional[LLMDebateSystem] = None
 current_debates: Dict[str, Dict[str, Any]] = {}
 ngrok_url: Optional[str] = None
 ngrok_process = None
+
+# Cloudflare tunnels will be managed by the startup script
+cloudflare_urls = {}
 
 def start_ngrok():
     """Start ngrok tunnel and return the public URL"""
@@ -98,32 +102,21 @@ def start_ngrok():
     
     return None
 
-def check_ngrok_url():
-    """Check if ngrok URL is available"""
-    global ngrok_url
+def check_cloudflare_urls():
+    """Check if Cloudflare URLs are available"""
+    global cloudflare_urls
     
-    if ngrok_url:  # Already have URL
-        return ngrok_url
-        
+    # First try to get from the tunnel instance
     try:
-        import requests
-        response = requests.get('http://localhost:4040/api/tunnels', timeout=2)
-        
-        if response.status_code == 200:
-            tunnels_data = response.json()
-            tunnels = tunnels_data.get('tunnels', [])
-            
-            for tunnel in tunnels:
-                if tunnel.get('proto') == 'https':
-                    ngrok_url = tunnel.get('public_url')
-                    if ngrok_url:
-                        logger.info(f"🌐 ngrok URL detected: {ngrok_url}")
-                        return ngrok_url
-                        
-    except Exception:
-        pass  # Silent fail for periodic checks
+        current_urls = get_cloudflare_urls()
+        if current_urls and (current_urls.get('backend') or current_urls.get('frontend')):
+            cloudflare_urls.update(current_urls)
+            logger.info(f"Got Cloudflare URLs from tunnel: {cloudflare_urls}")
+    except Exception as e:
+        logger.debug(f"Could not check Cloudflare URLs from tunnel: {e}")
     
-    return None
+    # Return current cloudflare_urls (might be set by startup script)
+    return cloudflare_urls
 
 def stop_ngrok():
     """Stop ngrok tunnel"""
@@ -219,6 +212,8 @@ Be objective, thorough, and focus on finding common ground."""
         
     except Exception as e:
         logger.error(f"Failed to initialize system: {e}")
+        import traceback
+        logger.error(f"Full traceback: {traceback.format_exc()}")
         debate_system = None
         # Don't log success if there was an error!
     
@@ -276,6 +271,7 @@ class SystemStatusResponse(BaseModel):
     models_loaded: List[str]
     config: Dict[str, Any]
     ngrok_url: Optional[str] = None
+    cloudflare_urls: Dict[str, Optional[str]] = {}
 
 @app.get("/api")
 async def api_root():
@@ -290,9 +286,9 @@ async def get_system_status(request: Request):
     logger.info(f"📊 Status check from {client_ip} - User-Agent: {user_agent}")
     logger.info(f"🔍 debate_system initialized: {debate_system is not None}")
     
-    # Check for ngrok URL if we don't have it yet
-    check_ngrok_url()
-    logger.info(f"🌐 Current ngrok_url: {ngrok_url}")
+    # Check for Cloudflare URLs
+    current_cloudflare_urls = check_cloudflare_urls()
+    logger.info(f"Current Cloudflare URLs: {current_cloudflare_urls}")
     
     if debate_system is None:
         logger.warning("⚠️ System not initialized - returning error status")
@@ -300,9 +296,10 @@ async def get_system_status(request: Request):
             initialized=False,
             models_loaded=[],
             config={"error": "System not initialized - check server logs"},
-            ngrok_url=ngrok_url
+            ngrok_url=ngrok_url,
+            cloudflare_urls=current_cloudflare_urls
         )
-        logger.info(f"📤 Returning status response: {response.model_dump()}")
+        logger.info(f"Returning status response: {response.model_dump()}")
         return response
     
     try:
@@ -319,14 +316,20 @@ async def get_system_status(request: Request):
             "debater_max_tokens": getattr(Config, 'DEBATER_MAX_TOKENS', Config.DEBATER_MODELS[0].max_tokens if Config.DEBATER_MODELS else 800)
         }
         
+        # Always prioritize Cloudflare over ngrok
+        final_ngrok_url = None  # Disable ngrok URLs when using Cloudflare
+        if not current_cloudflare_urls or not (current_cloudflare_urls.get('frontend') or current_cloudflare_urls.get('backend')):
+            final_ngrok_url = ngrok_url  # Only show ngrok if no Cloudflare
+            
         response = SystemStatusResponse(
             initialized=True,
             models_loaded=models_list,
             config=config_dict,
-            ngrok_url=ngrok_url
+            ngrok_url=final_ngrok_url,
+            cloudflare_urls=current_cloudflare_urls
         )
         logger.info(f"✅ System initialized - returning success status")
-        logger.info(f"📤 Returning status response: {response.model_dump()}")
+        logger.info(f"Returning status response: {response.model_dump()}")
         return response
     except Exception as e:
         logger.error(f"Error getting system status: {e}")
@@ -334,8 +337,17 @@ async def get_system_status(request: Request):
             initialized=False,
             models_loaded=[],
             config={"error": str(e)},
-            ngrok_url=ngrok_url
+            ngrok_url=ngrok_url,
+            cloudflare_urls=current_cloudflare_urls
         )
+
+@app.post("/api/internal/set-cloudflare-urls")
+async def set_cloudflare_urls(urls: Dict[str, Optional[str]]):
+    """Internal endpoint to set Cloudflare URLs from the startup script"""
+    global cloudflare_urls
+    cloudflare_urls.update(urls)
+    logger.info(f"Updated Cloudflare URLs: {cloudflare_urls}")
+    return {"status": "success", "urls": cloudflare_urls}
 
 @app.post("/api/debate/start", response_model=DebateResponse)
 async def start_debate(request: DebateRequest, background_tasks: BackgroundTasks):
@@ -405,6 +417,12 @@ async def list_debates():
             for debate_id, info in current_debates.items()
         ]
     }
+
+@app.get("/api/tunnel_url")
+def get_tunnel_url():
+    """Return the current Cloudflare public URL for the backend."""
+    url = get_cloudflared_url()
+    return {"cloudflared_url": url}
 
 async def run_debate(debate_id: str, question: str, max_rounds: Optional[int] = None):
     """Run debate in background with progress tracking"""
