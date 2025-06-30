@@ -4977,3 +4977,120 @@ models_loaded.3
 2025-06-30 12:12:53,817 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
 2025-06-30 12:12:56,318 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}
 2025-06-30 12:12:56,328 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
+2025-06-30 12:22:09,151 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}
+2025-06-30 12:22:09,168 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
+2025-06-30 12:22:14,114 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}
+2025-06-30 12:22:14,129 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
+2025-06-30 12:22:14,856 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}
+2025-06-30 12:22:14,884 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
+2025-06-30 12:22:45,260 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}
+2025-06-30 12:22:45,276 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
+2025-06-30 12:22:50,301 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}
+2025-06-30 12:22:50,314 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
+2025-06-30 12:23:52,056 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}
+2025-06-30 12:23:52,069 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://manitoba-olive-lights-skins.trycloudflare.com', 'frontend': 'https://memory-herein-grid-cleveland.trycloudflare.com'}}
+2025-06-30 12:26:21,415 - api.main - INFO - Angular dist folder found at: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-30 12:26:21,419 - api.main - INFO - Angular static files will be mounted from: C:\Users\wanth\OneDrive\harry\ai\ml\python\llm debate\angular-ui\dist
+2025-06-30 12:26:21,420 - api.main - INFO - Initializing LLM Debate System...
+2025-06-30 12:26:21,644 - api.main - INFO - Starting ngrok tunnel...
+2025-06-30 12:26:21,929 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-30 12:26:21,929 - system.dynamic_config - INFO - Found 20 available models
+2025-06-30 12:26:21,929 - api.main - INFO - Configuration set - Orchestrator: ModelConfig(name='Orchestrator', model='phi3:mini', temperature=0.3, max_tokens=2000, personality='analytical and diplomatic', system_prompt='You are an expert debate orchestrator. Your role is to:\n1. Analyze responses from three debater LLMs\n2. Determine if they have reached consensus\n3. Provide feedback to help them converge\n4. Synthesize final summaries when consensus is reached\nBe objective, thorough, and focus on finding common ground.')
+2025-06-30 12:26:21,930 - api.main - INFO - Configuration set - Debaters: [ModelConfig(name='Analytical_Debater', model='llama3.2:1b', temperature=0.6, max_tokens=800, personality='analytical and fact-focused', system_prompt='You are an analytical debater who focuses on facts, data, and logical reasoning.'), ModelConfig(name='Creative_Debater', model='gemma2:2b', temperature=0.7, max_tokens=800, personality='creative and perspective-oriented', system_prompt='You are a creative debater who brings unique perspectives and innovative thinking.'), ModelConfig(name='Pragmatic_Debater', model='llama3.2:3b', temperature=0.8, max_tokens=800, personality='pragmatic and solution-oriented', system_prompt='You are a pragmatic debater focused on practical solutions and real-world applications.')]
+2025-06-30 12:26:21,930 - system.main - INFO - Initializing LLM Debate System...
+2025-06-30 12:26:22,405 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-30 12:26:22,406 - backend.ollama_integration - INFO - Ensuring required models are loaded: ['phi3:mini', 'llama3.2:1b', 'gemma2:2b', 'llama3.2:3b']
+2025-06-30 12:26:22,888 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2025-06-30 12:26:22,891 - backend.ollama_integration - INFO - Model phi3:mini needs loading...
+2025-06-30 12:26:22,892 - backend.ollama_integration - INFO - Loading model phi3:mini for the FIRST TIME...
+2025-06-30 12:26:24,378 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:26:24,378 - backend.ollama_integration - INFO - Successfully loaded model phi3:mini - NOW IN MEMORY
+2025-06-30 12:26:24,379 - backend.ollama_integration - INFO - Model llama3.2:1b needs loading...
+2025-06-30 12:26:24,379 - backend.ollama_integration - INFO - Loading model llama3.2:1b for the FIRST TIME...
+2025-06-30 12:26:26,479 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:26:26,480 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:1b - NOW IN MEMORY
+2025-06-30 12:26:26,480 - backend.ollama_integration - INFO - Model gemma2:2b needs loading...
+2025-06-30 12:26:26,480 - backend.ollama_integration - INFO - Loading model gemma2:2b for the FIRST TIME...
+2025-06-30 12:26:28,818 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:26:28,818 - backend.ollama_integration - INFO - Successfully loaded model gemma2:2b - NOW IN MEMORY
+2025-06-30 12:26:28,818 - backend.ollama_integration - INFO - Model llama3.2:3b needs loading...
+2025-06-30 12:26:28,818 - backend.ollama_integration - INFO - Loading model llama3.2:3b for the FIRST TIME...
+2025-06-30 12:26:31,095 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:26:31,096 - backend.ollama_integration - INFO - Successfully loaded model llama3.2:3b - NOW IN MEMORY
+2025-06-30 12:26:31,096 - backend.ollama_integration - INFO - Currently loaded models: ['llama3.2:3b', 'gemma2:2b', 'phi3:mini', 'llama3.2:1b'] - PERSISTENT IN MEMORY
+2025-06-30 12:26:31,096 - backend.ollama_integration - INFO - All required models loaded successfully
+2025-06-30 12:26:31,096 - system.main - INFO - System initialized successfully
+2025-06-30 12:26:31,096 - api.main - INFO - System initialized successfully!
+2025-06-30 12:26:31,476 - api.main - INFO - Current Cloudflare URLs: {}
+2025-06-30 12:26:31,499 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': 'https://e9de-99-58-207-24.ngrok-free.app', 'cloudflare_urls': {}}
+2025-06-30 12:26:45,574 - api.main - INFO - Updated Cloudflare URLs: {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}
+2025-06-30 12:26:59,590 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}
+2025-06-30 12:26:59,604 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}}
+2025-06-30 12:27:04,610 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}
+2025-06-30 12:27:04,620 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}}
+2025-06-30 12:27:26,883 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}
+2025-06-30 12:27:26,898 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}}
+2025-06-30 12:27:31,823 - api.main - INFO - Current Cloudflare URLs: {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}
+2025-06-30 12:27:31,837 - api.main - INFO - Returning status response: {'initialized': True, 'models_loaded': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b', 'phi3:mini'], 'config': {'max_rounds': 3, 'orchestrator_model': 'phi3:mini', 'debater_models': ['llama3.2:1b', 'gemma2:2b', 'llama3.2:3b'], 'orchestrator_max_tokens': 2000, 'debater_max_tokens': 800}, 'ngrok_url': None, 'cloudflare_urls': {'backend': 'https://idle-seven-towns-version.trycloudflare.com', 'frontend': None}}
+2025-06-30 12:27:56,406 - api.main - INFO - Starting debate 1589a70b-842d-49da-820a-194fe749a25b: Should we include women in military?
+2025-06-30 12:27:56,407 - system.main - INFO - Starting debate: Should we include women in military?
+2025-06-30 12:27:56,407 - backend.debate_workflow - INFO - Starting debate: Should we include women in military?
+2025-06-30 12:27:56,412 - backend.debate_workflow - INFO - Initializing debate for question: Should we include women in military?
+2025-06-30 12:27:56,414 - backend.debate_workflow - INFO - Collecting initial responses from debaters
+2025-06-30 12:27:56,414 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:27:56,618 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:27:56,822 - backend.ollama_integration - INFO - Loading model tinyllama:1.1b for the FIRST TIME...
+2025-06-30 12:28:00,825 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:03,374 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:03,375 - backend.ollama_integration - INFO - Successfully loaded model tinyllama:1.1b - NOW IN MEMORY
+2025-06-30 12:28:07,606 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:07,606 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 1630 chars
+2025-06-30 12:28:10,303 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:10,304 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 4711 chars
+2025-06-30 12:28:10,304 - backend.debate_workflow - INFO - Collected 3 initial responses
+2025-06-30 12:28:10,305 - backend.debate_workflow - INFO - Analyzing consensus for round 1
+2025-06-30 12:28:10,397 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.783, reached=False
+2025-06-30 12:28:10,398 - backend.debate_workflow - INFO - Generating orchestrator feedback
+2025-06-30 12:28:10,446 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:28:23,484 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:23,485 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 2573 chars
+2025-06-30 12:28:23,485 - backend.debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-30 12:28:23,485 - backend.debate_workflow - INFO - Collecting rebuttals for round 2
+2025-06-30 12:28:23,486 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:28:23,675 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:28:23,852 - backend.ollama_integration - INFO - Model tinyllama:1.1b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:28:31,591 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:31,592 - backend.ollama_integration - WARNING - Response too long from Creative_Debater: 2093 chars
+2025-06-30 12:28:39,402 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:39,402 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 2272 chars
+2025-06-30 12:28:41,013 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:41,014 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 2465 chars
+2025-06-30 12:28:41,014 - backend.debate_workflow - INFO - Collected 3 rebuttal responses for round 2
+2025-06-30 12:28:41,015 - backend.debate_workflow - INFO - Analyzing consensus for round 2
+2025-06-30 12:28:41,066 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.829, reached=False
+2025-06-30 12:28:41,067 - backend.debate_workflow - INFO - Generating orchestrator feedback
+2025-06-30 12:28:41,106 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:28:53,917 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:28:53,918 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 2528 chars
+2025-06-30 12:28:53,918 - backend.debate_workflow - INFO - Orchestrator feedback generated successfully
+2025-06-30 12:28:53,918 - backend.debate_workflow - INFO - Collecting rebuttals for round 3
+2025-06-30 12:28:53,919 - backend.ollama_integration - INFO - Model gemma2:2b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:28:54,117 - backend.ollama_integration - INFO - Model phi3:mini ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:28:54,294 - backend.ollama_integration - INFO - Model tinyllama:1.1b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:29:05,598 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:29:05,599 - backend.ollama_integration - WARNING - Response too long from Creative_Debater: 3373 chars
+2025-06-30 12:29:12,916 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:29:12,917 - backend.ollama_integration - WARNING - Response too long from Practical_Debater: 2068 chars
+2025-06-30 12:29:15,155 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:29:15,155 - backend.ollama_integration - WARNING - Response too long from Analytical_Debater: 2710 chars
+2025-06-30 12:29:15,156 - backend.debate_workflow - INFO - Collected 3 rebuttal responses for round 3
+2025-06-30 12:29:15,156 - backend.debate_workflow - INFO - Analyzing consensus for round 3
+2025-06-30 12:29:15,232 - backend.debate_workflow - INFO - Consensus analysis: similarity=0.899, reached=True
+2025-06-30 12:29:15,233 - backend.debate_workflow - INFO - Handling max rounds reached
+2025-06-30 12:29:15,233 - backend.ollama_integration - INFO - Model llama3.2:3b ALREADY LOADED (persistent) - no action needed
+2025-06-30 12:29:30,091 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-06-30 12:29:30,092 - backend.ollama_integration - WARNING - Response too long from Orchestrator: 3725 chars
+2025-06-30 12:29:30,092 - backend.debate_workflow - INFO - Max rounds handling completed
+2025-06-30 12:29:30,093 - backend.debate_workflow - INFO - Debate completed: DebateStatus.MAX_ROUNDS_EXCEEDED in 3 rounds
+2025-06-30 12:29:30,093 - system.main - INFO - Debate completed with status: DebateStatus.MAX_ROUNDS_EXCEEDED
+2025-06-30 12:29:30,093 - api.main - INFO - Debate 1589a70b-842d-49da-820a-194fe749a25b completed successfully

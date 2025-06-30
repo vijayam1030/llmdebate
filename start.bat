@@ -3,7 +3,7 @@ echo ================================================
 echo    LLM Debate System - Unified Launcher
 echo ================================================
 echo.
-echo Starting both frontend and backend with Cloudflare tunnels...
+echo Starting backend with Cloudflare tunnel (serves complete app)...
 echo.
 
 REM Change to the script directory

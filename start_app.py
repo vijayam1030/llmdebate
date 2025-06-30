@@ -176,22 +176,23 @@ class AppLauncher:
         return backend_ready, frontend_ready
     
     def start_tunnels(self):
-        """Start Cloudflare tunnels for both services"""
-        logger.info("Starting Cloudflare tunnels...")
+        """Start Cloudflare tunnel for backend only (serves complete app)"""
+        logger.info("Starting Cloudflare tunnel for backend...")
         
         try:
-            from cloudflared_tunnel import start_cloudflare_tunnels, get_cloudflare_urls
+            from cloudflared_tunnel import start_cloudflared_tunnel
             
-            self.tunnel_urls = start_cloudflare_tunnels(
-                backend_port=8001,
-                frontend_port=4201
-            )
+            # Only start backend tunnel since it serves the complete app
+            backend_url = start_cloudflared_tunnel("http://localhost:8001")
+            self.tunnel_urls = {'backend': backend_url, 'frontend': None}
             
-            # Wait a bit for tunnels to establish
+            # Wait a bit for tunnel to establish
             time.sleep(5)
             
             # Get the actual URLs
-            urls = get_cloudflare_urls()
+            from cloudflared_tunnel import get_cloudflared_url
+            backend_url = get_cloudflared_url()
+            urls = {'backend': backend_url, 'frontend': None}
             
             # Also update the backend API's knowledge of Cloudflare URLs
             try:
@@ -208,10 +209,12 @@ class AppLauncher:
             logger.info("=" * 60)
             logger.info("🚀 LLM DEBATE SYSTEM STARTED SUCCESSFULLY!")
             logger.info("=" * 60)
-            logger.info(f"📱 Frontend URL: {urls.get('frontend', 'Not available')}")
-            logger.info(f"🔗 Backend API URL: {urls.get('backend', 'Not available')}")
+            logger.info(f"🌐 PUBLIC URL (Complete App): {backend_url or 'Not available'}")
             logger.info(f"🏠 Local Frontend: http://localhost:4201")
             logger.info(f"🏠 Local Backend: http://localhost:8001")
+            logger.info("=" * 60)
+            logger.info("💡 Share this URL with others:")
+            logger.info(f"   {backend_url or 'Not available'}")
             logger.info("=" * 60)
             logger.info("Press Ctrl+C to stop all services")
             logger.info("=" * 60)
